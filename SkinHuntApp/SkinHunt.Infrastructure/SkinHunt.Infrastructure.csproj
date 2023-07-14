@@ -11,4 +11,9 @@
     <Folder Include="RabbitMQ\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SkinHunt.Application\SkinHunt.Application.csproj" />
+    <ProjectReference Include="..\SkinHunt.Domain\SkinHunt.Domain.csproj" />
+  </ItemGroup>
+
 </Project>
