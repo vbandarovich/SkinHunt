@@ -1,7 +1,6 @@
 using FluentValidation.AspNetCore;
 using Serilog;
 using SkinHunt.Application;
-using SkinHunt.Application.Common.Mapping;
 using SkinHunt.Infrastructure;
 
 namespace SkinHuntApp
