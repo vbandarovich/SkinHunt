@@ -12,8 +12,6 @@ namespace SkinHunt.Application.Common.Entities
 
         public string Type { get; set; }
 
-        public string Description { get; set; }
-
         public DateTime ReleaseDate { get; set; }
 
         public double Float { get; set; }
