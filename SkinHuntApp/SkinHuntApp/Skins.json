@@ -2,7 +2,7 @@
   {
     "Name": "Wild Lotus", // Ak 47
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1489835978,
     "Color": "Green",
     "Rarity": "Minimal Wear",
@@ -13,7 +13,7 @@
   {
     "Name": "Gamma Doppler Emerald", // Butterfly
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0240136888,
     "Color": "Green",
     "Rarity": "Factory New",
@@ -24,7 +24,7 @@
   {
     "Name": "Dragon Lore", // AWP
     "Type": "Sniper Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0149520924,
     "Color": "Orange",
     "Rarity": "Factory New",
@@ -35,7 +35,7 @@
   {
     "Name": "Gungnir", // AWP
     "Type": "Sniper Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.5215078592,
     "Color": "Blue",
     "Rarity": "Battle-Scarred",
@@ -46,7 +46,7 @@
   {
     "Name": "Howl", // M4A4
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0386898331,
     "Color": "Red",
     "Rarity": "Factory New",
@@ -54,11 +54,10 @@
     "IsDiscount": true,
     "PriceWithDiscount": 7498.52
   },
-  // от сюда
   {
     "Name": "Neon Rider", // Ak 47
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0834443495,
     "Color": "Purple",
     "Rarity": "Minimal Wear",
@@ -69,7 +68,7 @@
   {
     "Name": "Fade", // M9 knife
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0797855929,
     "Color": "Rainbow",
     "Rarity": "Factory New",
@@ -79,7 +78,7 @@
   },
   {
     "Name": "Hyper Beast", // M4A1-S
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1021553129,
     "Color": "Blue",
     "Rarity": "Minimal Wear",
@@ -90,7 +89,7 @@
   {
     "Name": "Boreal Forest", // Skeleton knife
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1311877370,
     "Color": "Green",
     "Rarity": "Well-Worn",
@@ -101,7 +100,7 @@
   {
     "Name": "Redline", // Ak 47
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.3683933020,
     "Color": "Red",
     "Rarity": "Field-Tested",
@@ -112,7 +111,7 @@
   {
     "Name": "Crimson Web", // Stiletto knife
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1394437850,
     "Color": "Red",
     "Rarity": "Minimal Wear",
@@ -123,7 +122,7 @@
   {
     "Name": "Case Hardened", // Ak 47
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1239002794,
     "Color": "Iridescent",
     "Rarity": "Minimal Wear",
@@ -134,7 +133,7 @@
   {
     "Name": "Asiimov", // awp
     "Type": "Sniper Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.7097107172,
     "Color": "Orange",
     "Rarity": "Battle-Scarred",
@@ -145,7 +144,7 @@
   {
     "Name": "Serum", // usp
     "Type": "Pistol",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0986302570,
     "Color": "burgundy",
     "Rarity": "Minimal Wear",
@@ -156,7 +155,7 @@
   {
     "Name": "Vulcan", // Ak 47
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1480582952,
     "Color": "White",
     "Rarity": "Minimal Wear",
@@ -167,7 +166,7 @@
   {
     "Name": "Gold Arabesque", // Ak 47
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0929311737,
     "Color": "Yellow",
     "Rarity": "Minimal Wear",
@@ -178,7 +177,7 @@
   {
     "Name": "Desert Hydra", // awp
     "Type": "Sniper Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0526154377,
     "Color": "Orange",
     "Rarity": "Factory New",
@@ -189,7 +188,7 @@
   {
     "Name": "Lore", // M9
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0621657781,
     "Color": "Gold",
     "Rarity": "Factory New",
@@ -200,7 +199,7 @@
   {
     "Name": "Icarus Fell", // M4A1-S
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0839966834,
     "Color": "Blue",
     "Rarity": "Minimal Wear",
@@ -211,7 +210,7 @@
   {
     "Name": "Blue Steel", // Karambit
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.6853950620,
     "Color": "Blue",
     "Rarity": "Battle-Scarred",
@@ -222,7 +221,7 @@
   {
     "Name": "Redline", // awp
     "Type": "Sniper Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1651116014,
     "Color": "Red",
     "Rarity": "Field-Tested",
@@ -233,7 +232,7 @@
   {
     "Name": "Bloodsport", // Ak 47
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0558640733,
     "Color": "Red",
     "Rarity": "Factory New",
@@ -244,7 +243,7 @@
   {
     "Name": "Gamma Doppler Phase 4", // Butterfly
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0322732665,
     "Color": "Green",
     "Rarity": "Factory New",
@@ -255,7 +254,7 @@
   {
     "Name": "Lightning Strike", // awp
     "Type": "Sniper Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0719183236,
     "Color": "Purple",
     "Rarity": "Minimal Wear",
@@ -266,7 +265,7 @@
   {
     "Name": "Golden Coil", // M4A1-S
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.4844351411,
     "Color": "Golden",
     "Rarity": "Battle-Scarred",
@@ -277,7 +276,7 @@
   {
     "Name": "Doppler Phase 2", // Butterfly
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0348449349,
     "Color": "Pink",
     "Rarity": "Factory New",
@@ -288,7 +287,7 @@
   {
     "Name": "Hydroponic", //Ak 47
     "Type": "Assault Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0549590588,
     "Color": "Light green",
     "Rarity": "Factory New",
@@ -299,7 +298,7 @@
   {
     "Name": "Containment Breach", // awp
     "Type": "Sniper Rifle",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1288096458,
     "Color": "Light green",
     "Rarity": "Minimal Wear",
@@ -310,7 +309,7 @@
   {
     "Name": "Blue Steel", // Nomad
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.1445537210,
     "Color": "Blue",
     "Rarity": "Minimal Wear",
@@ -321,7 +320,7 @@
   {
     "Name": "Gamma Doppler Phase 2", // M9
     "Type": "Knife",
-    "ReleaseDate": "",
+    "ReleaseDate": "2023-08-02T12:34:56Z",
     "Float": 0.0081575830,
     "Color": "Green",
     "Rarity": "Factory New",
