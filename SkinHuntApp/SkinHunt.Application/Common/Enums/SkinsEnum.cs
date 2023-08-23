@@ -16,11 +16,12 @@
     {
         Bayonet,
         Bowie,
+        Butterfly,
         Falchion,
         Flip,
         Gut,
         Karambit,
-        M9_Bayonet,
+        M9Bayonet,
         Navaja,
         ShadowDaggers,
         Stiletto,
