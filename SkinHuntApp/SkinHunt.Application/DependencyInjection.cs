@@ -1,6 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using SkinHunt.Application.Common.Interfaces;
+using SkinHunt.Application.Services;
 using System.Reflection;
 
 namespace SkinHunt.Application
@@ -16,6 +18,8 @@ namespace SkinHunt.Application
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connection));
 
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly()));
+
+            services.AddScoped<IDbInitializer, DbInitializer>();
 
             return services;
         }
