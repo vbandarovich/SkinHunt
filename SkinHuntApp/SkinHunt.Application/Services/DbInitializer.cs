@@ -15,7 +15,11 @@ namespace SkinHunt.Application.Services
 
         public async Task InitializeAsync()
         {
-            await _mediator.Send(new InitSkinsDbCommand());
+            await _mediator.Send(new InitSkinsCommand());
+
+            await _mediator.Send(new InitRolesCommand());
+
+            await _mediator.Send(new InitAdminUserCommand());
         }
     }
 }

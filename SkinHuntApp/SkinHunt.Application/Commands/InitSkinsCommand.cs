@@ -5,23 +5,23 @@ using SkinHunt.Application.Common.Entities;
 
 namespace SkinHunt.Application.Commands
 {
-    public class InitSkinsDbCommand : IRequest
+    public class InitSkinsCommand : IRequest
     {
     }
 
-    public class InitSkinsDbCommandHandler : IRequestHandler<InitSkinsDbCommand>
+    public class InitSkinsCommandHandler : IRequestHandler<InitSkinsCommand>
     {
         private readonly DbContext _db;
-        private readonly ILogger<InitSkinsDbCommand> _logger;
+        private readonly ILogger<InitSkinsCommandHandler> _logger;
         private readonly string SkinsFileName = "Skins.json";
 
-        public InitSkinsDbCommandHandler(DbContext db, ILogger<InitSkinsDbCommand> logger)
+        public InitSkinsCommandHandler(DbContext db, ILogger<InitSkinsCommandHandler> logger)
         {
             _db = db;
             _logger = logger;
         }
 
-        public async Task Handle(InitSkinsDbCommand request, CancellationToken cancellationToken)
+        public async Task Handle(InitSkinsCommand request, CancellationToken cancellationToken)
         {
             await _db.Database.EnsureCreatedAsync(cancellationToken);
 
