@@ -1,58 +1,66 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
+using SkinHunt.Application.Common.Interfaces;
 using SkinHunt.Domain.Models;
 
 namespace SkinHunt.Service.Controllers
 {
-    [Route("api/authorization")]
+    [Route("api/signIn")]
     [ApiController]
     public class SignInController : Controller
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly IConfiguration _configuration;
         private readonly ILogger<SignInController> _logger;
+        private readonly IJwtExtension _jwtExtension;
 
-        public SignInController(UserManager<IdentityUser> userManager, IConfiguration configuration, SignInManager<IdentityUser> signInManager, ILogger<SignInController> logger)
+        public SignInController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, 
+            ILogger<SignInController> logger, IJwtExtension jwtExtension)
         {
             _userManager = userManager;
-            _signInManager = signInManager; 
-            _configuration = configuration;
-            _logger = logger;  
+            _signInManager = signInManager;
+            _logger = logger;
+            _jwtExtension = jwtExtension;
         }
 
         [HttpPost]
-        public async Task<object> Post(SignInModel signInModel)
+        public async Task<ActionResult> Post([FromBody]SignInModel model)
         {
             try
             {
-                var user = await _userManager.FindByEmailAsync(signInModel.Email);
+                var user = await _userManager.FindByEmailAsync(model.Email);
 
-                var result = await _signInManager.PasswordSignInAsync(user.UserName, signInModel.Password, false, true);
-
-                if (result.Succeeded)
+                if (user is not null)
                 {
-                    _logger.LogInformation("Login operation was successfully");
+                    var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, true);
 
-                    return Ok(new
+                    if (result.Succeeded)
                     {
-                        id = user.Id,
-                        userName = user.UserName,
-                        email = user.Email,
-                        roles = await _userManager.GetRolesAsync(user)
-                    });
-                }
+                        _logger.LogInformation("Login successeded");
 
-                _logger.LogError("Login operation was fail: user not found");
+                        return Ok(new
+                        {
+                            id = user.Id,
+                            userName = user.UserName,
+                            email = user.Email,
+                            roles = await _userManager.GetRolesAsync(user)
+                        });
+                    }
 
-                return null;
+                    _logger.LogError("Login failed: password was incorrect.");
+
+                    return Unauthorized("Password was incorrect");
+                }            
+
+                _logger.LogError("Login failed: user not found");
+
+                return NotFound("User not found");
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Login operation was fail with exception: {ex.Message}");
+                _logger.LogError($"Login failed with exception: {ex.Message}");
 
-                return null;
+                return BadRequest("Login failed with exception");
             }
         }
     }

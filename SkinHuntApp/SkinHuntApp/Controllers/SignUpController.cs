@@ -1,63 +1,64 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
+using SkinHunt.Application.Common.Interfaces;
+using SkinHunt.Domain.Constants;
 using SkinHunt.Domain.Models;
 
 namespace SkinHunt.Service.Controllers
 {
-    [Route("api/authorization")]
+    [Route("api/signUp")]
     [ApiController]
     public class SignUpController : AppControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IConfiguration _configuration;
         private readonly ILogger<SignUpController> _logger;
+        private readonly IJwtExtension _jwtExtension;
 
-        public SignUpController(UserManager<IdentityUser> userManager, IConfiguration configuration, ILogger<SignUpController> logger)
+        public SignUpController(UserManager<IdentityUser> userManager, ILogger<SignUpController> logger,
+            IJwtExtension jwtExtension)
         {
             _userManager = userManager;
-            _configuration = configuration;
             _logger = logger;
+            _jwtExtension = jwtExtension;
         }
 
         [AllowAnonymous]
-        [HttpPost("createUser")]
-        public async Task<object> Post(SignUpModel sugnUpModel)
+        [HttpPost()]
+        public async Task<object> Post([FromBody]SignUpModel model)
         {
             try
             {
                 var user = new IdentityUser
                 {
-                    UserName = sugnUpModel.Name,
-                    Email = sugnUpModel.Email,
+                    UserName = model.Username,
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber
                 };
 
-                var result = await _userManager.CreateAsync(user, sugnUpModel.Password);
+                var result = await _userManager.CreateAsync(user, model.Password);
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, "user");
+                    await _userManager.AddToRoleAsync(user, RolesConstants.User);
 
-                    _logger.LogInformation("User has been created");
+                    _logger.LogInformation("User has been created.");
 
-                    return Ok(new
-                    {
-                        id = user.Id,
-                        userName = user.UserName,
-                        email = user.Email,
-                    });
+                    var token = await _jwtExtension.GenerateTokenAsync(user);
+
+                    return Ok(token);
                 }
-                return Task.FromResult(false);
 
+                _logger.LogInformation($"User not created. Errors: {result.Errors.First()}.");
+
+                return Unauthorized("User not created.");
             }
             catch (Exception ex)
             {
-                Log.Error($"SignInAsync was fail with exception: {ex.Message}");
+                _logger.LogError($"Sign in failed with exception: {ex.Message}.");
 
-                return null;
-            }
-            
+                return BadRequest("Sign in failed.");
+            } 
         }
 
         [AllowAnonymous]
