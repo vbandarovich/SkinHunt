@@ -38,13 +38,17 @@ namespace SkinHunt.Service.Controllers
                     {
                         _logger.LogInformation("Login successeded");
 
-                        return Ok(new
-                        {
-                            id = user.Id,
-                            userName = user.UserName,
-                            email = user.Email,
-                            roles = await _userManager.GetRolesAsync(user)
-                        });
+                        var token = await _jwtExtension.GenerateTokenAsync(user);
+
+                        return Ok(token);
+
+                        //return Ok(new
+                        //{
+                        //    id = user.Id,
+                        //    userName = user.UserName,
+                        //    email = user.Email,
+                        //    roles = await _userManager.GetRolesAsync(user)
+                        //});
                     }
 
                     _logger.LogError("Login failed: password was incorrect.");
