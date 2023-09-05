@@ -18,7 +18,15 @@ namespace SkinHunt.Application
             var connection = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connection));
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Password.RequiredUniqueChars = 4;
+                options.Password.RequiredLength = 8;
+                options.Password.RequireDigit = false;  
+                options.Password.RequireNonAlphanumeric = false; 
+                options.Password.RequireUppercase = false;  
+                options.Password.RequireLowercase = false;
+            })
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DbContext>()
                 .AddDefaultTokenProviders();

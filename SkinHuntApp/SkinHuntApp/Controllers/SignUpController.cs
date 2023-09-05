@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Serilog;
-using SkinHunt.Application.Commands;
 using SkinHunt.Domain.Models;
 
 namespace SkinHunt.Service.Controllers
@@ -13,9 +12,9 @@ namespace SkinHunt.Service.Controllers
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly ILogger<InitRolesCommandHandler> _logger;
+        private readonly ILogger<SignUpController> _logger;
 
-        public SignUpController(UserManager<IdentityUser> userManager, IConfiguration configuration, ILogger<InitRolesCommandHandler> logger)
+        public SignUpController(UserManager<IdentityUser> userManager, IConfiguration configuration, ILogger<SignUpController> logger)
         {
             _userManager = userManager;
             _configuration = configuration;
@@ -24,17 +23,17 @@ namespace SkinHunt.Service.Controllers
 
         [AllowAnonymous]
         [HttpPost("createUser")]
-        public async Task<object> Post(RegisterModel registerModel)
+        public async Task<object> Post(SignUpModel sugnUpModel)
         {
             try
             {
                 var user = new IdentityUser
                 {
-                    UserName = registerModel.Name,
-                    Email = registerModel.Email,
+                    UserName = sugnUpModel.Name,
+                    Email = sugnUpModel.Email,
                 };
 
-                var result = await _userManager.CreateAsync(user, registerModel.Password);
+                var result = await _userManager.CreateAsync(user, sugnUpModel.Password);
 
                 if (result.Succeeded)
                 {

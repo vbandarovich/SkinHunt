@@ -1,6 +1,6 @@
 ﻿namespace SkinHunt.Domain.Models
 {
-    public class RegisterModel
+    public class SignUpModel
     {
         public string Name { get; set; }
         
