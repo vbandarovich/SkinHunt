@@ -8,8 +8,7 @@ namespace SkinHunt.Service.Controllers
     public class AppControllerBase : ControllerBase
     {
         public AppControllerBase()
-        {
-           
+        {   
         }
 
         protected Task Publish()

@@ -31,13 +31,18 @@ namespace SkinHunt.Application.Extensions
                 new Claim(ClaimTypes.Role, roles[0])
             };
 
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
+
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JWT:JwtExpireDays"]));
 
             var token = new JwtSecurityToken(
                 _configuration["JWT:ValidIssuer"],
-                _configuration["JWT:ValidIssuer"],
+                _configuration["JWT:ValidAudience"],
                 claims,
                 expires: expires,
                 signingCredentials: creds

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SkinHunt.Application.Common.Interfaces;
 using SkinHunt.Domain.Models;
@@ -6,8 +7,9 @@ using SkinHunt.Domain.Models;
 namespace SkinHunt.Service.Controllers
 {
     [Route("api/signIn")]
+    [AllowAnonymous]
     [ApiController]
-    public class SignInController : Controller
+    public class SignInController : AppControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
@@ -24,7 +26,7 @@ namespace SkinHunt.Service.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody]SignInModel model)
+        public async Task<ActionResult> Post([FromBody] SignInModel model)
         {
             try
             {
@@ -36,35 +38,24 @@ namespace SkinHunt.Service.Controllers
 
                     if (result.Succeeded)
                     {
-                        _logger.LogInformation("Login successeded");
+                        _logger.LogInformation("Login successeded.");
 
                         var token = await _jwtExtension.GenerateTokenAsync(user);
 
                         return Ok(token);
-
-                        //return Ok(new
-                        //{
-                        //    id = user.Id,
-                        //    userName = user.UserName,
-                        //    email = user.Email,
-                        //    roles = await _userManager.GetRolesAsync(user)
-                        //});
                     }
 
                     _logger.LogError("Login failed: password was incorrect.");
-
-                    return Unauthorized("Password was incorrect");
+                    return Unauthorized("Password was incorrect.");
                 }            
 
-                _logger.LogError("Login failed: user not found");
-
-                return NotFound("User not found");
+                _logger.LogError("Login failed: user not found.");
+                return NotFound("User not found.");
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Login failed with exception: {ex.Message}");
-
-                return BadRequest("Login failed with exception");
+                return BadRequest("Login failed with exception.");
             }
         }
     }
