@@ -8,7 +8,7 @@ namespace SkinHunt.Service.Controllers
     [Route("api/users")]
     [Authorize(Roles = "admin")]
     [ApiController]
-    public class UsersController : Controller
+    public class UsersController : AppControllerBase 
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<UsersController> _logger;
