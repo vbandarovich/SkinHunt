@@ -1,22 +1,15 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SkinHunt.Application.Common.Entities;
-using SkinHunt.Domain.Constants;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SkinHunt.Application.Commands
 {
-    public class GetSkinsCommand : IRequest<object>
+    public class GetSkinsCommand : IRequest<List<SkinEntity>>
     {
     }
 
-    public class GetSkinsCommandHandler : IRequestHandler<GetSkinsCommand, object>
+    public class GetSkinsCommandHandler : IRequestHandler<GetSkinsCommand, List<SkinEntity>>
     {
         private readonly DbContext _db;
         private readonly ILogger<GetSkinsCommandHandler> _logger;
@@ -27,7 +20,7 @@ namespace SkinHunt.Application.Commands
             _logger = logger;
         }
 
-        public async Task<object> Handle(GetSkinsCommand request, CancellationToken cancellationToken)
+        public async Task<List<SkinEntity>> Handle(GetSkinsCommand request, CancellationToken cancellationToken)
         {
             try
             {
@@ -39,12 +32,12 @@ namespace SkinHunt.Application.Commands
                     return result;
                 }
 
-                return null;
+                return new List<SkinEntity>();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while retrieving skins.");
-                return null;
+                return new List<SkinEntity>();
             }
         }
     }

@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using SkinHunt.Application.Common.Interfaces;
-using SkinHunt.Domain.Constants;
+using SkinHunt.Application.Commands;
 using SkinHunt.Domain.Models;
 
 namespace SkinHunt.Service.Controllers
@@ -12,51 +11,26 @@ namespace SkinHunt.Service.Controllers
     [ApiController]
     public class SignUpController : AppControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IMediator _mediator;
         private readonly ILogger<SignUpController> _logger;
-        private readonly IJwtExtension _jwtExtension;
 
-        public SignUpController(UserManager<IdentityUser> userManager, ILogger<SignUpController> logger,
-            IJwtExtension jwtExtension)
+        public SignUpController(IMediator mediator, ILogger<SignUpController> logger)
         {
-            _userManager = userManager;
+            _mediator = mediator;
             _logger = logger;
-            _jwtExtension = jwtExtension;
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] SignUpModel model)
         {
-            try
+            var result = await _mediator.Send(new SignUpCommand(model));
+
+            if (result is not null)
             {
-                var user = new IdentityUser
-                {
-                    UserName = model.Username,
-                    Email = model.Email,
-                    PhoneNumber = model.PhoneNumber
-                };
-
-                var result = await _userManager.CreateAsync(user, model.Password);
-
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, RolesConstants.User);
-
-                    _logger.LogInformation("User has been created.");
-
-                    var token = await _jwtExtension.GenerateTokenAsync(user);
-
-                    return Ok(token);
-                }
-
-                _logger.LogInformation($"User not created. Errors: {result.Errors.First()}.");
-                return Unauthorized("User not created.");
+                return Ok(result);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Sign in failed with exception: {ex.Message}.");
-                return BadRequest("Sign in failed.");
-            } 
+
+            return BadRequest();
         }
 
         [HttpPost("token")]

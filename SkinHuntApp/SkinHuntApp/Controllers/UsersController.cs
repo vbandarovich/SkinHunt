@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SkinHunt.Application.Commands;
 using SkinHunt.Domain.Constants;
 
 namespace SkinHunt.Service.Controllers
@@ -10,36 +12,26 @@ namespace SkinHunt.Service.Controllers
     [ApiController]
     public class UsersController : AppControllerBase 
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly IMediator _mediator;
         private readonly ILogger<UsersController> _logger;
 
-        public UsersController(UserManager<IdentityUser> userManager, ILogger<UsersController> logger)
+        public UsersController(IMediator mediator, ILogger<UsersController> logger)
         {
-            _userManager = userManager;
+            _mediator = mediator;
             _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            try
+            var result = await _mediator.Send( new GetUsersCommand());
+
+            if (result.Any())
             {
-                var users = await _userManager.GetUsersInRoleAsync(RolesConstants.User);
-
-                if (users is not null)
-                {
-                    _logger.LogInformation("Get users was successeded.");
-                    return Ok(users);
-                }
-
-                return NoContent();
-
+                return Ok(result);
             }
-            catch (Exception ex)
-            {
-                _logger.LogError($"Get users failed with exception: {ex.Message}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
+
+            return NoContent();
         }
 
     }

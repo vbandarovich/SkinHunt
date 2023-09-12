@@ -17,16 +17,17 @@ namespace SkinHunt.Service.Controllers
             _mediator = mediator;
         }
 
-        public async Task<object> GetAllSkinsAsync()
+        [HttpGet]
+        public async Task<IActionResult> GetAllSkinsAsync()
         {
             var result = await _mediator.Send(new GetSkinsCommand());
 
-            if (result is not null)
+            if (result.Any())
             {
-                return result;
+                return Ok(result);
             }
 
-            return null;
+            return NoContent();
         }
     }
 }
