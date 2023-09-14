@@ -1,9 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using SkinHunt.Application.Commands;
-using SkinHunt.Domain.Constants;
+using SkinHunt.Application.Queries;
 
 namespace SkinHunt.Service.Controllers
 {
@@ -24,7 +22,7 @@ namespace SkinHunt.Service.Controllers
         [HttpGet]
         public async Task<IActionResult> GetUsers()
         {
-            var result = await _mediator.Send( new GetUsersCommand());
+            var result = await _mediator.Send( new GetUsersQuery());
 
             if (result.Any())
             {

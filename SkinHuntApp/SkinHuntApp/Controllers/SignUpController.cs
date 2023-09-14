@@ -23,14 +23,24 @@ namespace SkinHunt.Service.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateUser([FromBody] SignUpModel model)
         {
-            var result = await _mediator.Send(new SignUpCommand(model));
-
-            if (result is not null)
+            try
             {
-                return Ok(result);
-            }
+                var result = await _mediator.Send(new SignUpCommand(model));
 
-            return BadRequest();
+                if (result is not null)
+                {
+                    _logger.LogInformation("User created.");
+                    return Ok(result);
+                }
+
+                _logger.LogError("Create user failed.");
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Unexpected error occured during sign up");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            } 
         }
 
         [HttpPost("token")]

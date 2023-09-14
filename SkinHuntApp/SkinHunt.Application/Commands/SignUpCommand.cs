@@ -1,6 +1,5 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.Extensions.Logging;
 using SkinHunt.Application.Common.Interfaces;
 using SkinHunt.Domain.Constants;
 using SkinHunt.Domain.Models;
@@ -9,59 +8,44 @@ namespace SkinHunt.Application.Commands
 {
     public class SignUpCommand : IRequest<object>
     {
-        public readonly SignUpModel model;
+        public SignUpModel Model { get; set; }
 
-        public SignUpCommand(SignUpModel signUpModel) 
+        public SignUpCommand(SignUpModel model)
         {
-            model = signUpModel;
+            Model = model;
         }
     }
 
     public class SignUpCommandHandler : IRequestHandler<SignUpCommand, object>
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<SignUpCommandHandler> _logger;
         private readonly IJwtExtension _jwtExtension;
 
-        public SignUpCommandHandler(UserManager<IdentityUser> userManager, ILogger<SignUpCommandHandler> logger, IJwtExtension jwtExtension)
+        public SignUpCommandHandler(UserManager<IdentityUser> userManager, IJwtExtension jwtExtension)
         {
             _userManager = userManager;
-            _logger = logger;
             _jwtExtension = jwtExtension;
         }
 
         public async Task<object> Handle(SignUpCommand request, CancellationToken cancellationToken)
         {
-            try
+            var user = new IdentityUser
             {
-                var user = new IdentityUser
-                {
-                    UserName = request.model.Username,
-                    Email = request.model.Email,
-                    PhoneNumber = request.model.PhoneNumber
-                };
+                UserName = request.Model.Username,
+                Email = request.Model.Email,
+                PhoneNumber = request.Model.PhoneNumber
+            };
 
-                var result = await _userManager.CreateAsync(user, request.model.Password);
+            var result = await _userManager.CreateAsync(user, request.Model.Password);
 
-                if (result.Succeeded)
-                {
-                    await _userManager.AddToRoleAsync(user, RolesConstants.User);
-
-                    _logger.LogInformation("User has been created.");
-
-                    var token = await _jwtExtension.GenerateTokenAsync(user);
-
-                    return token;
-                }
-
-                _logger.LogInformation($"User not created. Errors: {result.Errors.First()}.");
-                return null;
-            }
-            catch (Exception ex)
+            if (result.Succeeded)
             {
-                _logger.LogError($"Sign in failed with exception: {ex.Message}.");
-                return null;
+                await _userManager.AddToRoleAsync(user, RolesConstants.User);
+
+                return await _jwtExtension.GenerateTokenAsync(user);
             }
+
+            return null;
         }
     }
 }

@@ -3,24 +3,24 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SkinHunt.Application.Common.Entities;
 
-namespace SkinHunt.Application.Commands
+namespace SkinHunt.Application.Queries
 {
-    public class GetSkinsCommand : IRequest<List<SkinEntity>>
+    public class GetSkinsQuery : IRequest<List<SkinEntity>>
     {
     }
 
-    public class GetSkinsCommandHandler : IRequestHandler<GetSkinsCommand, List<SkinEntity>>
+    public class GetSkinsQueryHandler : IRequestHandler<GetSkinsQuery, List<SkinEntity>>
     {
         private readonly DbContext _db;
-        private readonly ILogger<GetSkinsCommandHandler> _logger;
+        private readonly ILogger<GetSkinsQueryHandler> _logger;
 
-        public GetSkinsCommandHandler(DbContext db, ILogger<GetSkinsCommandHandler> logger)
+        public GetSkinsQueryHandler(DbContext db, ILogger<GetSkinsQueryHandler> logger)
         {
             _db = db;
             _logger = logger;
         }
 
-        public async Task<List<SkinEntity>> Handle(GetSkinsCommand request, CancellationToken cancellationToken)
+        public async Task<List<SkinEntity>> Handle(GetSkinsQuery request, CancellationToken cancellationToken)
         {
             try
             {

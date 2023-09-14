@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkinHunt.Application.Commands;
+using SkinHunt.Application.Queries;
 using SkinHunt.Domain.Models;
 
 namespace SkinHunt.Service.Controllers
@@ -21,16 +22,34 @@ namespace SkinHunt.Service.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Post([FromBody] SignInModel model)
+        public async Task<IActionResult> Post([FromBody] SignInModel model)
         {
-            var result = await _mediator.Send(new SignInCommand(model));
-
-            if (result is not null)
+            try
             {
-                return Ok(result);
-            }
+                var user = await _mediator.Send(new GetUserByEmailQuery(model.Email));
 
-            return BadRequest();
+                if (user is not null)
+                {
+                    var result = await _mediator.Send(new SignInCommand(user, model.Password));
+
+                    if (result is not null)
+                    {
+                        _logger.LogError("Log in successeded.");
+                        return Ok(result);
+                    }
+
+                    _logger.LogError("Log in failed: password is incorrect.");
+                    return NoContent();
+                }
+
+                _logger.LogError("Log in failed: user not found.");
+                return NoContent();          
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Unexpected error occured during log in");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }  
         }
     }
 }

@@ -2,26 +2,25 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
 using SkinHunt.Domain.Constants;
-using Microsoft.AspNetCore.Mvc;
 
-namespace SkinHunt.Application.Commands
+namespace SkinHunt.Application.Queries
 {
-    public class GetUsersCommand : IRequest<List<IdentityUser>>
-    { 
+    public class GetUsersQuery : IRequest<List<IdentityUser>>
+    {
     }
 
-    public class GetUsersCommandHendler : IRequestHandler<GetUsersCommand, List<IdentityUser>>
+    public class GetUsersQueryHendler : IRequestHandler<GetUsersQuery, List<IdentityUser>>
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<GetUsersCommandHendler> _logger;
+        private readonly ILogger<GetUsersQueryHendler> _logger;
 
-        public GetUsersCommandHendler(UserManager<IdentityUser> userManager, ILogger<GetUsersCommandHendler> logger)
+        public GetUsersQueryHendler(UserManager<IdentityUser> userManager, ILogger<GetUsersQueryHendler> logger)
         {
             _userManager = userManager;
-            _logger = logger;  
+            _logger = logger;
         }
 
-        public async Task<List<IdentityUser>> Handle(GetUsersCommand request, CancellationToken cancellationToken)
+        public async Task<List<IdentityUser>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             try
             {
