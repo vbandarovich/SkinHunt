@@ -10,13 +10,13 @@ namespace SkinHunt.Service.Controllers
     [ApiController]
     public class AdminController : AppControllerBase
     {
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<AdminController> _logger;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public AdminController(UserManager<IdentityUser> userManager, ILogger<AdminController> logger)
+        public AdminController(ILogger<AdminController> logger, UserManager<IdentityUser> userManager)
         {
-            _userManager = userManager;
             _logger = logger;
+            _userManager = userManager;
         }
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace SkinHunt.Service.Controllers
                         if (result.Succeeded) 
                         {
                             _logger.LogInformation("Role assignment was successful.");
-                            return Ok();
+                            return Ok("Successfully.");
                         }              
                     }
 
@@ -50,8 +50,8 @@ namespace SkinHunt.Service.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError($"An error occurred: {ex.Message}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                _logger.LogError($"An error occurred: {ex.Message}.");
+                return StatusCode(500, $"Internal server error: {ex.Message}.");
             }
         }
     }

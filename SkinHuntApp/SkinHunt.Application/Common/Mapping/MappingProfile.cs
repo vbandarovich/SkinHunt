@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using SkinHunt.Application.Common.Entities;
+using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Common.Mapping
 {
@@ -6,6 +8,8 @@ namespace SkinHunt.Application.Common.Mapping
     {
         public MappingProfile()
         {
+            CreateMap<SkinModel, SkinEntity>()
+                .ReverseMap();
         }
     }
 }
