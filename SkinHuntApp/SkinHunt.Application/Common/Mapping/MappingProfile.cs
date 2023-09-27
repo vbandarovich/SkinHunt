@@ -10,6 +10,9 @@ namespace SkinHunt.Application.Common.Mapping
         {
             CreateMap<SkinModel, SkinEntity>()
                 .ReverseMap();
+
+            CreateMap<ItemTypeModel, ItemTypeEntity>()
+                .ReverseMap();
         }
     }
 }

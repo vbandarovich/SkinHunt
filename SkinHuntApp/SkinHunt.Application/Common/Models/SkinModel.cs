@@ -4,7 +4,7 @@
     {
         public string Name { get; set; }
 
-        public ItemType Type { get; set; }
+        public ItemTypeModel Type { get; set; }
 
         public DateTime ReleaseDate { get; set; }
 

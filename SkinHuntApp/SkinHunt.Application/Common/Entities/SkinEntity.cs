@@ -1,12 +1,10 @@
-﻿using SkinHunt.Application.Common.Models;
-
-namespace SkinHunt.Application.Common.Entities
+﻿namespace SkinHunt.Application.Common.Entities
 {
     public class SkinEntity : BaseEntity
     {
         public string Name { get; set; }
 
-        public ItemType Type { get; set; }
+        public ItemTypeEntity Type { get; set; }
 
         public DateTime ReleaseDate { get; set; }
 
