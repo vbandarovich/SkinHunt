@@ -1,5 +1,4 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SkinHunt.Application.Common.Entities;
@@ -20,13 +19,11 @@ namespace SkinHunt.Application.Commands
     {
         private readonly DbContext _db;
         private readonly ILogger<AddSkinDbCommandHandler> _logger;
-        private readonly IMapper _mapper;
 
-        public AddSkinDbCommandHandler(DbContext db, ILogger<AddSkinDbCommandHandler> logger, IMapper mapper)
+        public AddSkinDbCommandHandler(DbContext db, ILogger<AddSkinDbCommandHandler> logger)
         {
             _db = db;
             _logger = logger;
-            _mapper = mapper;
         }
 
         public async Task<SkinEntity> Handle(AddSkinCommand request, CancellationToken cancellationToken)

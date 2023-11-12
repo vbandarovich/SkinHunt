@@ -13,6 +13,11 @@ namespace SkinHunt.Application.Common.Mapping
 
             CreateMap<ItemTypeModel, ItemTypeEntity>()
                 .ReverseMap();
+
+            CreateMap<BasketModel, BasketEntity>()
+                .ForMember(dest => dest.User, opt => opt.MapFrom(src => src.UserId))
+                .ForMember(dest => dest.Skin, opt => opt.MapFrom(src => src.SkinId))
+                .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.Data));
         }
     }
 }

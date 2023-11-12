@@ -47,8 +47,8 @@ namespace SkinHunt.Service.Controllers
             }
             catch (Exception ex)
             {
-                _logger.LogError("Unexpected error occured during log in");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
+                _logger.LogError("Unexpected error occured during log in.");
+                return StatusCode(500, $"Internal server error: {ex.Message}.");
             }  
         }
     }

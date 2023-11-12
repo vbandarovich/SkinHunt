@@ -11,23 +11,34 @@ namespace SkinHunt.Service.Controllers
     public class GetAllSkinsController : AppControllerBase
     {
         private readonly IMediator _mediator;
+        private readonly ILogger<GetAllSkinsController> _logger;
 
-        public GetAllSkinsController(IMediator mediator)
+        public GetAllSkinsController(IMediator mediator, ILogger<GetAllSkinsController> logger)
         {
             _mediator = mediator;
+            _logger = logger;
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAllSkinsAsync()
         {
-            var result = await _mediator.Send(new GetSkinsQuery());
-
-            if (result.Any())
+            try
             {
-                return Ok(result);
-            }
+                var result = await _mediator.Send(new GetSkinsQuery());
 
-            return NoContent();
+                if (result.Any())
+                {
+                    return Ok(result);
+                }
+
+                return NoContent();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Cannot get all skins from db.");
+                return StatusCode(500, $"Internal server error: {ex.Message}.");
+            }
+            
         }
     }
 }
