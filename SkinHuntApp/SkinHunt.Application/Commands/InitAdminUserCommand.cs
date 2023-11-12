@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using SkinHunt.Domain.Constants;
 
 namespace SkinHunt.Application.Commands
 {
@@ -37,7 +38,7 @@ namespace SkinHunt.Application.Commands
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(admin, "admin");
+                    await _userManager.AddToRoleAsync(admin, RolesConstants.Admin);
 
                     _logger.LogInformation("Added default admin user to database.");
                 }               

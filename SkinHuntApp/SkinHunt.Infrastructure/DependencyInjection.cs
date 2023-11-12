@@ -2,6 +2,8 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using SkinHunt.Application.Common.Interfaces;
+using SkinHunt.Application.Extensions;
 using System.Text;
 
 namespace SkinHunt.Infrastructure
@@ -30,7 +32,9 @@ namespace SkinHunt.Infrastructure
                         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JWT:Secret"]))
                     };
                 });
-            
+
+            services.AddScoped<IJwtExtension, JwtExtension>();
+
             return services;
         }
     }

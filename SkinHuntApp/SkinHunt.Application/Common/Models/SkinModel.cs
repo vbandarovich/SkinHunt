@@ -1,10 +1,10 @@
-﻿namespace SkinHunt.Application.Common.Entities
+﻿namespace SkinHunt.Application.Common.Models
 {
-    public class SkinEntity : BaseEntity
+    public class SkinModel
     {
         public string Name { get; set; }
 
-        public ItemTypeEntity Type { get; set; }
+        public ItemTypeModel Type { get; set; }
 
         public DateTime ReleaseDate { get; set; }
 
@@ -14,7 +14,7 @@
 
         public string Rarity { get; set; }
 
-        public decimal Price { get; set; }     
+        public decimal Price { get; set; }
 
         public bool IsDiscount { get; set; }
 

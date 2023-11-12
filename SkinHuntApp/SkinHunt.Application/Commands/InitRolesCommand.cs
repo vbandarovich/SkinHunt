@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using SkinHunt.Domain.Constants;
 
 namespace SkinHunt.Application.Commands
 {
@@ -26,8 +27,8 @@ namespace SkinHunt.Application.Commands
         {
             if (!_db.Roles.Any())
             {
-                await _roleManager.CreateAsync(new IdentityRole("admin"));
-                await _roleManager.CreateAsync(new IdentityRole("user"));
+                await _roleManager.CreateAsync(new IdentityRole(RolesConstants.Admin));
+                await _roleManager.CreateAsync(new IdentityRole(RolesConstants.User));
 
                 _logger.LogInformation("Added default roles to database.");
             }
