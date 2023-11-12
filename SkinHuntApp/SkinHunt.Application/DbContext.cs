@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Common.Models;
+using SkinHunt.Application.Services;
 
 namespace SkinHunt.Application
 {
@@ -13,7 +14,7 @@ namespace SkinHunt.Application
         public DbSet<ItemType> SkinTypes { get; set; }
 
         public DbContext(DbContextOptions<DbContext> options) : base(options)
-        {          
+        {
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -1,13 +1,14 @@
 using FluentValidation.AspNetCore;
 using Serilog;
 using SkinHunt.Application;
+using SkinHunt.Application.Common.Interfaces;
 using SkinHunt.Infrastructure;
 
 namespace SkinHuntApp
 {
     public class Program
     {
-        public static void Main(string[] args)
+        public static async Task Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
 
@@ -60,6 +61,13 @@ namespace SkinHuntApp
             app.UseAuthorization();
 
             app.MapControllers();
+
+            using (var scope = app.Services.CreateScope())
+            {
+                var dbInitService = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+
+                await dbInitService.InitializeAsync();
+            }
 
             app.Run();
         }
