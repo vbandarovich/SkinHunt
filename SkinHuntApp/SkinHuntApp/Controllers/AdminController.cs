@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SkinHunt.Application.Queries;
 using SkinHunt.Domain.Constants;
 
 namespace SkinHunt.Service.Controllers
@@ -10,11 +12,13 @@ namespace SkinHunt.Service.Controllers
     [ApiController]
     public class AdminController : AppControllerBase
     {
+        private readonly IMediator _mediator;
         private readonly ILogger<AdminController> _logger;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public AdminController(ILogger<AdminController> logger, UserManager<IdentityUser> userManager)
+        public AdminController(IMediator mediator, ILogger<AdminController> logger, UserManager<IdentityUser> userManager)
         {
+            _mediator = mediator;
             _logger = logger;
             _userManager = userManager;
         }
@@ -53,6 +57,19 @@ namespace SkinHunt.Service.Controllers
                 _logger.LogError($"An error occurred: {ex.Message}.");
                 return StatusCode(500, $"Internal server error: {ex.Message}.");
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var result = await _mediator.Send(new GetUsersQuery());
+
+            if (result.Any())
+            {
+                return Ok(result);
+            }
+
+            return NoContent();
         }
     }
 }
