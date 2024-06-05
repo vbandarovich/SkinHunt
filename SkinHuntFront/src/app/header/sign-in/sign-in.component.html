@@ -1,14 +1,14 @@
-<div class="p-1 d-flex w-100 justify-content-center pb-4 pt-4 bg-sign-in rounded-2">
+<div class="p-1 d-flex w-100 justify-content-center pb-4 pt-4 bg-sign-in rounded-2 sign-in-page">
   <mdb-tabs #tabs [pills]="true" [fill]="true" style="width: 340px;">
-    <mdb-tab title="Войти" >
+    <mdb-tab title="Войти">
       <form [formGroup]="signInForm">
         <!-- Email input -->
         <mdb-form-control class="input-style">
           <input
-            mdbValidate 
-            mdbInput 
-            type="email" 
-            id="loginEmail" 
+            mdbValidate
+            mdbInput
+            type="email"
+            id="loginEmail"
             class="form-control"
             formControlName="email"
             required
@@ -28,9 +28,9 @@
         <mdb-form-control class="input-style">
           <input
             mdbValidate
-            mdbInput 
-            type="password" 
-            id="loginPassword" 
+            mdbInput
+            type="password"
+            id="loginPassword"
             class="form-control"
             formControlName="password"
             required
@@ -84,11 +84,11 @@
       <form [formGroup]="signUpForm">
         <!-- Email input -->
         <mdb-form-control class="input-style">
-          <input 
+          <input
             mdbValidate
-            mdbInput 
-            type="email" 
-            id="registerEmail" 
+            mdbInput
+            type="email"
+            id="registerEmail"
             class="form-control"
             formControlName="email"
             required
@@ -106,11 +106,11 @@
 
         <!-- Password input -->
         <mdb-form-control class="input-style">
-          <input 
+          <input
             mdbValidate
-            mdbInput 
-            type="password" 
-            id="registerPassword" 
+            mdbInput
+            type="password"
+            id="registerPassword"
             class="form-control"
             formControlName="password"
             required

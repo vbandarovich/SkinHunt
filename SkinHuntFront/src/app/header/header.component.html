@@ -39,11 +39,11 @@
       </ul>
       <!-- Left links -->
       <div class="language-dropdown-button me-4">
-        <div mdbDropdown #dropdown class="dropdown">
+        <div mdbDropdown #flagDropdown class="dropdown">
           <button
             class="btn dropdown-toggle p-0"
             type="button"
-            id="dropdownMenuButton"
+            id="flagDropdownMenuButton"
             aria-expanded="false"
             mdbDropdownToggle
           >
@@ -52,7 +52,7 @@
           <ul
             mdbDropdownMenu
             class="dropdown-menu"
-            aria-labelledby="dropdownMenuButton"
+            aria-labelledby="flagDropdownMenuButton"
           >
             <li>
               <i class="flag flag-russia"></i>
@@ -66,11 +66,11 @@
         </div>
       </div>
       <div class="currency-dropdown-button me-4">
-        <div mdbDropdown #dropdown class="dropdown">
+        <div mdbDropdown #currencyDropdown class="dropdown">
           <button
             class="btn dropdown-toggle p-0"
             type="button"
-            id="dropdownMenuButton"
+            id="currencyDropdownMenuButton"
             aria-expanded="false"
             mdbDropdownToggle
           >
@@ -79,7 +79,7 @@
           <ul
             mdbDropdownMenu
             class="dropdown-menu"
-            aria-labelledby="dropdownMenuButton"
+            aria-labelledby="currencyDropdownMenuButton"
           >
             <li><a class="dropdown-item" href="#">$ USD</a></li>
             <li><a class="dropdown-item" href="#">₽ RUB</a></li>
@@ -87,7 +87,7 @@
             <li><a class="dropdown-item" href="#">Br BYN</a></li>
           </ul>
         </div>
-      </div>      
+      </div>
       <div class="d-flex align-items-center">
         <button type="button" class="button-styles me-2" (click)="openSignInModal()">
           <span class="email-styles">
