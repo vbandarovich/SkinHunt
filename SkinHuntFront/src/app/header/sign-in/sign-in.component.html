@@ -11,6 +11,7 @@
             id="loginEmail"
             class="form-control"
             formControlName="email"
+            placeholder="myexample@gmail.com"
             required
           />
           <label mdbLabel class="form-label" for="loginEmail">Email</label>
@@ -33,6 +34,7 @@
             id="loginPassword"
             class="form-control"
             formControlName="password"
+            placeholder="password1234"
             required
           />
           <label mdbLabel class="form-label" for="loginPassword">Пароль</label>
@@ -59,7 +61,7 @@
                 id="loginCheck"
                 [checked]="false"
               />
-              <label class="form-check-label" for="loginCheck"> Запомнить меня </label>
+              <label class="form-check-label text-style" for="loginCheck"> Запомнить меня </label>
             </div>
           </div>
 
@@ -75,7 +77,7 @@
         </button>
         <!-- Register buttons -->
         <div class="text-center">
-          <p>Не зарегистрированы? <a id="register-link" href="#!" (click)="setActiveTab()">Регистрация</a></p>
+          <p class="text-style">Не зарегистрированы? <a id="register-link" href="#!" (click)="setActiveTab()">Регистрация</a></p>
         </div>
       </form>
     </mdb-tab
@@ -91,6 +93,7 @@
             id="registerEmail"
             class="form-control"
             formControlName="email"
+            placeholder="myexample@gmail.com"
             required
           />
           <label mdbLabel class="form-label" for="registerEmail">Email</label>
@@ -113,6 +116,7 @@
             id="registerPassword"
             class="form-control"
             formControlName="password"
+            placeholder="password1234"
             required
           />
           <label mdbLabel class="form-label" for="registerPassword">Пароль</label>

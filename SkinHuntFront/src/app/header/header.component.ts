@@ -1,7 +1,7 @@
 import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
-import {MdbDropdownDirective, MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
-import {ChangeDetectionStrategy, Component, signal, ViewChild} from '@angular/core';
+import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
+import {ChangeDetectionStrategy, Component } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {MdbModalModule, MdbModalRef, MdbModalService} from 'mdb-angular-ui-kit/modal';
@@ -22,8 +22,6 @@ import {MdbModalModule, MdbModalRef, MdbModalService} from 'mdb-angular-ui-kit/m
 })
 
 export class HeaderComponent {
-  @ViewChild('flagDropdown') flagDropdown!: MdbDropdownDirective;
-  @ViewChild('currencyDropdown') currencyDropdown!: MdbDropdownDirective;
 
   signInModalRef: MdbModalRef<SignInComponent> | null = null;
 

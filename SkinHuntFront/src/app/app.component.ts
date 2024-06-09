@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import {MdbCheckboxModule} from 'mdb-angular-ui-kit/checkbox';
 import { HeaderComponent } from './header/header.component';
+import { BodyComponent } from './body/body/body.component';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,7 @@ import { HeaderComponent } from './header/header.component';
     RouterOutlet,
     MdbCheckboxModule,
     HeaderComponent,
+    BodyComponent,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
