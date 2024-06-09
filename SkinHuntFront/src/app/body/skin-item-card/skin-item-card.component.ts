@@ -14,7 +14,7 @@ import {HeaderComponent} from "../../header/header.component";
   template: `
     <div class="card-container">
       <img class="card-image" src="assets/card-image.png" loading="lazy">
-      <footer class="baseCard-footer">
+      <div class="baseCard-footer">
         <div class="baseCard-tag">
           <span class="badge bagde-color">-24%</span>
         </div>
@@ -37,7 +37,7 @@ import {HeaderComponent} from "../../header/header.component";
               <i class="fas fa-shopping-cart"></i>
             </button>
         </div>
-      </footer>
+      </div>
     </div>
     `,
   styles: [
@@ -48,9 +48,10 @@ import {HeaderComponent} from "../../header/header.component";
         justify-content: center;
         align-items: center;
         width: 162px;
-        height: 218px;
+        height: 242px;
         background-color: #312f3d;
         border-radius: 4px;
+        padding: 8px 0 8px 0;
       }
 
       .card-container:hover {
@@ -67,16 +68,11 @@ import {HeaderComponent} from "../../header/header.component";
 
       .card-image {
         width: 100%;
-        width: 140px;
         height: auto;
-        height: 105px;
       }
 
       .baseCard-footer {
-        margin-top: 4px;
-        margin-left: 8px;
         width: calc(100% - 16px);
-        margin-bottom: 10px;
       }
 
       .bagde-color {
