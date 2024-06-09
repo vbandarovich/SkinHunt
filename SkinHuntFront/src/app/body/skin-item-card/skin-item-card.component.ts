@@ -13,7 +13,31 @@ import {HeaderComponent} from "../../header/header.component";
   ],
   template: `
     <div class="card-container">
-      text
+      <img class="card-image" src="assets/card-image.png" loading="lazy">
+      <footer class="baseCard-footer">
+        <div class="baseCard-tag">
+          <span class="badge bagde-color">-24%</span>
+        </div>
+        <div class="baseCard-description">
+            <span class="text-description">
+                FN / 0.0668
+            </span>
+        </div>
+        <div class="baseCard-price">
+            <div class="price">
+                <span class="styles-price">
+                    <span>
+                        Br 57 638.77
+                    </span>
+                </span>
+            </div>
+        </div>
+        <div class="baseCard-action-button">
+            <button type="button" class="btn-basket">
+              <i class="fas fa-shopping-cart"></i>
+            </button>
+        </div>
+      </footer>
     </div>
     `,
   styles: [
@@ -23,9 +47,88 @@ import {HeaderComponent} from "../../header/header.component";
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        width: 161px;
+        width: 162px;
         height: 218px;
-        background: #fff;
+        background-color: #312f3d;
+        border-radius: 4px;
+      }
+
+      .card-container:hover {
+        background-color: #6c697c;
+      }
+
+      .card-container:hover button {
+        background-color: #8678d7;
+      }
+
+      .card-container:hover i {
+        opacity: 80%;
+      }
+
+      .card-image {
+        width: 100%;
+        width: 140px;
+        height: auto;
+        height: 105px;
+      }
+
+      .baseCard-footer {
+        margin-top: 4px;
+        margin-left: 8px;
+        width: calc(100% - 16px);
+        margin-bottom: 10px;
+      }
+
+      .bagde-color {
+        background-color: color-mix(in srgb, #5bc27a 20%, rgba(28,26,36,0.5));
+        color: #5bc27a;
+      }
+
+      .text-description {
+        color: #bbb9c7;
+        font-size: 11px;
+        font-weight: 400;
+        line-height: 16px;
+        letter-spacing: 0.275px;
+      }
+
+      .styles-price {
+        color: #fff;
+        font-family: Inter, system-ui;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 20px;
+        letter-spacing: .02em;
+      }
+
+      .baseCard-action-button {
+        display: flex;
+        gap: 4px;
+        //justify-content: center;
+        height: 28px;
+      }
+
+      .btn-basket {
+        width: 100%;
+        height: 28px;
+        cursor: pointer;
+        color: #fff;
+        background-color: #403d4d;
+        border: 0;
+        border-radius: 4px;
+      }
+
+      .btn-basket i {
+        opacity: 50%;
+      }
+
+      .btn-basket:hover {
+        background-color: #a293e5 !important;
+      }
+
+      .btn-basket:hover i{
+        opacity: 100%;
       }
     `,
   ]

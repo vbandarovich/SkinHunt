@@ -126,6 +126,11 @@
   border: 1px solid #806cf5;
 }
 
+.btn-reset:hover {
+  color: #a99afa;
+  border: 1px solid #a99afa;
+}
+
 .buy-page-content {
   display: flex;
   flex-direction: column;
@@ -197,6 +202,10 @@
   background-color: #403d4d;
   border-radius: 4px;
   transition: background-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.csm-ui-wrapper:hover{
+    background-color: #66617e;
 }
 
 .csm-ui-start-slot, .csm-ui-start-slot {
@@ -284,6 +293,10 @@
   border: none;
   border-radius: 4px;
   outline: none;
+}
+
+.basket-btn:hover {
+    background: #888499;
 }
 
 .basket-text {
