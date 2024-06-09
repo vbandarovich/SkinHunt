@@ -18,11 +18,11 @@
                                 <div class="count-filters">
                                     0
                                 </div>
-                            </div>         
+                            </div>
                         </div>
                         <button class="btn-icon-plus">
                             <i class="fas fa-plus"></i>
-                        </button>                          
+                        </button>
                     </div>
                     <div class="collapse-container">
                         <div class="collapse-container-header">
@@ -32,11 +32,11 @@
                                         Price
                                     </span>
                                 </div>
-                            </div>         
+                            </div>
                         </div>
                         <button class="btn-icon-plus">
                             <i class="fas fa-plus"></i>
-                        </button>                          
+                        </button>
                     </div>
                     <div class="collapse-container">
                         <div class="collapse-container-header">
@@ -46,11 +46,11 @@
                                         Type
                                     </span>
                                 </div>
-                            </div>         
+                            </div>
                         </div>
                         <button class="btn-icon-plus">
                             <i class="fas fa-plus"></i>
-                        </button>                          
+                        </button>
                     </div>
                     <div class="collapse-container">
                         <div class="collapse-container-header">
@@ -60,11 +60,11 @@
                                         Exterior
                                     </span>
                                 </div>
-                            </div>         
+                            </div>
                         </div>
                         <button class="btn-icon-plus">
                             <i class="fas fa-plus"></i>
-                        </button>                          
+                        </button>
                     </div>
                     <div class="collapse-container">
                         <div class="collapse-container-header">
@@ -74,11 +74,11 @@
                                         Color
                                     </span>
                                 </div>
-                            </div>         
+                            </div>
                         </div>
                         <button class="btn-icon-plus">
                             <i class="fas fa-plus"></i>
-                        </button>                          
+                        </button>
                     </div>
                     <div class="collapse-container">
                         <div class="collapse-container-header">
@@ -88,11 +88,11 @@
                                         Float
                                     </span>
                                 </div>
-                            </div>         
+                            </div>
                         </div>
                         <button class="btn-icon-plus">
                             <i class="fas fa-plus"></i>
-                        </button>                          
+                        </button>
                     </div>
                 </div>
             </div>
@@ -205,8 +205,11 @@
             </div>
         </div>
         <div class="buy-page-body">
-            <div class="sellorders-wrapper">
-                <div class="sellordersList-wrapper">
+            <div class="sellOrders-wrapper">
+                <div class="sellOrdersList-wrapper">
+                  @for (itemCard of cards$(); track itemCard) {
+                    <skin-item-card></skin-item-card>
+                  }
                 </div>
             </div>
         </div>

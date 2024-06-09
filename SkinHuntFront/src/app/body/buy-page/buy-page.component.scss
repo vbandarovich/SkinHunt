@@ -1,8 +1,9 @@
-.buy-page-styles{
-    display: grid;
-    grid-template-rows: 100%;
-    grid-template-columns: 80px 1fr;
-    height: 100%;
-    padding-right: 16px;
-    background-color: #1c1a24;
+.buy-page-styles {
+  display: grid;
+  grid-template-rows: 100%;
+  grid-template-columns: 80px 1fr;
+  height: 100%;
+  padding-right: 16px;
+  background-color: #1c1a24;
+  overflow: hidden
 }
