@@ -81,3 +81,15 @@
     color: #fff;
     background-color: rgb(85, 83, 94);
 }
+
+.absolute-strip-market {
+    position: absolute;
+    top: 0;
+    width: 47px;
+    height: 4px;
+    margin-left: -47px;
+    background-color:#c85cd1;
+    content: "";
+    border-radius: 0 0 4px 4px;
+
+}

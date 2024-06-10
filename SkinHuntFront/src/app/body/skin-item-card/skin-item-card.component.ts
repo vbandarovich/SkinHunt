@@ -14,7 +14,7 @@ import {HeaderComponent} from "../../header/header.component";
   template: `
     <div class="card-container">
       <img class="card-image" src="assets/card-image.png" loading="lazy">
-      <div class="baseCard-footer">
+      <div class="baseCard-lower-part">
         <div class="baseCard-tag">
           <span class="badge bagde-color">-24%</span>
         </div>
@@ -71,7 +71,7 @@ import {HeaderComponent} from "../../header/header.component";
         height: auto;
       }
 
-      .baseCard-footer {
+      .baseCard-lower-part {
         width: calc(100% - 16px);
       }
 
@@ -101,7 +101,6 @@ import {HeaderComponent} from "../../header/header.component";
       .baseCard-action-button {
         display: flex;
         gap: 4px;
-        //justify-content: center;
         height: 28px;
       }
 

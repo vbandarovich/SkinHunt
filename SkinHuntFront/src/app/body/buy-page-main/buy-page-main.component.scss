@@ -131,6 +131,15 @@
   border: 1px solid #a99afa;
 }
 
+.icon-styles {
+  opacity: 50%;
+}
+
+.icon-styles:hover {
+  opacity: 100%;
+  transition: 0.3s;
+}
+
 .buy-page-content {
   display: flex;
   flex-direction: column;
@@ -327,7 +336,6 @@
   flex-wrap: wrap;
   align-items: center;
   gap: 8px;
-  //max-height: 699px;
   max-height: calc(100vh - 134px);
   padding: 0 4px 40px 0;
   overflow-y: auto;
