@@ -130,9 +130,15 @@
                                                         <i class="fas fa-search"></i>
                                                     </span>
                                                 </div>
-                                                <input placeholder="Поиск..." autocomplete="off" class="csm-ui-input">
+                                                <input
+                                                  placeholder="Поиск..."
+                                                  autocomplete="off"
+                                                  class="csm-ui-input"
+                                                  [ngModel]="typehead$()"
+                                                  (ngModelChange)="typehead$.set($event)"
+                                                >
                                                 <div class="csm-ui-end-slot">
-                                                    <button class="clear-button-search">
+                                                    <button class="clear-button-search" (click)="typehead$.set('')">
                                                         <i class="fas fa-times"></i>
                                                     </button>
                                                 </div>

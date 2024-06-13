@@ -1,7 +1,8 @@
-import {ChangeDetectionStrategy, Component, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, OnInit, signal} from '@angular/core';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
 import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
 import {SkinItemCardComponent} from "../skin-item-card/skin-item-card.component";
+import {FormsModule} from "@angular/forms";
 
 export interface ItemCard {
   name: string;
@@ -14,6 +15,7 @@ export interface ItemCard {
     MdbDropdownModule,
     MdbRippleModule,
     SkinItemCardComponent,
+    FormsModule,
   ],
   templateUrl: './buy-page-main.component.html',
   styleUrl: './buy-page-main.component.scss',
@@ -22,6 +24,8 @@ export interface ItemCard {
 
 export class BuyPageMainComponent implements OnInit{
   cards$ = signal<ItemCard[]>([]);
+
+  typehead$ = signal<string>('');
 
   ngOnInit() {
     this.setCards();
