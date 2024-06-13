@@ -20,10 +20,15 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-icon-plus">
+                        <button class="btn-icon-plus" (click)="onChangedSubmenuList('savedFilters')">
                             <i class="fas fa-plus fa-xs icon-styles"></i>
                         </button>
                     </div>
+                  @if (showSubmenuList$().includes('savedFilters')) {
+                    <div style="display: flex; align-items: center; justify-content: center">
+                      hide template
+                    </div>
+                  }
                     <div class="collapse-container">
                         <div class="collapse-container-header">
                             <div class="collapse-container-title-group">
@@ -34,10 +39,15 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-icon-plus">
+                        <button class="btn-icon-plus" (click)="onChangedSubmenuList('price')">
                             <i class="fas fa-plus fa-xs icon-styles"></i>
                         </button>
                     </div>
+                  @if (showSubmenuList$().includes('price')) {
+                    <div style="display: flex; align-items: center; justify-content: center">
+                      hide template
+                    </div>
+                  }
                     <div class="collapse-container">
                         <div class="collapse-container-header">
                             <div class="collapse-container-title-group">
@@ -48,10 +58,15 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-icon-plus">
+                        <button class="btn-icon-plus" (click)="onChangedSubmenuList('type')">
                             <i class="fas fa-plus fa-xs icon-styles"></i>
                         </button>
                     </div>
+                  @if (showSubmenuList$().includes('type')) {
+                    <div style="display: flex; align-items: center; justify-content: center">
+                      hide template
+                    </div>
+                  }
                     <div class="collapse-container">
                         <div class="collapse-container-header">
                             <div class="collapse-container-title-group">
@@ -62,10 +77,15 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-icon-plus">
+                        <button class="btn-icon-plus" (click)="onChangedSubmenuList('quality')">
                             <i class="fas fa-plus fa-xs icon-styles"></i>
                         </button>
                     </div>
+                  @if (showSubmenuList$().includes('quality')) {
+                    <div style="display: flex; align-items: center; justify-content: center">
+                      hide template
+                    </div>
+                  }
                     <div class="collapse-container">
                         <div class="collapse-container-header">
                             <div class="collapse-container-title-group">
@@ -76,10 +96,15 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-icon-plus">
+                        <button class="btn-icon-plus" (click)="onChangedSubmenuList('color')">
                             <i class="fas fa-plus fa-xs icon-styles"></i>
                         </button>
                     </div>
+                  @if (showSubmenuList$().includes('color')) {
+                    <div style="display: flex; align-items: center; justify-content: center">
+                      hide template
+                    </div>
+                  }
                     <div class="collapse-container">
                         <div class="collapse-container-header">
                             <div class="collapse-container-title-group">
@@ -90,10 +115,15 @@
                                 </div>
                             </div>
                         </div>
-                        <button class="btn-icon-plus">
+                        <button class="btn-icon-plus" (click)="onChangedSubmenuList('float')">
                             <i class="fas fa-plus fa-xs icon-styles"></i>
                         </button>
                     </div>
+                  @if (showSubmenuList$().includes('float')) {
+                    <div style="display: flex; align-items: center; justify-content: center">
+                      hide template
+                    </div>
+                  }
                 </div>
             </div>
             <div class="buy-page-button">

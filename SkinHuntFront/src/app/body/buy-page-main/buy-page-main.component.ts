@@ -3,6 +3,7 @@ import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
 import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
 import {SkinItemCardComponent} from "../skin-item-card/skin-item-card.component";
 import {FormsModule} from "@angular/forms";
+import {FiltersSubmenuItems} from "../../models/filters-submenu-items";
 
 export interface ItemCard {
   name: string;
@@ -26,9 +27,18 @@ export class BuyPageMainComponent implements OnInit{
   cards$ = signal<ItemCard[]>([]);
 
   typehead$ = signal<string>('');
+  showSubmenuList$ = signal<FiltersSubmenuItems[]>([]);
 
   ngOnInit() {
     this.setCards();
+  }
+
+  onChangedSubmenuList(submenu: FiltersSubmenuItems) {
+    if (this.showSubmenuList$().includes(submenu)) {
+      this.showSubmenuList$.set(this.showSubmenuList$().filter((item) => item !== submenu));
+    } else {
+      this.showSubmenuList$.update((items) => [...items, submenu]);
+    }
   }
 
   setCards() {
