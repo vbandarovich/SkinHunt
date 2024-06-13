@@ -51,7 +51,12 @@
             aria-expanded="false"
             mdbDropdownToggle
           >
-          <i class="flag flag-united-states"></i>
+            @if (language$() === 'ru') {
+              <i class="flag flag-russia"></i>
+            }
+            @if (language$() === 'eng') {
+              <i class="flag flag-united-states"></i>
+            }
           </button>
           <ul
             mdbDropdownMenu
@@ -59,13 +64,13 @@
             aria-labelledby="flagDropdownMenuButton"
           >
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="#" (click)="setLanguage('ru')">
                 <i class="flag flag-russia"></i>
                 Русский
               </a>
             </li>
             <li>
-              <a class="dropdown-item" href="#">
+              <a class="dropdown-item" href="#" (click)="setLanguage('eng')">
                 <i class="flag flag-united-states"></i>
                 English
               </a>
@@ -82,17 +87,28 @@
             aria-expanded="false"
             mdbDropdownToggle
           >
-          $ USD
+            @if (currency$() === 'usd') {
+              $ USD
+            }
+            @if (currency$() === 'eur') {
+              € EUR
+            }
+            @if (currency$() === 'rub') {
+              ₽ RUB
+            }
+            @if (currency$() === 'byn') {
+              Br BYN
+            }
           </button>
           <ul
             mdbDropdownMenu
             class="dropdown-menu"
             aria-labelledby="currencyDropdownMenuButton"
           >
-            <li><a class="dropdown-item" href="#">$ USD</a></li>
-            <li><a class="dropdown-item" href="#">₽ RUB</a></li>
-            <li><a class="dropdown-item" href="#">€ EUR</a></li>
-            <li><a class="dropdown-item" href="#">Br BYN</a></li>
+            <li><a class="dropdown-item" href="#" (click)="setCurrency('usd')">$ USD</a></li>
+            <li><a class="dropdown-item" href="#" (click)="setCurrency('rub')">₽ RUB</a></li>
+            <li><a class="dropdown-item" href="#" (click)="setCurrency('eur')">€ EUR</a></li>
+            <li><a class="dropdown-item" href="#" (click)="setCurrency('byn')">Br BYN</a></li>
           </ul>
         </div>
       </div>
