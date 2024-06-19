@@ -3,8 +3,27 @@ import { CommonModule } from '@angular/common';
 import { MdbModalRef } from "mdb-angular-ui-kit/modal";
 import {MdbFormsModule} from 'mdb-angular-ui-kit/forms';
 import { MdbTabsComponent, MdbTabsModule } from 'mdb-angular-ui-kit/tabs';
-import { AbstractControl, FormControl, FormGroup, MinLengthValidator, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators
+} from '@angular/forms';
 import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
+
+export  const  PasswordValidator:  ValidatorFn  = (control:AbstractControl):  ValidationErrors|  null  =>{
+  const  password  =  control.get('passwordSignUp');
+  const  confirmpassword  =  control.get('confirmPasswordSignUp');
+
+  if (password  &&  confirmpassword  &&  password.value  !==  confirmpassword.value){
+    return { passwordMismatch :  true }
+  }
+
+  return  null;
+}
 
 @Component({
   selector: 'app-sign-in',
@@ -13,7 +32,7 @@ import { MdbValidationModule } from 'mdb-angular-ui-kit/validation';
     CommonModule,
     MdbFormsModule,
     MdbTabsModule,
-    MdbValidationModule, 
+    MdbValidationModule,
     ReactiveFormsModule
   ],
   templateUrl: './sign-in.component.html',
@@ -25,37 +44,40 @@ export class SignInComponent {
   @ViewChild('tabs') tabs!: MdbTabsComponent;
 
   signInForm = new FormGroup({
-    emailSignIn: new FormControl(null, { validators: [Validators.required, Validators.email], updateOn: 'change' }),
-    passwordSignIn: new FormControl(null, { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
+    emailSignIn: new FormControl<string>('', { validators: [Validators.required, Validators.email], updateOn: 'change' }),
+    passwordSignIn: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
   });
 
   signUpForm = new FormGroup({
-    emailSignUp: new FormControl(null, { validators: [Validators.required, Validators.email], updateOn: 'change' }),
-    passwordSignUp: new FormControl(null, { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
-    confirmPasswordSignUp: new FormControl(null, { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' })
-  });
+    emailSignUp: new FormControl<string>('', { validators: [Validators.required, Validators.email], updateOn: 'change' }),
+    passwordSignUp: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
+    confirmPasswordSignUp: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' })
+  },
+    {
+      validators: PasswordValidator,
+    });
 
-  constructor(public modalRef: MdbModalRef<SignInComponent>) {  
+  constructor(public modalRef: MdbModalRef<SignInComponent>) {
   }
 
-  get SignInEmail(): AbstractControl {
-    return this.signInForm.get('emailSignIn')!;
+  get SignInEmail() {
+    return this.signInForm.controls.emailSignIn;
   }
 
-  get SignInPassword(): AbstractControl {
-    return this.signInForm.get('passwordSignIn')!;
+  get SignInPassword() {
+    return this.signInForm.controls.passwordSignIn;
   }
 
-  get SignUpEmail(): AbstractControl {
-    return this.signUpForm.get('emailSignUp')!;
+  get SignUpEmail() {
+    return this.signUpForm.controls.emailSignUp;
   }
 
-  get SignUpPassword(): AbstractControl {
-    return this.signUpForm.get('passwordSignUp')!;
+  get SignUpPassword() {
+    return this.signUpForm.controls.passwordSignUp;
   }
 
-  get SignUpRepeatPassword(): AbstractControl {
-    return this.signUpForm.get('confirmPasswordSignUp')!;
+  get SignUpRepeatPassword() {
+    return this.signUpForm.controls.confirmPasswordSignUp;
   }
 
   setActiveTab() {

@@ -1,7 +1,7 @@
 <div class="p-1 d-flex w-100 justify-content-center pb-4 pt-4 bg-sign-in rounded-2 sign-in-page">
   <mdb-tabs #tabs [pills]="true" [fill]="true" style="width: 340px;">
     <mdb-tab title="Войти">
-      <form 
+      <form
         [formGroup]="signInForm"
       >
         <!-- Email input -->
@@ -144,14 +144,17 @@
             required
           />
           <label mdbLabel class="form-label" for="registerRepeatPassword">Повторите пароль</label>
-          <mdb-error
-            *ngIf="SignUpRepeatPassword?.invalid && (SignUpRepeatPassword?.dirty || SignUpRepeatPassword?.touched)"
-            >Пароли должны совпадать<i class="fas fa-times ps-1"></i>
-          </mdb-error>
-          <mdb-success
-            *ngIf="SignUpRepeatPassword?.valid && (SignUpRepeatPassword?.dirty || SignUpRepeatPassword?.touched)"
-            ><i class="fas fa-check"></i>
-          </mdb-success>
+          @if (SignUpRepeatPassword?.invalid && (SignUpRepeatPassword?.dirty || SignUpRepeatPassword?.touched) && signUpForm.errors?.['passwordMismatch']) {
+            <mdb-error>
+              Пароли должны совпадать
+              <i class="fas fa-times ps-1"></i>
+            </mdb-error>
+          }
+          @if (SignUpRepeatPassword?.valid && (SignUpRepeatPassword?.dirty || SignUpRepeatPassword?.touched) && !signUpForm.errors?.['passwordMismatch']) {
+            <mdb-success>
+              <i class="fas fa-check"></i>
+            </mdb-success>
+          }
         </mdb-form-control>
 
         <!-- Submit button -->
