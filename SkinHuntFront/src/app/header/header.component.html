@@ -1,8 +1,5 @@
-<!-- Navbar -->
 <nav class="navbar navbar-expand-lg p-0">
-  <!-- Container wrapper -->
   <div class="header">
-    <!-- Navbar brand -->
     <a class="navbar-brand ms-1" href="">
       <img
         src="assets/new_logo.png"
@@ -13,7 +10,6 @@
       />
     </a>
 
-    <!-- Toggle button -->
     <button
       class="navbar-toggler"
       type="button"
@@ -24,14 +20,12 @@
       <i class="fas fa-bars"></i>
     </button>
 
-    <!-- Collapsible wrapper -->
     <div
       class="collapse navbar-collapse"
       id="navbarButtonsExample"
       mdbCollapse
       #buttonsNav="mdbCollapse"
     >
-      <!-- Left links -->
       <ul class="navbar-nav me-auto mb-2 ms-4 mb-lg-0">
         <li>
           <a class="nav-link" href="#">
@@ -41,7 +35,6 @@
         </li>
       </ul>
 
-      <!-- Left links -->
       <div class="language-dropdown-button me-4">
         <div mdbDropdown #flagDropdown class="dropdown">
           <button
@@ -113,16 +106,49 @@
         </div>
       </div>
       <div class="d-flex align-items-center">
-        <button type="button" class="button-styles me-2" (click)="openSignInModal()">
-          <span class="email-styles">
-            <img src="assets/email-icon.png" alt="email">
-          </span>
-          Войти через Email
-        </button>
+        @if (isAuth$() === true) {
+          <div mdbDropdown #profileDropdown class="dropdown">
+            <button
+              class="btn dropdown-toggle p-0 d-flex align-items-center"
+              type="button"
+              id="profileDropdownMenuButton"
+              aria-expanded="false"
+              mdbDropdownToggle
+            >
+              <a class="nav-link d-sm-flex align-items-sm-center" href="#">
+                <img
+                  src="https://mdbootstrap.com/img/new/avatars/1.webp"
+                  class="rounded-circle"
+                  height="22"
+                  alt=""
+                  loading="lazy"
+                />
+              </a>
+            </button>
+            <ul mdbDropdownMenu 
+                class="dropdown-menu dropdown-menu-end dropdown-menu-start" 
+                aria-labelledby="rofileDropdownMenuButton">
+              <li>
+                <a class="dropdown-item" href="#">Профиль</a>
+              </li>
+              <li>
+                <a class="dropdown-item" href="#">
+                  Выйти
+                  <i class="fas fa-sign-out-alt ms-1"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        }
+        @else{
+          <button type="button" class="button-styles me-2" (click)="openSignInModal()">
+            <span class="email-styles">
+              <img src="assets/email-icon.png" alt="email">
+            </span>
+            Войти через Email
+          </button>
+        }
       </div>
     </div>
-    <!-- Collapsible wrapper -->
   </div>
-  <!-- Container wrapper -->
 </nav>
-<!-- Navbar -->

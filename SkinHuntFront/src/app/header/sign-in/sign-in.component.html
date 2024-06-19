@@ -1,7 +1,9 @@
 <div class="p-1 d-flex w-100 justify-content-center pb-4 pt-4 bg-sign-in rounded-2 sign-in-page">
   <mdb-tabs #tabs [pills]="true" [fill]="true" style="width: 340px;">
     <mdb-tab title="Войти">
-      <form [formGroup]="signInForm">
+      <form 
+        [formGroup]="signInForm"
+      >
         <!-- Email input -->
         <mdb-form-control class="input-style">
           <input
@@ -10,17 +12,17 @@
             type="email"
             id="loginEmail"
             class="form-control"
-            formControlName="email"
+            formControlName="emailSignIn"
             placeholder="myexample@gmail.com"
             required
           />
           <label mdbLabel class="form-label" for="loginEmail">Email</label>
           <mdb-error
-            *ngIf="LogInEmail?.invalid && (LogInEmail?.dirty || LogInEmail?.touched)"
+            *ngIf="SignInEmail?.invalid && (SignInEmail?.dirty || SignInEmail?.touched)"
             >Email должен быть заполнен<i class="fas fa-times ps-1"></i>
           </mdb-error>
           <mdb-success
-            *ngIf="LogInEmail?.valid && (LogInEmail?.dirty || LogInEmail?.touched)"
+            *ngIf="SignInEmail?.valid && (SignInEmail?.dirty || SignInEmail?.touched)"
             ><i class="fas fa-check"></i>
           </mdb-success>
         </mdb-form-control>
@@ -33,17 +35,17 @@
             type="password"
             id="loginPassword"
             class="form-control"
-            formControlName="password"
+            formControlName="passwordSignIn"
             placeholder="password1234"
             required
           />
           <label mdbLabel class="form-label" for="loginPassword">Пароль</label>
           <mdb-error
-            *ngIf="LogInPassword?.invalid && (LogInPassword?.dirty || LogInPassword?.touched)"
+            *ngIf="SignInPassword?.invalid && (SignInPassword?.dirty || SignInPassword?.touched)"
             >Пароль должен быть заполнен<i class="fas fa-times ps-1"></i>
           </mdb-error>
           <mdb-success
-            *ngIf="LogInPassword?.valid && (LogInPassword?.dirty || LogInPassword?.touched)"
+            *ngIf="SignInPassword?.valid && (SignInPassword?.dirty || SignInPassword?.touched)"
             ><i class="fas fa-check"></i>
           </mdb-success>
         </mdb-form-control>
@@ -72,7 +74,7 @@
         </div>
 
         <!-- Submit button -->
-        <button mdbRipple type="submit" class="btn btn-primary btn-block mb-4" [disabled]="this.signInForm.invalid">
+        <button mdbRipple type="submit" class="btn btn-primary btn-block mb-4" [disabled]="this.signInForm.invalid" (click)="onSubmitSignIn()">
           Войти
         </button>
         <!-- Register buttons -->
@@ -92,7 +94,7 @@
             type="email"
             id="registerEmail"
             class="form-control"
-            formControlName="email"
+            formControlName="emailSignUp"
             placeholder="myexample@gmail.com"
             required
           />
@@ -115,7 +117,7 @@
             type="password"
             id="registerPassword"
             class="form-control"
-            formControlName="password"
+            formControlName="passwordSignUp"
             placeholder="password1234"
             required
           />
@@ -138,7 +140,7 @@
             type="password"
             id="registerRepeatPassword"
             class="form-control"
-            formControlName="confirmPassword"
+            formControlName="confirmPasswordSignUp"
             required
           />
           <label mdbLabel class="form-label" for="registerRepeatPassword">Повторите пароль</label>
@@ -153,7 +155,7 @@
         </mdb-form-control>
 
         <!-- Submit button -->
-        <button mdbRipple type="submit" class="btn btn-primary btn-block mb-3" [disabled]="this.signUpForm.invalid">
+        <button mdbRipple type="submit" class="btn btn-primary btn-block mb-3" [disabled]="this.signUpForm.invalid" (click)="onSubmitSignUp()">
           Зарегистрироваться
         </button>
       </form>

@@ -29,6 +29,7 @@ export class HeaderComponent {
 
   language$ = signal<InterfaceLanguage>('eng');
   currency$ = signal<Currency>('usd');
+  isAuth$ = signal<boolean>(false);
 
   constructor(private modalService: MdbModalService) {
   }
