@@ -24,8 +24,4 @@ export class AuthService {
         .post("https://localhost:44348/api/signIn", userData)
         .subscribe();
     }
-
-    logOut(){
-
-    }
 }

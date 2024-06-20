@@ -12,7 +12,7 @@
             type="email"
             id="loginEmail"
             class="form-control"
-            formControlName="emailSignIn"
+            formControlName="email"
             placeholder="myexample@gmail.com"
             required
           />
@@ -35,7 +35,7 @@
             type="password"
             id="loginPassword"
             class="form-control"
-            formControlName="passwordSignIn"
+            formControlName="password"
             placeholder="password1234"
             required
           />
@@ -94,7 +94,7 @@
             type="email"
             id="registerEmail"
             class="form-control"
-            formControlName="emailSignUp"
+            formControlName="email"
             placeholder="myexample@gmail.com"
             required
           />
@@ -117,7 +117,7 @@
             type="password"
             id="registerPassword"
             class="form-control"
-            formControlName="passwordSignUp"
+            formControlName="password"
             placeholder="password1234"
             required
           />
@@ -140,17 +140,17 @@
             type="password"
             id="registerRepeatPassword"
             class="form-control"
-            formControlName="confirmPasswordSignUp"
+            formControlName="confirmPassword"
             required
           />
           <label mdbLabel class="form-label" for="registerRepeatPassword">Повторите пароль</label>
-          @if (SignUpRepeatPassword?.invalid && (SignUpRepeatPassword?.dirty || SignUpRepeatPassword?.touched) && signUpForm.errors?.['passwordMismatch']) {
+          @if (SignUpRepeatPassword.invalid && (SignUpRepeatPassword.dirty || SignUpRepeatPassword.touched) && signUpForm.errors?.['passwordMismatch']) {
             <mdb-error>
               Пароли должны совпадать
               <i class="fas fa-times ps-1"></i>
             </mdb-error>
           }
-          @if (SignUpRepeatPassword?.valid && (SignUpRepeatPassword?.dirty || SignUpRepeatPassword?.touched) && !signUpForm.errors?.['passwordMismatch']) {
+          @if (SignUpRepeatPassword.valid && (SignUpRepeatPassword.dirty || SignUpRepeatPassword.touched) && !signUpForm.errors?.['passwordMismatch']) {
             <mdb-success>
               <i class="fas fa-check"></i>
             </mdb-success>

@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/auth.service';
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MdbModalRef } from "mdb-angular-ui-kit/modal";
@@ -33,7 +34,7 @@ export  const  PasswordValidator:  ValidatorFn  = (control:AbstractControl):  Va
     MdbFormsModule,
     MdbTabsModule,
     MdbValidationModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
   ],
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
@@ -44,51 +45,61 @@ export class SignInComponent {
   @ViewChild('tabs') tabs!: MdbTabsComponent;
 
   signInForm = new FormGroup({
-    emailSignIn: new FormControl<string>('', { validators: [Validators.required, Validators.email], updateOn: 'change' }),
-    passwordSignIn: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
+    email: new FormControl<string>('', { validators: [Validators.required, Validators.email], updateOn: 'change' }),
+    password: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
   });
 
   signUpForm = new FormGroup({
-    emailSignUp: new FormControl<string>('', { validators: [Validators.required, Validators.email], updateOn: 'change' }),
-    passwordSignUp: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
-    confirmPasswordSignUp: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' })
+    email: new FormControl<string>('', { validators: [Validators.required, Validators.email], updateOn: 'change' }),
+    password: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
+    confirmPassword: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' })
   },
     {
       validators: PasswordValidator,
     });
 
-  constructor(public modalRef: MdbModalRef<SignInComponent>) {
+  constructor(public modalRef: MdbModalRef<SignInComponent>, private readonly authService : AuthService ) {
   }
 
   get SignInEmail() {
-    return this.signInForm.controls.emailSignIn;
+    return this.signInForm.controls.email;
   }
 
   get SignInPassword() {
-    return this.signInForm.controls.passwordSignIn;
+    return this.signInForm.controls.password;
   }
 
   get SignUpEmail() {
-    return this.signUpForm.controls.emailSignUp;
+    return this.signUpForm.controls.email;
   }
 
   get SignUpPassword() {
-    return this.signUpForm.controls.passwordSignUp;
+    return this.signUpForm.controls.password;
   }
 
   get SignUpRepeatPassword() {
-    return this.signUpForm.controls.confirmPasswordSignUp;
+    return this.signUpForm.controls.confirmPassword;
   }
 
   setActiveTab() {
     this.tabs.setActiveTab(1);
   }
 
-  onSubmitSignIn(){
-    console.log(this.signInForm.value);
+  onSubmitSignIn() {
+    const command = {
+      email: this.SignInEmail.value!,
+      password: this.SignInPassword.value!,
+    };
+
+    this.authService.signIn(command);
   }
 
-  onSubmitSignUp(){
-    console.log(this.signUpForm.value);
+  onSubmitSignUp() {
+    const command = {
+      email: this.SignInEmail.value!,
+      password: this.SignInPassword.value!,
+    };
+
+    this.authService.signUp(command);
   }
 }
