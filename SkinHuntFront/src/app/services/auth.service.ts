@@ -1,7 +1,7 @@
 import { HttpClient, HttpStatusCode } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
-import { AuthUser } from "../models/user-model";
+import { AuthUser } from "../models/authUser";
 
 @Injectable({
     providedIn: 'root',

@@ -10,16 +10,16 @@
 .buy-page-filters {
   display: flex;
   box-sizing: border-box;
-  max-height: 100%;
+  max-height: 900px;
   padding-top: 8px;
-  overflow-y: auto;
 }
 
 .buy-page-wrapper-filters {
   width: 100%;
+  min-width: 208px;
   max-width: 208px;
   padding: 16px;
-  overflow: hidden;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -339,4 +339,109 @@
   max-height: calc(100vh - 134px);
   padding: 0 4px 40px 0;
   overflow-y: auto;
+}
+
+.skinPrice,
+.skinFloat {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 4px 0 8px;
+}
+
+.skinPrice-form,
+.skinFloat-form {
+  position: relative;
+  width: 100%;
+  height: 25.97px;
+}
+
+.skinPrice-input,
+.skinFloat-input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  padding-right: 6px;
+  padding-top: 2px;
+  padding-left: 5px;
+  font-size: 14px;
+  line-height: 110%;
+  color: hsla(0, 0%, 100%, .5);
+  background: #403d4d;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+}
+
+.skinPrice-delimiter,
+.skinFloat-delimiter {
+  box-sizing: border-box;
+  min-width: 8px;
+  height: 2px;
+  margin: 0 10px;
+  background: #fff;
+}
+
+.skinType-list,
+.skinQuality-list,
+.skinColor-list {
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+  list-style: none;
+}
+
+.skinType-list-item,
+.skinQuality-list-item,
+.skinColor-list-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.form-check-input {
+  background-color: transparent;
+  border-color: white;
+  opacity: 70%;
+}
+
+.form-check-input:checked {
+  background-color: transparent;
+  border-color: white;
+  opacity: 70%;
+}
+
+.colorName {
+  color: transparent;
+  background-clip: text;
+}
+
+.red {
+  background-image: linear-gradient(to left, #9c3333, #ec2e4d);
+}
+
+.blue {
+  background-image: linear-gradient(to left, #514abb, #5314e4);
+}
+
+.yellow {
+  background-image: linear-gradient(to left, #b6da35, #e4fa1f);
+}
+
+.green {
+  background-image: linear-gradient(to left, #98e442, #3de713);
+}
+
+.pirple {
+  background-image: linear-gradient(to left, #8f2d82, #5c0a55);
+}
+
+.gray {
+  background-image: linear-gradient(to left, #817b7b, #f0f0f0);
+}
+
+.brown {
+  background-image: linear-gradient(to left, #865330, #ee8936);
 }

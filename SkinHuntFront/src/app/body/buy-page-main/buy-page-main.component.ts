@@ -4,6 +4,8 @@ import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
 import {SkinItemCardComponent} from "../skin-item-card/skin-item-card.component";
 import {FormsModule} from "@angular/forms";
 import {FiltersSubmenuItems} from "../../models/filters-submenu-items";
+import { SortItems } from '../../models/sort';
+import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 
 export interface ItemCard {
   name: string;
@@ -15,6 +17,7 @@ export interface ItemCard {
   imports: [
     MdbDropdownModule,
     MdbRippleModule,
+    MdbCheckboxModule,
     SkinItemCardComponent,
     FormsModule,
   ],
@@ -26,6 +29,7 @@ export interface ItemCard {
 export class BuyPageMainComponent implements OnInit{
   cards$ = signal<ItemCard[]>([]);
 
+  sort$ = signal<SortItems>('default');
   typehead$ = signal<string>('');
   showSubmenuList$ = signal<FiltersSubmenuItems[]>([]);
 
@@ -39,6 +43,10 @@ export class BuyPageMainComponent implements OnInit{
     } else {
       this.showSubmenuList$.update((items) => [...items, submenu]);
     }
+  }
+
+  setSort(sortItem: SortItems) {
+    this.sort$.set(sortItem);
   }
 
   setCards() {
