@@ -8,12 +8,8 @@ import { SortItems } from '../../models/sort';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { HttpClient } from '@angular/common/http';
 import { API_URL } from '../../constants/URL';
-import { skinModel } from '../../models/skinModel';
+import { SkinModel } from '../../models/skinModel';
 
-export interface ItemCard {
-  name: string;
-  price: number;
-}
 @Component({
   selector: 'app-buy-page-main',
   standalone: true,
@@ -30,7 +26,7 @@ export interface ItemCard {
 })
 
 export class BuyPageMainComponent implements OnInit{
-  cards$ = signal<ItemCard[]>([]);
+  cards$ = signal<SkinModel[]>([]);
 
   sort$ = signal<SortItems>('default');
   typehead$ = signal<string>('');
@@ -55,8 +51,8 @@ export class BuyPageMainComponent implements OnInit{
   }
 
   setCards(){
-    this.http.get<skinModel[]>(`${API_URL}/skins`).subscribe(
-      (response: skinModel[]) => {
+    this.http.get<SkinModel[]>(`${API_URL}/skins`).subscribe(
+      (response: SkinModel[]) => {
         this.cards$.set(response);
         console.log(response);
       });

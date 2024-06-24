@@ -480,7 +480,7 @@
                 <div class="basket">
                     <button class="basket-btn">
                         <span class="basket-text">
-                            Br 0
+                            $ 0
                         </span>
                         <i class="fas fa-shopping-cart icon-style" style="opacity: 80%;"></i>
                     </button>
@@ -491,7 +491,7 @@
             <div class="sellOrders-wrapper">
                 <div class="sellOrdersList-wrapper">
                   @for (itemCard of cards$(); track itemCard) {
-                    <skin-item-card></skin-item-card>
+                    <skin-item-card [card]="itemCard"></skin-item-card>
                   }
                 </div>
             </div>

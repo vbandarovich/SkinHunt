@@ -30,7 +30,7 @@ export class HeaderComponent {
 
   signInModalRef: MdbModalRef<SignInComponent> | null = null;
 
-  language$ = signal<InterfaceLanguage>('eng');
+  language$ = signal<InterfaceLanguage>('ru');
   currency$ = signal<Currency>('usd');
 
   constructor(

@@ -1,7 +1,8 @@
-import {Component} from "@angular/core";
+import {Component, input} from "@angular/core";
 import {RouterOutlet} from "@angular/router";
 import {MdbCheckboxModule} from "mdb-angular-ui-kit/checkbox";
 import {HeaderComponent} from "../../header/header.component";
+import { SkinModel } from "../../models/skinModel";
 
 @Component({
   selector: 'skin-item-card',
@@ -15,21 +16,21 @@ import {HeaderComponent} from "../../header/header.component";
     <div class="card-container">
       <img class="card-image" src="assets/card-image.png" loading="lazy">
       <div class="baseCard-lower-part">
-        <!-- @if(isDiscount){
+        @if(card().isDiscount){
           <div class="baseCard-tag">
-            <span class="badge bagde-color"></span>
+            <span class="badge bagde-color">-{{(((card().price - card().priceWithDiscount) / card().price) * 100).toFixed(2)}}%</span>
           </div>
-        } -->
+        }
         <div class="baseCard-description">
             <span class="text-description">
-                FN / 0.0668
+                FN / {{card().float}}
             </span>
         </div>
         <div class="baseCard-price">
             <div class="price">
                 <span class="styles-price">
                     <span>
-                        Br 57 638.77
+                      $ {{card().price}}
                     </span>
                 </span>
             </div>
@@ -74,6 +75,7 @@ import {HeaderComponent} from "../../header/header.component";
       }
 
       .baseCard-lower-part {
+        margin-top: auto;
         width: calc(100% - 16px);
       }
 
@@ -131,4 +133,5 @@ import {HeaderComponent} from "../../header/header.component";
   ]
 })
 export class SkinItemCardComponent {
+  card = input.required<SkinModel>();
 }

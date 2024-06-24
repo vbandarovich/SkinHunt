@@ -1,4 +1,4 @@
-export interface skinModel {
+export interface SkinModel {
     color: string;
     float: number;
     id: string;
@@ -14,3 +14,4 @@ export interface skinModel {
         subcategory: number;
     };
   }
+  
