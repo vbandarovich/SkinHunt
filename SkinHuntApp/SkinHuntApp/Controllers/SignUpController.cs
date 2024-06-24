@@ -30,7 +30,7 @@ namespace SkinHunt.Service.Controllers
                 if (result is not null)
                 {
                     _logger.LogInformation("User created.");
-                    return Ok(result);
+                    return Ok(new { token = result });
                 }
 
                 _logger.LogError("Create user failed.");

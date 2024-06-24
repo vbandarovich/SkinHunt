@@ -1,3 +1,4 @@
+import { AuthService } from './../services/auth.service';
 import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
 import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
@@ -7,6 +8,7 @@ import {SignInComponent} from './sign-in/sign-in.component';
 import {MdbModalModule, MdbModalRef, MdbModalService} from 'mdb-angular-ui-kit/modal';
 import {InterfaceLanguage} from "../models/interface-language";
 import {Currency} from "../models/currency";
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -16,7 +18,8 @@ import {Currency} from "../models/currency";
     MdbCollapseModule,
     MdbRippleModule,
     MdbDropdownModule,
-    MdbModalModule
+    MdbModalModule,
+    RouterModule,
   ],
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
@@ -29,9 +32,13 @@ export class HeaderComponent {
 
   language$ = signal<InterfaceLanguage>('eng');
   currency$ = signal<Currency>('usd');
-  isAuth$ = signal<boolean>(false);
 
-  constructor(private modalService: MdbModalService) {
+  constructor(
+    private modalService: MdbModalService,
+    public authService: AuthService
+  ) 
+  {
+
   }
 
   openSignInModal() {
@@ -46,5 +53,9 @@ export class HeaderComponent {
 
   setCurrency(currency: Currency) {
     this.currency$.set(currency);
+  }
+
+  logOutHandler() {
+    this.authService.logOut();
   }
 }

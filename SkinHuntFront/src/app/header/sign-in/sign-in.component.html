@@ -50,6 +50,12 @@
           </mdb-success>
         </mdb-form-control>
 
+        @if(errorLogIn$()){
+          <div class="errorText">
+            Email или пароль не совпадают
+          </div>
+        }
+
         <!-- 2 column grid layout -->
         <div class="row mb-4">
           <div class="col-md-6 d-flex justify-content-center">

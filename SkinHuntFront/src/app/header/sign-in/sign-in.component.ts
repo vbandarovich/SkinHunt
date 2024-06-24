@@ -1,5 +1,5 @@
 import { AuthService } from './../../services/auth.service';
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MdbModalRef } from "mdb-angular-ui-kit/modal";
 import {MdbFormsModule} from 'mdb-angular-ui-kit/forms';
@@ -44,6 +44,8 @@ export class SignInComponent {
 
   @ViewChild('tabs') tabs!: MdbTabsComponent;
 
+  errorLogIn$ = signal<boolean>(false);
+
   signInForm = new FormGroup({
     email: new FormControl<string>('', { validators: [Validators.required, Validators.email], updateOn: 'change' }),
     password: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
@@ -58,7 +60,10 @@ export class SignInComponent {
       validators: PasswordValidator,
     });
 
-  constructor(public modalRef: MdbModalRef<SignInComponent>, private readonly authService : AuthService ) {
+  constructor(
+    public modalRef: MdbModalRef<SignInComponent>, 
+    private readonly authService : AuthService
+   ) {
   }
 
   get SignInEmail() {
@@ -91,7 +96,14 @@ export class SignInComponent {
       password: this.SignInPassword.value!,
     };
 
-    this.authService.signIn(command);
+    this.authService.signIn(command).subscribe((result) => {
+      if (result) {
+        this.modalRef.close();
+      }
+      else{
+        this.errorLogIn$.set(true);
+      }
+    });
   }
 
   onSubmitSignUp() {
@@ -100,6 +112,13 @@ export class SignInComponent {
       password: this.SignInPassword.value!,
     };
 
-    this.authService.signUp(command);
+    this.authService.signUp(command).subscribe((result) => {
+      if (result) {
+        this.modalRef.close();
+      }
+      else{
+        this.errorLogIn$.set(true);
+      }
+    });
   }
 }

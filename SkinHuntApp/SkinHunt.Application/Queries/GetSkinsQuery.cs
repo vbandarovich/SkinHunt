@@ -24,7 +24,7 @@ namespace SkinHunt.Application.Queries
         {
             try
             {
-                var result = await _db.Skins.ToListAsync();
+                var result = await _db.Skins.Include(s => s.Type).ToListAsync();
 
                 if (result.Any())
                 {

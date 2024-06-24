@@ -15,9 +15,11 @@ import {HeaderComponent} from "../../header/header.component";
     <div class="card-container">
       <img class="card-image" src="assets/card-image.png" loading="lazy">
       <div class="baseCard-lower-part">
-        <div class="baseCard-tag">
-          <span class="badge bagde-color">-24%</span>
-        </div>
+        <!-- @if(isDiscount){
+          <div class="baseCard-tag">
+            <span class="badge bagde-color"></span>
+          </div>
+        } -->
         <div class="baseCard-description">
             <span class="text-description">
                 FN / 0.0668
