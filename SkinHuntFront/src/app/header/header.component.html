@@ -98,7 +98,7 @@
         </div>
       </div>
       <div class="d-flex align-items-center">
-        @if (this.authService.isAuth$()) {
+        @if (this.authService.user$()) {
           <div mdbDropdown #profileDropdown class="dropdown">
             <button
               class="btn dropdown-toggle p-0 d-flex align-items-center"

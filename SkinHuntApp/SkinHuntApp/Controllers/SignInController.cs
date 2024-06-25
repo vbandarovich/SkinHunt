@@ -34,8 +34,8 @@ namespace SkinHunt.Service.Controllers
 
                     if (result is not null)
                     {
-                        _logger.LogError("Log in successeded.");
-                        return Ok(new { token = result });
+                        _logger.LogInformation("Log in successeded.");
+                        return Ok(result);
                     }
 
                     _logger.LogError("Log in failed: password is incorrect.");

@@ -2,7 +2,7 @@ import { AuthService } from './../services/auth.service';
 import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
 import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
-import {ChangeDetectionStrategy, Component, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {MdbModalModule, MdbModalRef, MdbModalService} from 'mdb-angular-ui-kit/modal';
@@ -27,19 +27,23 @@ import { RouterModule } from '@angular/router';
 })
 
 export class HeaderComponent {
-
   signInModalRef: MdbModalRef<SignInComponent> | null = null;
 
   language$ = signal<InterfaceLanguage>('ru');
   currency$ = signal<Currency>('usd');
-  userAvatar$ = signal<string>("../../../assets/unAuthAvatar.jpg");
+
+  userAvatar$ = computed(() => {
+    if (this.authService.user$()?.avatar) {
+      return this.authService.user$()?.avatar;
+    }
+
+    return "../../../assets/unAuthAvatar.jpg";
+  });
 
   constructor(
     private modalService: MdbModalService,
     public authService: AuthService
-  )
-  {
-  }
+  ) {}
 
   openSignInModal() {
     this.signInModalRef = this.modalService.open(SignInComponent, {

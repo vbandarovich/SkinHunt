@@ -4,5 +4,6 @@ export interface User {
   userName: string;
   phoneNumber: string;
   balance: number;
+  avatar: string;
   token: string;
 }

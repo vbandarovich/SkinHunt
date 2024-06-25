@@ -9,13 +9,14 @@ export const customInterceptor: HttpInterceptorFn = (req, next) => {
   if (req.url.includes('/signUp')) {
     return next(req);
   }
-  
-  const token = localStorage.getItem('token');
 
-  if(token){
+  const user = localStorage.getItem('user');
+
+  if (user) {
+    const userObject = JSON.parse(user);
     const cloneRequest = req.clone({
       setHeaders:{
-        Authorization: `Bearer ${token}`
+        Authorization: `Bearer ${userObject.token}`
         }
       });
 

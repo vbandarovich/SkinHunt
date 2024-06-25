@@ -12,5 +12,7 @@ public class UserDto
     
     public double Balance { get; set; }
     
+    public string Avatar { get; set; }
+    
     public string Token { get; set; }
 }

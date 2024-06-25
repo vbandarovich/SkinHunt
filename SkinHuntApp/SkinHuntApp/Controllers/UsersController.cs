@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkinHunt.Application.Commands;
+using SkinHunt.Application.Common.Models;
 using SkinHunt.Application.Extensions;
 using SkinHunt.Application.Queries;
 
@@ -68,6 +69,29 @@ namespace SkinHunt.Service.Controllers
                 _logger.LogError("An unexpected error occurred while deleting the skin.");
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             }
+        }
+        
+        [HttpPost]
+        public async Task<IActionResult> UpdateUserAvatar([FromBody] UpdateUserAvatarModel model)
+        {
+            try
+            {
+                var result = await _mediator.Send(new UpdateUserAvatarCommand(model));
+
+                if (result is not null)
+                {
+                    _logger.LogInformation("User avatar updated.");
+                    return Ok(result);
+                }
+
+                _logger.LogError("Update user avatar failed.");
+                return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Unexpected error occured during update avatar");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            } 
         }
     }
 }

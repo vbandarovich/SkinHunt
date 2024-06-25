@@ -4,22 +4,23 @@ import { AuthUser } from "../models/authUser";
 import { API_URL } from "../constants/URL";
 import { tap } from "rxjs";
 import {User} from "../models/User";
+import {Router} from "@angular/router";
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
-
-    isAuth$ = signal<User | null>(null);
+    user$ = signal<User | null>(null);
 
     constructor(
         private readonly http: HttpClient,
+        private readonly router: Router,
     )
     {
       const user = localStorage.getItem('user');
 
       if (user) {
-        this.isAuth$.set(JSON.parse(user));
+        this.user$.set(JSON.parse(user));
       }
     }
 
@@ -28,9 +29,9 @@ export class AuthService {
         .post<User>(`${API_URL}/signUp`, userData)
         .pipe(
             tap((res) => {
-                if(res != null){
-                    localStorage.setItem('user', JSON.stringify(res));
-                    this.isAuth$.set(res);
+                if (res != null) {
+                  localStorage.setItem('user', JSON.stringify(res));
+                  this.user$.set(res);
                 }
             })
         );
@@ -41,16 +42,17 @@ export class AuthService {
         .post<User>(`${API_URL}/signIn`, userData)
         .pipe(
             tap((res) => {
-                if(res != null){
+                if (res != null) {
                   localStorage.setItem('user', JSON.stringify(res));
-                  this.isAuth$.set(res);
+                  this.user$.set(res);
                 }
             })
         );
     }
 
     logOut(){
-        localStorage.removeItem("user");
-        this.isAuth$.set(null);
+      localStorage.removeItem('user');
+      this.user$.set(null);
+      this.router.navigate(['']);
     }
 }
