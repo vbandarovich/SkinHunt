@@ -19,6 +19,8 @@ namespace SkinHunt.Application.Common.Mapping
             CreateMap<SkinEntity, SkinDto>();
             
             CreateMap<BasketEntity, BasketDto>();
+            
+            CreateMap<ItemTypeEntity, ItemTypeDto>();
         }
     }
 }

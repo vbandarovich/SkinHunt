@@ -1,34 +1,36 @@
-import { HttpClient, HttpStatusCode } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Injectable, signal } from "@angular/core";
-import { Router } from "@angular/router";
 import { AuthUser } from "../models/authUser";
 import { API_URL } from "../constants/URL";
 import { tap } from "rxjs";
-import { SignInResultModel } from "../models/sign-in-result-model";
+import {User} from "../models/User";
 
 @Injectable({
     providedIn: 'root',
 })
 export class AuthService {
 
-    isAuth$ = signal<boolean>(false);
+    isAuth$ = signal<User | null>(null);
 
     constructor(
         private readonly http: HttpClient,
-    ) 
+    )
     {
-        const token = localStorage.getItem("token");
-        this.isAuth$.set(!!token);
+      const user = localStorage.getItem('user');
+
+      if (user) {
+        this.isAuth$.set(JSON.parse(user));
+      }
     }
 
     signUp(userData: AuthUser){
         return this.http
-        .post<SignInResultModel>(`${API_URL}/signUp`, userData)
+        .post<User>(`${API_URL}/signUp`, userData)
         .pipe(
             tap((res) => {
                 if(res != null){
-                    localStorage.setItem("token", res.token);
-                    this.isAuth$.set(true);
+                    localStorage.setItem('user', JSON.stringify(res));
+                    this.isAuth$.set(res);
                 }
             })
         );
@@ -36,19 +38,19 @@ export class AuthService {
 
     signIn(userData: AuthUser){
         return this.http
-        .post<SignInResultModel>(`${API_URL}/signIn`, userData)
+        .post<User>(`${API_URL}/signIn`, userData)
         .pipe(
             tap((res) => {
                 if(res != null){
-                    localStorage.setItem("token", res.token);
-                    this.isAuth$.set(true);
+                  localStorage.setItem('user', JSON.stringify(res));
+                  this.isAuth$.set(res);
                 }
             })
         );
     }
 
     logOut(){
-        localStorage.removeItem("token");
-        this.isAuth$.set(false);
+        localStorage.removeItem("user");
+        this.isAuth$.set(null);
     }
 }
