@@ -1,30 +1,36 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SkinHunt.Domain.Constants;
+using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Queries
 {
-    public class GetUsersQuery : IRequest<List<IdentityUser>>
+    public class GetUsersQuery : IRequest<List<UserDto>>
     {
     }
 
-    public class GetUsersQueryHendler : IRequestHandler<GetUsersQuery, List<IdentityUser>>
+    public class GetUsersQueryHandler : IRequestHandler<GetUsersQuery, List<UserDto>>
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly ILogger<GetUsersQueryHendler> _logger;
+        private readonly DbContext _dbContext;
+        private readonly IMapper _mapper;
+        private readonly ILogger<GetUsersQueryHandler> _logger;
 
-        public GetUsersQueryHendler(UserManager<IdentityUser> userManager, ILogger<GetUsersQueryHendler> logger)
+        public GetUsersQueryHandler(DbContext dbContext, IMapper mapper, ILogger<GetUsersQueryHandler> logger)
         {
-            _userManager = userManager;
+            _dbContext = dbContext;
+            _mapper = mapper;
             _logger = logger;
         }
 
-        public async Task<List<IdentityUser>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
+        public async Task<List<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
         {
             try
             {
-                var users = await _userManager.GetUsersInRoleAsync(RolesConstants.User);
+                var users = await _dbContext.Users
+                    .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                    .ToListAsync();
 
                 if (users.Any())
                 {
@@ -32,13 +38,13 @@ namespace SkinHunt.Application.Queries
                     return users.ToList();
                 }
 
-                return new List<IdentityUser>();
+                return new List<UserDto>();
 
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Get users failed with exception: {ex.Message}");
-                return new List<IdentityUser>();
+                return new List<UserDto>();
             }
         }
     }

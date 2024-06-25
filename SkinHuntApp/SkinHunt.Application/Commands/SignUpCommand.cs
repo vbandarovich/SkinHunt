@@ -1,12 +1,17 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Common.Interfaces;
+using SkinHunt.Application.Common.Models;
 using SkinHunt.Domain.Constants;
 using SkinHunt.Domain.Models;
 
 namespace SkinHunt.Application.Commands
 {
-    public class SignUpCommand : IRequest<object>
+    public class SignUpCommand : IRequest<UserDto>
     {
         public SignUpModel Model { get; set; }
 
@@ -16,20 +21,28 @@ namespace SkinHunt.Application.Commands
         }
     }
 
-    public class SignUpCommandHandler : IRequestHandler<SignUpCommand, object>
+    public class SignUpCommandHandler : IRequestHandler<SignUpCommand, UserDto>
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
         private readonly IJwtExtension _jwtExtension;
+        private readonly DbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public SignUpCommandHandler(UserManager<IdentityUser> userManager, IJwtExtension jwtExtension)
+        public SignUpCommandHandler(
+            UserManager<UserEntity> userManager,
+            IJwtExtension jwtExtension,
+            DbContext dbContext,
+            IMapper mapper)
         {
             _userManager = userManager;
             _jwtExtension = jwtExtension;
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public async Task<object> Handle(SignUpCommand request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(SignUpCommand request, CancellationToken cancellationToken)
         {
-            var user = new IdentityUser
+            var user = new UserEntity
             {
                 UserName = request.Model.Email,
                 Email = request.Model.Email,
@@ -41,7 +54,15 @@ namespace SkinHunt.Application.Commands
             {
                 await _userManager.AddToRoleAsync(user, RolesConstants.User);
 
-                return await _jwtExtension.GenerateTokenAsync(user);
+                var userDto = await _dbContext.Users
+                    .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                    .FirstAsync(o => o.UserName == user.UserName);
+                
+                var token = await _jwtExtension.GenerateTokenAsync(user);
+
+                userDto.Token = token;
+
+                return userDto;
             }
 
             return null;

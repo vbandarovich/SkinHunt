@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Queries;
 using SkinHunt.Domain.Constants;
 
@@ -14,9 +15,9 @@ namespace SkinHunt.Service.Controllers
     {
         private readonly IMediator _mediator;
         private readonly ILogger<AdminController> _logger;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public AdminController(IMediator mediator, ILogger<AdminController> logger, UserManager<IdentityUser> userManager)
+        public AdminController(IMediator mediator, ILogger<AdminController> logger, UserManager<UserEntity> userManager)
         {
             _mediator = mediator;
             _logger = logger;

@@ -5,21 +5,22 @@ using SkinHunt.Application.Common.Interfaces;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using SkinHunt.Application.Common.Entities;
 
 namespace SkinHunt.Application.Extensions
 {
     public class JwtExtension : IJwtExtension
     {
         private readonly IConfiguration _configuration;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public JwtExtension(IConfiguration configuration, UserManager<IdentityUser> userManager)
+        public JwtExtension(IConfiguration configuration, UserManager<UserEntity> userManager)
         {
             _configuration = configuration;
             _userManager = userManager;
         }
 
-        public async Task<object> GenerateTokenAsync(IdentityUser user)
+        public async Task<string> GenerateTokenAsync(UserEntity user)
         {
             var roles = await _userManager.GetRolesAsync(user);
 

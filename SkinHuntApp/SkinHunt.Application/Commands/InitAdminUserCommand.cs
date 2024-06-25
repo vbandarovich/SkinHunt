@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Logging;
+using SkinHunt.Application.Common.Entities;
 using SkinHunt.Domain.Constants;
 
 namespace SkinHunt.Application.Commands
@@ -13,10 +14,10 @@ namespace SkinHunt.Application.Commands
     {
         private readonly DbContext _db;
         private readonly ILogger<InitRolesCommandHandler> _logger;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<UserEntity> _userManager;
 
         public InitAdminUserCommandHandler(DbContext db, ILogger<InitRolesCommandHandler> logger,
-            UserManager<IdentityUser> userManager)
+            UserManager<UserEntity> userManager)
         {
             _db = db;
             _logger = logger;
@@ -27,7 +28,7 @@ namespace SkinHunt.Application.Commands
         {
             if (!_db.Users.Any())
             {
-                var admin = new IdentityUser
+                var admin = new UserEntity
                 {
                     UserName = "admin",
                     Email = "admin@gmail.com",

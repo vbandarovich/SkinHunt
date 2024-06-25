@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using SkinHunt.Application.Common.Entities;
 
 namespace SkinHunt.Application.Common.Interfaces
 {
     public interface IJwtExtension
     {
-        Task<object> GenerateTokenAsync(IdentityUser user);
+        Task<string> GenerateTokenAsync(UserEntity user);
     }
 }

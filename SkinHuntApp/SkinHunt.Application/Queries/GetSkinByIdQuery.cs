@@ -1,10 +1,12 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
-using SkinHunt.Application.Common.Entities;
+using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Queries
 {
-    public class GetSkinByIdQuery : IRequest<SkinEntity>
+    public class GetSkinByIdQuery : IRequest<SkinDto>
     {
         public Guid Id { get; set; }
 
@@ -14,18 +16,22 @@ namespace SkinHunt.Application.Queries
         }
     }
 
-    public class GetSkinByIdQueryHandler : IRequestHandler<GetSkinByIdQuery, SkinEntity>
+    public class GetSkinByIdQueryHandler : IRequestHandler<GetSkinByIdQuery, SkinDto>
     {
         private readonly DbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public GetSkinByIdQueryHandler(DbContext dbContext)
+        public GetSkinByIdQueryHandler(DbContext dbContext, IMapper mapper)
         {
             _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public async Task<SkinEntity> Handle(GetSkinByIdQuery request, CancellationToken cancellationToken)
+        public async Task<SkinDto> Handle(GetSkinByIdQuery request, CancellationToken cancellationToken)
         {
-            return await _dbContext.Skins.FirstAsync(x => x.Id == request.Id);
+            return await _dbContext.Skins
+                .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
+                .FirstAsync(x => x.Id == request.Id.ToString());
         }
     }
 }

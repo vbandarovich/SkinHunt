@@ -1,17 +1,16 @@
-﻿using AutoMapper;
-using MediatR;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SkinHunt.Application.Common.Entities;
 
 namespace SkinHunt.Application.Commands
 {
     public class RemoveSkinFromBasketCommand : IRequest
     {
-        public BasketEntity Skin { get; set; }
+        public Guid BasketEntryId { get; set; }
 
-        public RemoveSkinFromBasketCommand(BasketEntity skin)
+        public RemoveSkinFromBasketCommand(Guid basketEntryId)
         {
-            Skin = skin;
+            BasketEntryId = basketEntryId;
         }
     }
 
@@ -28,11 +27,16 @@ namespace SkinHunt.Application.Commands
 
         public async Task Handle(RemoveSkinFromBasketCommand request, CancellationToken cancellationToken)
         {
-            _dbContext.Basket.Remove(request.Skin);
+            var entity = await _dbContext.Basket.FirstOrDefaultAsync(o => o.Id == request.BasketEntryId);
 
-            _logger.LogInformation("Skin removed from basket successfully.");
+            if (entity is not null)
+            {
+                _dbContext.Basket.Remove(entity);
 
-            await _dbContext.SaveChangesAsync(cancellationToken);
+                _logger.LogInformation("Skin removed from basket successfully.");
+
+                await _dbContext.SaveChangesAsync(cancellationToken);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -7,7 +8,7 @@ using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Commands
 {
-    public class AddItemTypeCommand : IRequest<ItemTypeEntity>
+    public class AddItemTypeCommand : IRequest<ItemTypeDto>
     {
         public ItemTypeModel ItemType { get; set; }
 
@@ -17,7 +18,7 @@ namespace SkinHunt.Application.Commands
         }
     }
 
-    public class AddItemTypeCommandHandler : IRequestHandler<AddItemTypeCommand, ItemTypeEntity>
+    public class AddItemTypeCommandHandler : IRequestHandler<AddItemTypeCommand, ItemTypeDto>
     {
         private readonly DbContext _db;
         private readonly ILogger<AddItemTypeCommandHandler> _logger;
@@ -30,7 +31,7 @@ namespace SkinHunt.Application.Commands
             _mapper = mapper;
         }
 
-        public async Task<ItemTypeEntity> Handle(AddItemTypeCommand request, CancellationToken cancellationToken)
+        public async Task<ItemTypeDto> Handle(AddItemTypeCommand request, CancellationToken cancellationToken)
         {
             if (!_db.SkinTypes.Any(x => x.Category.Equals(request.ItemType.Category) && x.Subcategory.Equals(request.ItemType.Subcategory)))
             {
@@ -43,7 +44,9 @@ namespace SkinHunt.Application.Commands
                 await _db.SaveChangesAsync(cancellationToken);
             }
 
-            return await _db.SkinTypes.FirstAsync(x => x.Category.Equals(request.ItemType.Category)
+            return await _db.SkinTypes
+                .ProjectTo<ItemTypeDto>(_mapper.ConfigurationProvider)
+                .FirstAsync(x => x.Category.Equals(request.ItemType.Category)
                 && x.Subcategory.Equals(request.ItemType.Subcategory), cancellationToken);
         }
     }

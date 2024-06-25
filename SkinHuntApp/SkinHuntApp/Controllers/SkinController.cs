@@ -2,9 +2,11 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using SkinHunt.Application.Commands;
 using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Common.Models;
+using DbContext = SkinHunt.Application.DbContext;
 
 namespace SkinHunt.Service.Controllers
 {
@@ -16,12 +18,17 @@ namespace SkinHunt.Service.Controllers
         private readonly IMediator _mediator;
         private readonly ILogger<SkinController> _logger;
         private readonly IMapper _mapper;
+        private readonly DbContext _dbContext;
 
-        public SkinController(IMediator mediator, ILogger<SkinController> logger, IMapper mapper)
+        public SkinController(
+            IMediator mediator,
+            ILogger<SkinController> logger,
+            IMapper mapper, DbContext dbContext)
         {
             _mediator = mediator;
             _logger = logger;
             _mapper = mapper;
+            _dbContext = dbContext;
         }
 
         [HttpPost]
@@ -29,10 +36,14 @@ namespace SkinHunt.Service.Controllers
         {
             try
             {
-                var itemType = await _mediator.Send(new AddItemTypeCommand(model.Type));
+                await _mediator.Send(new AddItemTypeCommand(model.Type));
 
                 var skinEntity = _mapper.Map<SkinEntity>(model);
-                skinEntity.Type = itemType;
+
+                var skinType = await _dbContext.SkinTypes
+                    .FirstAsync(o => o.Category == model.Type.Category && o.Subcategory == model.Type.Subcategory);
+                
+                skinEntity.Type = skinType;
 
                 var result = await _mediator.Send(new AddSkinCommand(skinEntity));
 

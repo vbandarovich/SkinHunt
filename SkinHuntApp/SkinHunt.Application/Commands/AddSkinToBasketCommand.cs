@@ -1,18 +1,21 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SkinHunt.Application.Common.Entities;
-using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Commands
 {
     public class AddSkinToBasketCommand : IRequest
     {
-        public BasketModel Model { get; set; }
+        public string UserId { get; set; }
+        
+        public Guid SkinId { get; set; }
 
-        public AddSkinToBasketCommand(BasketModel model)
+        public AddSkinToBasketCommand(string userId, Guid skinId)
         {
-            Model = model;
+            UserId = userId;
+            SkinId = skinId;
         }
     }
 
@@ -31,7 +34,15 @@ namespace SkinHunt.Application.Commands
 
         public async Task Handle(AddSkinToBasketCommand request, CancellationToken cancellationToken)
         {
-            var entity = _mapper.Map<BasketEntity>(request.Model);
+            var user = await _dbContext.Users.FirstAsync(o => o.Id == request.UserId);
+            var skin = await _dbContext.Skins.FirstAsync(o => o.Id == request.SkinId);
+            
+            var entity = new BasketEntity()
+            {
+                User = user,
+                Skin = skin,
+                CreatedDate = DateTime.UtcNow
+            };
 
             await _dbContext.Basket.AddAsync(entity, cancellationToken);
 

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using SkinHunt.Application.Common.Entities;
@@ -48,7 +49,10 @@ namespace SkinHunt.Application.Commands
                         {
                             var type = _mapper.Map<ItemTypeModel>(skin.Type);
 
-                            var typeEntity = await _mediator.Send(new AddItemTypeCommand(type), cancellationToken);
+                            await _mediator.Send(new AddItemTypeCommand(type), cancellationToken);
+
+                            var typeEntity = await _db.SkinTypes
+                                .FirstAsync(o => o.Category == type.Category && o.Subcategory == type.Subcategory);
 
                             skin.Type = typeEntity;                    
 

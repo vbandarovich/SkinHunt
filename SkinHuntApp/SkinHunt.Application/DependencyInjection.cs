@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SkinHunt.Application.Common.Interfaces;
 using SkinHunt.Application.Services;
 using System.Reflection;
+using SkinHunt.Application.Common.Entities;
 
 namespace SkinHunt.Application
 {
@@ -18,7 +19,7 @@ namespace SkinHunt.Application
             var connection = configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<DbContext>(options => options.UseSqlServer(connection));
 
-            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            services.AddIdentity<UserEntity, IdentityRole>(options =>
             {
                 options.Password.RequiredUniqueChars = 4;
                 options.Password.RequiredLength = 8;

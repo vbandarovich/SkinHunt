@@ -1,4 +1,3 @@
-import { ProfileComponent } from './../body/profile/profile.component';
 import { AuthService } from './../services/auth.service';
 import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
@@ -33,11 +32,12 @@ export class HeaderComponent {
 
   language$ = signal<InterfaceLanguage>('ru');
   currency$ = signal<Currency>('usd');
+  userAvatar$ = signal<string>("../../../assets/unAuthAvatar.jpg");
 
   constructor(
     private modalService: MdbModalService,
     public authService: AuthService
-  ) 
+  )
   {
   }
 

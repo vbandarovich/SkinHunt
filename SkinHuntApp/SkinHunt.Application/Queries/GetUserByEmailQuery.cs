@@ -1,9 +1,12 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Identity;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
+using Microsoft.EntityFrameworkCore;
+using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Queries
 {
-    public class GetUserByEmailQuery : IRequest<IdentityUser>
+    public class GetUserByEmailQuery : IRequest<UserDto>
     {
         public string Email { get; set; }
 
@@ -13,18 +16,22 @@ namespace SkinHunt.Application.Queries
         }
     }
 
-    public class GetUserByEmailQueryHanlder : IRequestHandler<GetUserByEmailQuery, IdentityUser>
+    public class GetUserByEmailQueryHandler : IRequestHandler<GetUserByEmailQuery, UserDto>
     {
-        private readonly UserManager<IdentityUser> _userManager;
-
-        public GetUserByEmailQueryHanlder(UserManager<IdentityUser> userManager)
+        private readonly DbContext _dbContext;
+        private readonly IMapper _mapper;
+        
+        public GetUserByEmailQueryHandler(DbContext dbContext, IMapper mapper)
         {
-            _userManager = userManager;
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public async Task<IdentityUser> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(GetUserByEmailQuery request, CancellationToken cancellationToken)
         {
-            return await _userManager.FindByEmailAsync(request.Email);
+            return await _dbContext.Users
+                .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                .FirstAsync(o => o.Email == request.Email);
         }
     }
 }

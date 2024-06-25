@@ -1,10 +1,8 @@
-﻿using Microsoft.AspNetCore.Identity;
-
-namespace SkinHunt.Application.Common.Entities
+﻿namespace SkinHunt.Application.Common.Entities
 {
     public class BasketEntity : BaseEntity
     {
-        public IdentityUser User { get; set; }
+        public UserEntity User { get; set; }
 
         public SkinEntity Skin { get; set; }
 

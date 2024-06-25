@@ -109,7 +109,7 @@
             >
               <a class="nav-link d-sm-flex align-items-sm-center">
                 <img
-                  src="../../assets/avatar.jpg"
+                  [src]="userAvatar$()"
                   class="rounded-circle"
                   height="30"
                   alt=""
@@ -117,8 +117,8 @@
                 />
               </a>
             </button>
-            <ul mdbDropdownMenu 
-                class="dropdown-menu dropdown-menu-end dropdown-menu-start" 
+            <ul mdbDropdownMenu
+                class="dropdown-menu dropdown-menu-end dropdown-menu-start"
                 aria-labelledby="rofileDropdownMenuButton">
               <li>
                 <a class="dropdown-item" [routerLink]="['/profile']">Профиль</a>

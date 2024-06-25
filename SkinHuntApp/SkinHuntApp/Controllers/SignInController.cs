@@ -30,7 +30,7 @@ namespace SkinHunt.Service.Controllers
 
                 if (user is not null)
                 {
-                    var result = await _mediator.Send(new SignInCommand(user, model.Password));
+                    var result = await _mediator.Send(new SignInCommand(user.UserName, model.Password));
 
                     if (result is not null)
                     {

@@ -1,41 +1,62 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
+using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Common.Interfaces;
+using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Commands
 {
-    public class SignInCommand : IRequest<object>
+    public class SignInCommand : IRequest<UserDto>
     {
-        public IdentityUser User { get; set; }
+        public string UserName { get; set; }
         public string Password { get; set; }
 
-        public SignInCommand(IdentityUser user, string password)
+        public SignInCommand(string userName, string password)
         {
-            User = user;
+            UserName = userName;
             Password = password;
         }
     }
 
-    public class SignInCommandHandler : IRequestHandler<SignInCommand, object>
+    public class SignInCommandHandler : IRequestHandler<SignInCommand, UserDto>
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly SignInManager<UserEntity> _signInManager;
         private readonly IJwtExtension _jwtExtension;
+        private readonly DbContext _dbContext;
+        private readonly IMapper _mapper;
 
-        public SignInCommandHandler(SignInManager<IdentityUser> signInManager, IJwtExtension jwtExtension)
+        public SignInCommandHandler(
+            SignInManager<UserEntity> signInManager,
+            IJwtExtension jwtExtension,
+            DbContext dbContext,
+            IMapper mapper)
         {
             _signInManager = signInManager;
             _jwtExtension = jwtExtension;
+            _dbContext = dbContext;
+            _mapper = mapper;
         }
 
-        public async Task<object> Handle(SignInCommand request, CancellationToken cancellationToken)
+        public async Task<UserDto> Handle(SignInCommand request, CancellationToken cancellationToken)
         {
-            var result = await _signInManager.PasswordSignInAsync(request.User.UserName, request.Password, false, true);
+            var result = await _signInManager.PasswordSignInAsync(request.UserName, request.Password, false, true);
 
             if (result.Succeeded)
             {
-                var token = await _jwtExtension.GenerateTokenAsync(request.User);
+                var user = await _dbContext.Users.FirstAsync(o => o.UserName == request.UserName);
+                
+                var token = await _jwtExtension.GenerateTokenAsync(user);
 
-                return token;
+                var userDto = await _dbContext.Users
+                    .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
+                    .FirstAsync(o => o.UserName == request.UserName);
+
+                userDto.Token = token;
+
+                return userDto;
             }
 
             return null;

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkinHunt.Application.Commands;
-using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Extensions;
 using SkinHunt.Application.Queries;
 
@@ -23,7 +22,7 @@ namespace SkinHunt.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<List<BasketEntity>> GetSkinsFromBasketAsync()
+        public async Task<ActionResult> GetSkinsFromBasketAsync()
         {
             try
             {
@@ -36,20 +35,17 @@ namespace SkinHunt.Service.Controllers
                     var skins = await _mediator.Send(new GetSkinsByUserIdFromBasketQuery(id));
 
                     _logger.LogInformation("Skins received successfully.");
-                    return skins;
+                    return Ok(skins);
                 }
-                else
-                {
-                    _logger.LogInformation("An error occurred while receiving the token.");
-                    return new List<BasketEntity>();
-                }
+                
+                _logger.LogInformation("An error occurred while receiving the token.");
+                return BadRequest();
             }
             catch (Exception ex)
             {
                 _logger.LogError($"An unexpected error occurred while receiving the skin. Error message {ex}");
-                return new List<BasketEntity>();
+                return StatusCode(500, $"Internal server error: {ex.Message}");
             }
-            
         }
 
         [HttpDelete]
@@ -57,28 +53,15 @@ namespace SkinHunt.Service.Controllers
         {
             try
             {
-                if (HttpContext.Request.Headers.TryGetValue("Authorization", out var authHeader))
+                if (skinId != Guid.Empty)
                 {
-                    var token = authHeader.ToString().Replace("Bearer ", "");
+                    await _mediator.Send(new RemoveSkinFromBasketCommand(skinId));
 
-                    var id = await JwtTokenHandler.GetIdFromTokenAsync(token);
-
-                    var skin = await _mediator.Send(new GetSkinByIdFromBasketQuery(id, skinId));
-
-                    if (skin is not null)
-                    {
-                        await _mediator.Send(new RemoveSkinFromBasketCommand(skin));
-
-                        return Ok();
-                    }
-
-                    return BadRequest();
+                    return Ok();
                 }
-                else
-                {
-                    _logger.LogInformation("An error occurred while receiving the token.");
-                    return BadRequest();
-                }
+                
+                _logger.LogInformation("An error occurred while receiving the token.");
+                return BadRequest();
             }
             catch (Exception ex)
             {

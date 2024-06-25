@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SkinHunt.Application.Commands;
 using SkinHunt.Application.Common.Models;
-using SkinHunt.Application.Extensions;
-using SkinHunt.Application.Queries;
 
 namespace SkinHunt.Service.Controllers
 {
@@ -23,35 +21,13 @@ namespace SkinHunt.Service.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddSkinToBasket([FromBody] Guid skinId)
+        public async Task<IActionResult> AddSkinToBasket([FromBody] BasketModel model)
         {
             try
             {
-                if (HttpContext.Request.Headers.TryGetValue("Authorization", out var authHeader))
-                {
-                    var token = authHeader.ToString().Replace("Bearer ", "");
+                await _mediator.Send(new AddSkinToBasketCommand(model.UserId, model.SkinId));
 
-                    var id = await JwtTokenHandler.GetIdFromTokenAsync(token);
-
-                    var user = await _mediator.Send(new GetUserByTokenQuery(id));
-
-                    var skin = await _mediator.Send(new GetSkinByIdQuery(skinId));
-
-                    var model = new BasketModel()
-                    {
-                        UserId = user,
-                        SkinId = skin,
-                        Data = DateTime.Now
-                    };
-
-                    await _mediator.Send(new AddSkinToBasketCommand(model));
-
-                    return Ok();
-                }
-                else
-                {
-                    return BadRequest();
-                }
+                return Ok();
             }
             catch (Exception ex)
             {

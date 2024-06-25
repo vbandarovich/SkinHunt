@@ -1,11 +1,13 @@
-﻿using MediatR;
+﻿using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using SkinHunt.Application.Common.Entities;
+using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Queries
 {
-    public class GetSkinsByUserIdFromBasketQuery : IRequest<List<BasketEntity>>
+    public class GetSkinsByUserIdFromBasketQuery : IRequest<List<BasketDto>>
     {
         public string Id { get; set; }
 
@@ -15,24 +17,27 @@ namespace SkinHunt.Application.Queries
         }
     }
 
-    public class GetSkinsByUserIdQueryHandler : IRequestHandler<GetSkinsByUserIdFromBasketQuery, List<BasketEntity>>
+    public class GetSkinsByUserIdQueryHandler : IRequestHandler<GetSkinsByUserIdFromBasketQuery, List<BasketDto>>
     {
         private readonly DbContext _db;
         private readonly ILogger<GetSkinsByUserIdQueryHandler> _logger;
+        private readonly IMapper _mapper;
 
-        public GetSkinsByUserIdQueryHandler(DbContext db, ILogger<GetSkinsByUserIdQueryHandler> logger)
+        public GetSkinsByUserIdQueryHandler(DbContext db, ILogger<GetSkinsByUserIdQueryHandler> logger, IMapper mapper)
         {
             _db = db;
             _logger = logger;
+            _mapper = mapper;
         }
 
-        public async Task<List<BasketEntity>> Handle(GetSkinsByUserIdFromBasketQuery request, CancellationToken cancellationToken)
+        public async Task<List<BasketDto>> Handle(GetSkinsByUserIdFromBasketQuery request, CancellationToken cancellationToken)
         {
             try
             {
                 var result = await _db.Basket.Where(x => x.User.Id == request.Id)
                     .Include(x => x.User)
                     .Include(x => x.Skin)
+                    .ProjectTo<BasketDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 
                 if (result.Any())
@@ -41,12 +46,12 @@ namespace SkinHunt.Application.Queries
                     return result;
                 }
 
-                return new List<BasketEntity>();
+                return new List<BasketDto>();
             }
             catch (Exception ex)
             {
                 _logger.LogError(ex, "An error occurred while retrieving skins.");
-                return new List<BasketEntity>();
+                return new List<BasketDto>();
             }
         }
     }
