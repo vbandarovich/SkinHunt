@@ -1,3 +1,4 @@
+import { ProfileComponent } from './../body/profile/profile.component';
 import { AuthService } from './../services/auth.service';
 import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
@@ -38,7 +39,6 @@ export class HeaderComponent {
     public authService: AuthService
   ) 
   {
-
   }
 
   openSignInModal() {

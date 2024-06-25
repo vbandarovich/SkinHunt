@@ -83,12 +83,6 @@
             @if (currency$() === 'usd') {
               $ USD
             }
-            @if (currency$() === 'eur') {
-              € EUR
-            }
-            @if (currency$() === 'rub') {
-              ₽ RUB
-            }
             @if (currency$() === 'byn') {
               Br BYN
             }
@@ -99,8 +93,6 @@
             aria-labelledby="currencyDropdownMenuButton"
           >
             <li><a class="dropdown-item" (click)="setCurrency('usd')">$ USD</a></li>
-            <li><a class="dropdown-item" (click)="setCurrency('rub')">₽ RUB</a></li>
-            <li><a class="dropdown-item" (click)="setCurrency('eur')">€ EUR</a></li>
             <li><a class="dropdown-item" (click)="setCurrency('byn')">Br BYN</a></li>
           </ul>
         </div>

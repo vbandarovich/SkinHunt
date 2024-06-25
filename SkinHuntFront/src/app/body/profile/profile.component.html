@@ -6,10 +6,6 @@
                     <div class="row about-list">
                         <div class="col-md-6">
                             <div class="media">
-                                <label>Имя пользователя</label>
-                                <p>Кирилл</p>
-                            </div>
-                            <div class="media">
                                 <label>Email</label>
                                 <p>bondarovich.kirya&#64;gmail.com</p>
                             </div>
@@ -23,14 +19,13 @@
             </div>
             <div class="col-lg-6">
                 <div class="about-avatar">
-                    <img src="../../../assets/avatar.jpg" title="" alt="" style="border-radius: 50%;">
+                    <img [src]="selectedImage$()" alt="Selected Image" style="border-radius: 50%; width: 350px; height: 350px;">
                 </div>
             </div>
         </div>
         <div>
-            <button type="button" class="button-styles me-2">
-                Вставить фото
-              </button>
+            <button type="button" class="button-styles me-2" (click)="fileInput.click()">Вставить фото</button>
+            <input type="file" (change)="onFileSelected($event)" style="display: none;" #fileInput>
         </div>
         <div class="counter">
             <div class="row">

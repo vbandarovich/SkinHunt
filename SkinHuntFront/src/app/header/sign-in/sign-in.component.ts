@@ -54,7 +54,7 @@ export class SignInComponent {
   signUpForm = new FormGroup({
     email: new FormControl<string>('', { validators: [Validators.required, Validators.email], updateOn: 'change' }),
     password: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' }),
-    confirmPassword: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(8)], updateOn: 'change' })
+    phoneNumber: new FormControl<string>('', { validators: [Validators.required, Validators.minLength(13), Validators.maxLength(13)], updateOn: 'change' })
   },
     {
       validators: PasswordValidator,
@@ -82,8 +82,8 @@ export class SignInComponent {
     return this.signUpForm.controls.password;
   }
 
-  get SignUpRepeatPassword() {
-    return this.signUpForm.controls.confirmPassword;
+  get SignUpPhoneNumber() {
+    return this.signUpForm.controls.phoneNumber;
   }
 
   setActiveTab() {
@@ -110,6 +110,7 @@ export class SignInComponent {
     const command = {
       email: this.SignInEmail.value!,
       password: this.SignInPassword.value!,
+      phoneNumber: this.SignUpPhoneNumber.value!
     };
 
     this.authService.signUp(command).subscribe((result) => {

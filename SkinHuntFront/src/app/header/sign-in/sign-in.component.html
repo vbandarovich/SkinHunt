@@ -115,6 +115,28 @@
           </mdb-success>
         </mdb-form-control>
 
+        <mdb-form-control class="input-style">
+          <input
+            mdbValidate
+            mdbInput
+            type="tel"
+            id="phoneNumber"
+            class="form-control"
+            formControlName="phoneNumber"
+            placeholder="+375293333333"
+            required
+          />
+          <label mdbLabel class="form-label" for="phoneNumber">Номер телефона</label>
+          <mdb-error
+            *ngIf="SignUpPhoneNumber?.invalid && (SignUpPhoneNumber?.dirty || SignUpPhoneNumber?.touched)"
+            ><i class="fas fa-times ps-1"></i>
+          </mdb-error>
+          <mdb-success
+            *ngIf="SignUpPhoneNumber?.valid && (SignUpPhoneNumber?.dirty || SignUpPhoneNumber?.touched)"
+            ><i class="fas fa-check"></i>
+          </mdb-success>
+        </mdb-form-control>
+
         <!-- Password input -->
         <mdb-form-control class="input-style">
           <input
@@ -136,31 +158,6 @@
             *ngIf="SignUpPassword?.valid && (SignUpPassword?.dirty || SignUpPassword?.touched)"
             ><i class="fas fa-check"></i>
           </mdb-success>
-        </mdb-form-control>
-
-        <!-- Repeat Password input -->
-        <mdb-form-control class="input-style">
-          <input
-            mdbValidate
-            mdbInput
-            type="password"
-            id="registerRepeatPassword"
-            class="form-control"
-            formControlName="confirmPassword"
-            required
-          />
-          <label mdbLabel class="form-label" for="registerRepeatPassword">Повторите пароль</label>
-          @if (SignUpRepeatPassword.invalid && (SignUpRepeatPassword.dirty || SignUpRepeatPassword.touched) && signUpForm.errors?.['passwordMismatch']) {
-            <mdb-error>
-              Пароли должны совпадать
-              <i class="fas fa-times ps-1"></i>
-            </mdb-error>
-          }
-          @if (SignUpRepeatPassword.valid && (SignUpRepeatPassword.dirty || SignUpRepeatPassword.touched) && !signUpForm.errors?.['passwordMismatch']) {
-            <mdb-success>
-              <i class="fas fa-check"></i>
-            </mdb-success>
-          }
         </mdb-form-control>
 
         <!-- Submit button -->
