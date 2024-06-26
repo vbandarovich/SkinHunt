@@ -54,7 +54,6 @@ export class BuyPageMainComponent implements OnInit{
     this.http.get<SkinModel[]>(`${API_URL}/skins`).subscribe(
       (response: SkinModel[]) => {
         this.cards$.set(response);
-        console.log(response);
       });
   }
 }

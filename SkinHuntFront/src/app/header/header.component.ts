@@ -2,13 +2,13 @@ import { AuthService } from './../services/auth.service';
 import {MdbCollapseModule} from 'mdb-angular-ui-kit/collapse';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
 import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
-import {ChangeDetectionStrategy, Component, computed, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {MdbModalModule, MdbModalRef, MdbModalService} from 'mdb-angular-ui-kit/modal';
 import {InterfaceLanguage} from "../models/interface-language";
 import {Currency} from "../models/currency";
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -32,6 +32,8 @@ export class HeaderComponent {
   language$ = signal<InterfaceLanguage>('ru');
   currency$ = signal<Currency>('usd');
 
+  router: Router = inject(Router);
+
   userAvatar$ = computed(() => {
     if (this.authService.user$()?.avatar) {
       return this.authService.user$()?.avatar;
@@ -40,10 +42,10 @@ export class HeaderComponent {
     return "../../../assets/unAuthAvatar.jpg";
   });
 
-  constructor(
+  constructor (
     private modalService: MdbModalService,
     public authService: AuthService
-  ) {}
+  ) { }
 
   openSignInModal() {
     this.signInModalRef = this.modalService.open(SignInComponent, {
@@ -61,5 +63,6 @@ export class HeaderComponent {
 
   logOutHandler() {
     this.authService.logOut();
+    this.router.navigate(['']);
   }
 }

@@ -14,9 +14,9 @@ import { SkinModel } from "../../models/skinModel";
   ],
   template: `
     <div class="card-container">
-      <img class="card-image" src="assets/card-image.png" loading="lazy">
+      <img class="card-image" [src]="card().photo" loading="lazy">
       <div class="baseCard-lower-part">
-        @if(card().isDiscount){
+        @if (card().isDiscount) {
           <div class="baseCard-tag">
             <span class="badge bagde-color">-{{(((card().price - card().priceWithDiscount) / card().price) * 100).toFixed(2)}}%</span>
           </div>

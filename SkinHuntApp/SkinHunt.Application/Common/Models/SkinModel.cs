@@ -19,5 +19,7 @@
         public bool IsDiscount { get; set; }
 
         public decimal PriceWithDiscount { get; set; }
+
+        public string Photo {  get; set; }
     }
 }
