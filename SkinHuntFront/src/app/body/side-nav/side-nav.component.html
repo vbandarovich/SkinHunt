@@ -18,13 +18,13 @@
     <a
       class="side-nav-item"
       href="#"
-      [ngClass]="selectedTab$() === 'sale' ? 'active' : ''"
-      (click)="setTab('sale')">
+      [ngClass]="selectedTab$() === 'basket' ? 'active' : ''"
+      (click)="setTab('basket')">
         <div>
-            <i class="fas fa-hand-holding-usd icon-style"></i>
+            <i class="fas fa-shopping-basket icon-style"></i>
         </div>
         <span class="side-nav-item-text">
-            Продажа
+            Корзина
         </span>
     </a>
     <a

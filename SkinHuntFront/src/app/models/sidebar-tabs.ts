@@ -1,4 +1,4 @@
 export type SidebarTabs =
   'buy' |
-  'sale' |
+  'basket' |
   'history';
