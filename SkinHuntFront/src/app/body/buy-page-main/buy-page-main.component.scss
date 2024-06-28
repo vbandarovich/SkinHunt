@@ -328,14 +328,12 @@
 
 .sellOrders-wrapper {
   display: flex;
-  height: 100%;
 }
 
 .sellOrdersList-wrapper {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: center;
   gap: 8px;
   max-height: calc(100vh - 134px);
   padding: 0 4px 40px 0;

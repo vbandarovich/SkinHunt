@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SkinHunt.Application.Common.Models;
 using SkinHunt.Application.Queries;
 
 namespace SkinHunt.Service.Controllers
@@ -20,11 +21,11 @@ namespace SkinHunt.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSkinsAsync()
+        public async Task<IActionResult> GetAllSkinsAsync([FromQuery]string? option)
         {
             try
             {
-                var result = await _mediator.Send(new GetSkinsQuery());
+                var result = await _mediator.Send(new GetSkinsQuery(option));
 
                 if (result.Any())
                 {

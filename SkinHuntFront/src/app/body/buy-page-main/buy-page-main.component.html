@@ -490,9 +490,9 @@
         <div class="buy-page-body">
             <div class="sellOrders-wrapper">
                 <div class="sellOrdersList-wrapper">
-                  @for (itemCard of cards$(); track itemCard) {
-                    <skin-item-card [card]="itemCard"></skin-item-card>
-                  }
+                    @for (itemCard of cardsList$(); track itemCard) {
+                        <skin-item-card [card]="itemCard"></skin-item-card>
+                    }
                 </div>
             </div>
         </div>

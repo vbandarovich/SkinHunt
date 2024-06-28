@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, effect, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, OnInit, signal} from '@angular/core';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
 import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
 import {SkinItemCardComponent} from "../skin-item-card/skin-item-card.component";
@@ -34,6 +34,14 @@ export class BuyPageMainComponent implements OnInit{
 
   constructor(private readonly http: HttpClient){}
 
+  cardsList$ = computed(() => {
+    if (this.typehead$()) {
+      return this.cards$().filter((o) => o.name.toLowerCase().includes(this.typehead$().toLowerCase()));
+    }
+
+    return this.cards$();
+  });
+
   ngOnInit() {
     this.setCards();
   }
@@ -48,12 +56,15 @@ export class BuyPageMainComponent implements OnInit{
 
   setSort(sortItem: SortItems) {
     this.sort$.set(sortItem);
+    this.setCards();
   }
 
   setCards(){
-    this.http.get<SkinModel[]>(`${API_URL}/skins`).subscribe(
+    const apiUrl = `${API_URL}/skins?option=${this.sort$()}`;
+
+    this.http.get<SkinModel[]>(apiUrl).subscribe(
       (response: SkinModel[]) => {
         this.cards$.set(response);
-      });
+    });
   }
 }

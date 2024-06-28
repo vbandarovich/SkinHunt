@@ -9,6 +9,12 @@ namespace SkinHunt.Application.Queries
 {
     public class GetSkinsQuery : IRequest<List<SkinDto>>
     {
+        public string Option { get; set; }
+
+        public GetSkinsQuery(string option)
+        {
+            Option = option;
+        }
     }
 
     public class GetSkinsQueryHandler : IRequestHandler<GetSkinsQuery, List<SkinDto>>
@@ -32,6 +38,42 @@ namespace SkinHunt.Application.Queries
                     .Include(s => s.Type)
                     .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
+
+                if (request.Option == "priceMax")
+                {
+                    result = await _db.Skins
+                    .Include(s => s.Type)
+                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
+                    .OrderByDescending(s => s.Price)
+                    .ToListAsync();
+                }
+
+                if (request.Option == "priceMin")
+                {
+                    result = await _db.Skins
+                    .Include(s => s.Type)
+                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
+                    .OrderBy(s => s.Price)
+                    .ToListAsync();
+                }
+
+                if (request.Option == "floatMax")
+                {
+                    result = await _db.Skins
+                    .Include(s => s.Type)
+                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
+                    .OrderByDescending(s => s.Float)
+                    .ToListAsync();
+                }
+
+                if (request.Option == "floatMin")
+                {
+                    result = await _db.Skins
+                    .Include(s => s.Type)
+                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
+                    .OrderBy(s => s.Float)
+                    .ToListAsync();
+                }
 
                 if (result.Any())
                 {
