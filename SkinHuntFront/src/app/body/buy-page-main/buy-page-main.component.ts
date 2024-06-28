@@ -36,7 +36,7 @@ export class BuyPageMainComponent implements OnInit{
 
   cardsList$ = computed(() => {
     if (this.typehead$()) {
-      return this.cards$().filter((o) => o.name.toLowerCase().includes(this.typehead$().toLowerCase()));
+      return this.cards$().filter((o) => o.name.toLowerCase().includes(this.typehead$().toLowerCase().trim()));
     }
 
     return this.cards$();

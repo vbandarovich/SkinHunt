@@ -18,18 +18,6 @@
     <a
       class="side-nav-item"
       href="#"
-      [ngClass]="selectedTab$() === 'quick sale' ? 'active' : ''"
-      (click)="setTab('quick sale')">
-        <div>
-            <i class="fas fa-poo-storm icon-style"></i>
-        </div>
-        <span class="side-nav-item-text">
-            Быстрая продажа
-        </span>
-    </a>
-    <a
-      class="side-nav-item"
-      href="#"
       [ngClass]="selectedTab$() === 'sale' ? 'active' : ''"
       (click)="setTab('sale')">
         <div>
@@ -37,18 +25,6 @@
         </div>
         <span class="side-nav-item-text">
             Продажа
-        </span>
-    </a>
-    <a
-      class="side-nav-item"
-      href="#"
-      [ngClass]="selectedTab$() === 'cash out' ? 'active' : ''"
-      (click)="setTab('cash out')">
-        <div>
-            <i class="fas fa-dollar-sign icon-style"></i>
-        </div>
-        <span class="side-nav-item-text">
-            Вывод средств
         </span>
     </a>
     <a
