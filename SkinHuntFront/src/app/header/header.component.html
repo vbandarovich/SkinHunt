@@ -124,6 +124,12 @@
               <li>
                 <a class="dropdown-item" [routerLink]="['/profile']">Профиль</a>
               </li>
+              @if (this.adminMenu$()) 
+              {
+                <li>
+                  <a class="dropdown-item" [routerLink]="['/users']">Пользователи</a>
+                </li>
+              }
               <li>
                 <a class="dropdown-item" (click)="logOutHandler()">
                   Выйти

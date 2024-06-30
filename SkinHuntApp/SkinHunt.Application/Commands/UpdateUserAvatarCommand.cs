@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Common.Interfaces;
 using SkinHunt.Application.Common.Models;
 
@@ -22,12 +24,18 @@ public class UpdateUserAvatarCommandHandler : IRequestHandler<UpdateUserAvatarCo
     private readonly DbContext _dbContext;
     private readonly IJwtExtension _jwtExtension;
     private readonly IMapper _mapper;
+    private readonly UserManager<UserEntity> _userManager;
 
-    public UpdateUserAvatarCommandHandler(DbContext dbContext, IJwtExtension jwtExtension, IMapper mapper)
+    public UpdateUserAvatarCommandHandler(
+        DbContext dbContext,
+        IJwtExtension jwtExtension,
+        IMapper mapper,
+        UserManager<UserEntity> userManager)
     {
         _dbContext = dbContext;
         _jwtExtension = jwtExtension;
         _mapper = mapper;
+        _userManager = userManager;
     }
 
     public async Task<UserDto> Handle(UpdateUserAvatarCommand request, CancellationToken cancellationToken)
@@ -45,6 +53,9 @@ public class UpdateUserAvatarCommandHandler : IRequestHandler<UpdateUserAvatarCo
             .FirstAsync(o => o.Id == request.Model.UserId);
 
         userDto.Token = token;
+
+        var roles = await _userManager.GetRolesAsync(user);
+        userDto.Roles = roles.ToArray();
 
         return userDto;
     }

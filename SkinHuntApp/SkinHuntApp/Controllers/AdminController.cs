@@ -64,6 +64,7 @@ namespace SkinHunt.Service.Controllers
         public async Task<IActionResult> GetUsers()
         {
             var result = await _mediator.Send(new GetUsersQuery());
+            result.Reverse();
 
             if (result.Any())
             {

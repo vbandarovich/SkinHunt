@@ -24,6 +24,7 @@ namespace SkinHunt.Application.Commands
     public class SignInCommandHandler : IRequestHandler<SignInCommand, UserDto>
     {
         private readonly SignInManager<UserEntity> _signInManager;
+        private readonly UserManager<UserEntity> _userManager;
         private readonly IJwtExtension _jwtExtension;
         private readonly DbContext _dbContext;
         private readonly IMapper _mapper;
@@ -32,12 +33,14 @@ namespace SkinHunt.Application.Commands
             SignInManager<UserEntity> signInManager,
             IJwtExtension jwtExtension,
             DbContext dbContext,
-            IMapper mapper)
+            IMapper mapper,
+            UserManager<UserEntity> userManager)
         {
             _signInManager = signInManager;
             _jwtExtension = jwtExtension;
             _dbContext = dbContext;
             _mapper = mapper;
+            _userManager = userManager;
         }
 
         public async Task<UserDto> Handle(SignInCommand request, CancellationToken cancellationToken)
@@ -55,6 +58,9 @@ namespace SkinHunt.Application.Commands
                     .FirstAsync(o => o.UserName == request.UserName);
 
                 userDto.Token = token;
+
+                var roles = await _userManager.GetRolesAsync(user);
+                userDto.Roles = roles.ToArray();
 
                 return userDto;
             }

@@ -13,12 +13,24 @@ export class ProfileComponent implements OnInit {
   userService = inject(UserService);
   authService = inject(AuthService);
   selectedImage$ = signal<string>("../../../assets/unAuthAvatar.jpg");
+  userEmail$ = signal<string>('-');
+  userNumber$ = signal<string>('-');
 
   ngOnInit() {
     const avatar = this.authService.user$()?.avatar;
+    const email = this.authService.user$()?.email;
+    const phoneNumber = this.authService.user$()?.phoneNumber;
 
     if (avatar) {
       this.selectedImage$.set(avatar);
+    }
+
+    if (email) {
+      this.userEmail$.set(email);
+    }
+
+    if (phoneNumber) {
+      this.userNumber$.set(phoneNumber);
     }
   }
 

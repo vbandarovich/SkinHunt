@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, computed, effect, OnInit, signal} from '@angular/core';
+import {ChangeDetectionStrategy, Component, computed, effect, inject, signal} from '@angular/core';
 import {MdbRippleModule} from 'mdb-angular-ui-kit/ripple';
 import { MdbDropdownModule} from 'mdb-angular-ui-kit/dropdown';
 import {SkinItemCardComponent} from "../skin-item-card/skin-item-card.component";
@@ -7,8 +7,8 @@ import {FiltersSubmenuItems} from "../../models/filters-submenu-items";
 import { SortItems } from '../../models/sort';
 import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { HttpClient } from '@angular/common/http';
-import { API_URL } from '../../constants/URL';
 import { SkinModel } from '../../models/skinModel';
+import { SkinService } from '../../services/skin.service';
 
 @Component({
   selector: 'app-buy-page-main',
@@ -25,14 +25,26 @@ import { SkinModel } from '../../models/skinModel';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
-export class BuyPageMainComponent implements OnInit{
-  cards$ = signal<SkinModel[]>([]);
+export class BuyPageMainComponent {
+  skinService = inject(SkinService);
 
-  sort$ = signal<SortItems>('default');
+  cards$ = signal<SkinModel[]>([]);
+  sortBy$ = signal<SortItems>('default');
+  priceAbove$ = signal<number>(0);
+  priceLess$ = signal<number>(0);
+  types$ = signal<number[]>([]);
+  rarity$ = signal<string[]>([]);
+  floatAbove$ = signal<number>(0);
+  floatLess$ = signal<number>(0);
+
   typehead$ = signal<string>('');
   showSubmenuList$ = signal<FiltersSubmenuItems[]>([]);
 
-  constructor(private readonly http: HttpClient){}
+  constructor(private readonly http: HttpClient) {
+    effect(() => {
+      this.getCards();
+    });
+  }
 
   cardsList$ = computed(() => {
     if (this.typehead$()) {
@@ -42,10 +54,6 @@ export class BuyPageMainComponent implements OnInit{
     return this.cards$();
   });
 
-  ngOnInit() {
-    this.setCards();
-  }
-
   onChangedSubmenuList(submenu: FiltersSubmenuItems) {
     if (this.showSubmenuList$().includes(submenu)) {
       this.showSubmenuList$.set(this.showSubmenuList$().filter((item) => item !== submenu));
@@ -54,17 +62,56 @@ export class BuyPageMainComponent implements OnInit{
     }
   }
 
-  setSort(sortItem: SortItems) {
-    this.sort$.set(sortItem);
-    this.setCards();
+  setSortBy(sortItem: SortItems) {
+    this.sortBy$.set(sortItem);
   }
 
-  setCards(){
-    const apiUrl = `${API_URL}/skins?option=${this.sort$()}`;
+  onChangePriceAbove($event: any) {
+    this.priceAbove$.set($event.target.value);
+  }
 
-    this.http.get<SkinModel[]>(apiUrl).subscribe(
-      (response: SkinModel[]) => {
-        this.cards$.set(response);
-    });
+  onChangePriceLess($event: any) {
+    this.priceLess$.set($event.target.value);
+  }
+
+  onChangeType(numberCheckBox: number) {
+    if (this.types$().includes(numberCheckBox)) {
+      this.types$.set(this.types$().filter((item) => item !== numberCheckBox));
+    } else {
+      this.types$.update((items) => [...items, numberCheckBox]);
+    }
+  }
+
+  onChangeRarity(rarityCheckBox: string) {
+    if (this.rarity$().includes(rarityCheckBox)) {
+      this.rarity$.set(this.rarity$().filter((item) => item !== rarityCheckBox));
+    } else {
+      this.rarity$.update((items) => [...items, rarityCheckBox]);
+    }
+  }
+
+  onChangeFloatAbove($event: any) {
+    this.floatAbove$.set($event.target.value);
+  }
+
+  onChangeFloatLess($event: any) {
+    this.floatLess$.set($event.target.value);
+  }
+
+  getCards() {
+    const filters = {
+      sortBy: this.sortBy$(),
+      priceAbove: this.priceAbove$(),
+      priceLess: this.priceLess$(),
+      types: this.types$(),
+      rarity: this.rarity$(),
+      floatAbove: this.floatAbove$(),
+      floatLess: this.floatLess$()
+    }
+
+    this.skinService.getSortedCards(filters)
+      .subscribe((skins) => {
+        this.cards$.set(skins);
+      });
   }
 }

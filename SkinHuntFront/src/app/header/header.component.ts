@@ -42,6 +42,12 @@ export class HeaderComponent {
     return "../../../assets/unAuthAvatar.jpg";
   });
 
+  adminMenu$ = computed(() => {
+    const roles = this.authService.user$()?.roles;
+
+    return roles?.includes('admin')
+  });
+
   constructor (
     private modalService: MdbModalService,
     public authService: AuthService

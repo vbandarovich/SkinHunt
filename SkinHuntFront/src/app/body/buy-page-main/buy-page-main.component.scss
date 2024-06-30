@@ -1,3 +1,9 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 .buy-page-main {
   display: grid;
   grid-template-rows: 100%;
@@ -106,29 +112,6 @@
   border: 0;
   color: #fff;
   background-color: transparent;
-}
-
-.buy-page-button {
-  display: flex;
-  margin-top: 16px;
-}
-
-.buy-page-reset-button {
-  width: 100%;
-}
-
-.btn-reset {
-  height: 32px;
-  width: 100%;
-  padding: 0;
-  color: #806cf5;
-  background-color: transparent;
-  border: 1px solid #806cf5;
-}
-
-.btn-reset:hover {
-  color: #a99afa;
-  border: 1px solid #a99afa;
 }
 
 .icon-styles {
@@ -410,37 +393,4 @@
   background-color: transparent;
   border-color: white;
   opacity: 70%;
-}
-
-.colorName {
-  color: transparent;
-  background-clip: text;
-}
-
-.red {
-  background-image: linear-gradient(to left, #9c3333, #ec2e4d);
-}
-
-.blue {
-  background-image: linear-gradient(to left, #514abb, #5314e4);
-}
-
-.yellow {
-  background-image: linear-gradient(to left, #b6da35, #e4fa1f);
-}
-
-.green {
-  background-image: linear-gradient(to left, #98e442, #3de713);
-}
-
-.pirple {
-  background-image: linear-gradient(to left, #8f2d82, #5c0a55);
-}
-
-.gray {
-  background-image: linear-gradient(to left, #817b7b, #f0f0f0);
-}
-
-.brown {
-  background-image: linear-gradient(to left, #865330, #ee8936);
 }

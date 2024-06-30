@@ -3,18 +3,26 @@ using AutoMapper.QueryableExtensions;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SkinHunt.Application.Common.Enums;
 using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Queries
 {
     public class GetSkinsQuery : IRequest<List<SkinDto>>
     {
-        public string Option { get; set; }
+        public string SortBy { get; set; }
 
-        public GetSkinsQuery(string option)
-        {
-            Option = option;
-        }
+        public decimal? PriceAbove { get; set; }
+
+        public decimal? PriceLess { get; set; }
+
+        public Category[] Types { get; set; }
+
+        public string[] Rarity {  get; set; }
+
+        public double? FloatAbove { get; set; }
+
+        public double? FloatLess { get; set; }
     }
 
     public class GetSkinsQueryHandler : IRequestHandler<GetSkinsQuery, List<SkinDto>>
@@ -33,47 +41,62 @@ namespace SkinHunt.Application.Queries
         public async Task<List<SkinDto>> Handle(GetSkinsQuery request, CancellationToken cancellationToken)
         {
             try
-            {
-                var result = await _db.Skins
+            { 
+                var query = _db.Skins
                     .Include(s => s.Type)
-                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
-                    .ToListAsync();
-
-                if (request.Option == "priceMax")
+                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider);
+                
+                if (request.PriceAbove is not null)
                 {
-                    result = await _db.Skins
-                    .Include(s => s.Type)
-                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
-                    .OrderByDescending(s => s.Price)
-                    .ToListAsync();
+                    query = query.Where(o => o.PriceWithDiscount >= request.PriceAbove);
                 }
 
-                if (request.Option == "priceMin")
+                if (request.PriceLess is not null)
                 {
-                    result = await _db.Skins
-                    .Include(s => s.Type)
-                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
-                    .OrderBy(s => s.Price)
-                    .ToListAsync();
+                    query = query.Where(o => o.PriceWithDiscount <= request.PriceLess);
                 }
 
-                if (request.Option == "floatMax")
+                if (request.Types is not null)
                 {
-                    result = await _db.Skins
-                    .Include(s => s.Type)
-                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
-                    .OrderByDescending(s => s.Float)
-                    .ToListAsync();
+                    query = query.Where(o => request.Types.Contains(o.Type.Category));
                 }
 
-                if (request.Option == "floatMin")
+                if (request.Rarity is not null) 
                 {
-                    result = await _db.Skins
-                    .Include(s => s.Type)
-                    .ProjectTo<SkinDto>(_mapper.ConfigurationProvider)
-                    .OrderBy(s => s.Float)
-                    .ToListAsync();
+                    query = query.Where(o => request.Rarity.Contains(o.Rarity));
                 }
+
+                if (request.FloatAbove is not null)
+                {
+                    query = query.Where(o => o.Float >= request.FloatAbove);
+                }
+
+                if (request.FloatLess is not null)
+                {
+                    query = query.Where(o => o.Float <= request.FloatLess);
+                }
+
+                if (request.SortBy == "priceMax")
+                {
+                    query = query.OrderByDescending(s => s.Price);            
+                }
+
+                if (request.SortBy == "priceMin")
+                {
+                    query = query.OrderBy(s => s.Price);             
+                }
+
+                if (request.SortBy == "floatMax")
+                {
+                    query = query.OrderByDescending(s => s.Float);            
+                }
+
+                if (request.SortBy == "floatMin")
+                {
+                    query = query.OrderBy(s => s.Float);                 
+                }
+
+                var result = await query.ToListAsync();
 
                 if (result.Any())
                 {

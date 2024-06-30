@@ -21,11 +21,11 @@ namespace SkinHunt.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAllSkinsAsync([FromQuery]string? option)
+        public async Task<IActionResult> GetAllSkinsAsync([FromQuery] GetSkinsQuery query)
         {
             try
             {
-                var result = await _mediator.Send(new GetSkinsQuery(option));
+                var result = await _mediator.Send(query);
 
                 if (result.Any())
                 {

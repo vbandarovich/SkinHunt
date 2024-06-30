@@ -59,8 +59,10 @@ namespace SkinHunt.Application.Commands
                     .FirstAsync(o => o.UserName == user.UserName);
                 
                 var token = await _jwtExtension.GenerateTokenAsync(user);
-
                 userDto.Token = token;
+
+                var roles = await _userManager.GetRolesAsync(user);
+                userDto.Roles = roles.ToArray();
 
                 return userDto;
             }

@@ -2,9 +2,11 @@ import { Routes } from '@angular/router';
 import { BuyPageComponent } from './body/buy-page/buy-page.component';
 import { ProfileComponent } from './body/profile/profile.component';
 import { authGuard } from './guards/auth.guard';
+import { AdminComponent } from './body/admin/admin.component';
 
 export const BODY_ROUTES: Routes = [
-  { path: '',
+  { 
+    path: '',
     pathMatch: 'full',
     component: BuyPageComponent
   },
@@ -14,4 +16,10 @@ export const BODY_ROUTES: Routes = [
     component: ProfileComponent,
     canActivate: [ authGuard() ]
   },
+  {
+    path: 'users',
+    pathMatch: 'full',
+    component: AdminComponent,
+    canActivate: [ authGuard() ]
+  }
 ]

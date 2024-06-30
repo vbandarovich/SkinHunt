@@ -6,4 +6,5 @@ export interface User {
   balance: number;
   avatar: string;
   token: string;
+  roles: string[];
 }

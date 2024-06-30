@@ -38,12 +38,12 @@
                   @if (showSubmenuList$().includes('price')) {
                     <div class="skinPrice">
                       <form class="skinPrice-form">
-                        <input type="text" class="skinPrice-input" placeholder="Br 0.00">
+                        <input type="number" class="skinPrice-input" placeholder="Br 0.00" (change)="onChangePriceAbove($event)">
                       </form>
                       <div class="skinPrice-delimiter">
                       </div>
                       <form class="skinPrice-form">
-                        <input type="text" class="skinPrice-input" placeholder="Br ∞">
+                        <input type="number" class="skinPrice-input" placeholder="Br ∞" (change)="onChangePriceLess($event)">
                       </form>
                     </div>
                   }
@@ -71,7 +71,7 @@
                                 type="checkbox"
                                 value=""
                                 id="Knifes"
-                                [checked]="false"
+                                (change)="onChangeType(0)"
                               />
                               <label class="" for="Knifes">Ножи</label>
                             </li>
@@ -82,7 +82,7 @@
                                 type="checkbox"
                                 value=""
                                 id="Gloves"
-                                [checked]="false"
+                                (change)="onChangeType(1)"
                               />
                               <label class="" for="Gloves">Перчатки</label>
                             </li>
@@ -93,7 +93,7 @@
                                 type="checkbox"
                                 value=""
                                 id="Pistols"
-                                [checked]="false"
+                                (change)="onChangeType(2)"
                               />
                               <label class="" for="Pistols">Пистолеты</label>
                             </li>
@@ -104,7 +104,7 @@
                                 type="checkbox"
                                 value=""
                                 id="SMGs"
-                                [checked]="false"
+                                (change)="onChangeType(3)"
                               />
                               <label class="" for="SMGs">ПП</label>
                             </li>
@@ -115,7 +115,7 @@
                                 type="checkbox"
                                 value=""
                                 id="AssaultRifles"
-                                [checked]="false"
+                                (change)="onChangeType(4)"
                               />
                               <label class="" for="AssaultRifles">Штурмовые винтовки</label>
                             </li>
@@ -126,7 +126,7 @@
                                 type="checkbox"
                                 value=""
                                 id="SniperRifles"
-                                [checked]="false"
+                                (change)="onChangeType(5)"
                               />
                               <label class="" for="SniperRifles">Снайперские винтовки</label>
                             </li>
@@ -137,7 +137,7 @@
                                 type="checkbox"
                                 value=""
                                 id="ShotGuns"
-                                [checked]="false"
+                                (change)="onChangeType(6)"
                               />
                               <label class="" for="ShotGuns">Дробовики</label>
                             </li>
@@ -148,7 +148,7 @@
                                 type="checkbox"
                                 value=""
                                 id="MachineGuns"
-                                [checked]="false"
+                                (change)="onChangeType(7)"
                               />
                               <label class="" for="MachineGuns">Пулеметы</label>
                             </li>
@@ -179,7 +179,7 @@
                                 type="checkbox"
                                 value=""
                                 id="factoryNew"
-                                [checked]="false"
+                                (change)="onChangeRarity('Factory New')"
                               />
                               <label class="" for="factoryNew">Прямо с завода</label>
                             </li>
@@ -190,7 +190,7 @@
                                 type="checkbox"
                                 value=""
                                 id="minimalWear"
-                                [checked]="false"
+                                (change)="onChangeRarity('Minimal Wear')"
                               />
                               <label class="" for="minimalWear">Немного поношенное</label>
                             </li>
@@ -201,7 +201,7 @@
                                 type="checkbox"
                                 value=""
                                 id="fieldTested"
-                                [checked]="false"
+                                (change)="onChangeRarity('Field-Tested')"
                               />
                               <label class="" for="fieldTested">После полевых испытаний</label>
                             </li>
@@ -212,7 +212,7 @@
                                 type="checkbox"
                                 value=""
                                 id="wellworn"
-                                [checked]="false"
+                                (change)="onChangeRarity('Well-Worn')"
                               />
                               <label class="" for="wellworn">Поношенное</label>
                             </li>
@@ -223,106 +223,9 @@
                                 type="checkbox"
                                 value=""
                                 id="battleScarred"
-                                [checked]="false"
+                                (change)="onChangeRarity('Battle-Scarred')"
                               />
                               <label class="" for="battleScarred">Закаленное в боях</label>
-                            </li>
-                        </ul>
-                    </div>
-                  }
-                    <div class="collapse-container">
-                        <div class="collapse-container-header">
-                            <div class="collapse-container-title-group">
-                                <div class="media-queries-desktop">
-                                    <span class="text-savedfilters">
-                                        Цвет
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                        <button class="btn-icon-plus" (click)="onChangedSubmenuList('color')">
-                            <i class="fas fa-plus fa-xs icon-styles"></i>
-                        </button>
-                    </div>
-                  @if (showSubmenuList$().includes('color')) {
-                    <div class="skinColor">
-                        <ul class="skinColor-list">
-                            <li class="skinColor-list-item">
-                                <input
-                                mdbCheckbox
-                                class="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="colorRed"
-                                [checked]="false"
-                              />
-                              <label class="colorName red" for="colorRed">Красный</label>
-                            </li>
-                            <li class="skinType-list-item">
-                                <input
-                                mdbCheckbox
-                                class="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="colorBlue"
-                                [checked]="false"
-                              />
-                              <label class="colorName blue" for="colorBlue">Синий</label>
-                            </li>
-                            <li class="skinType-list-item">
-                                <input
-                                mdbCheckbox
-                                class="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="colorYellow"
-                                [checked]="false"
-                              />
-                              <label class="colorName yellow" for="colorYellow">Желтый</label>
-                            </li>
-                            <li class="skinType-list-item">
-                                <input
-                                mdbCheckbox
-                                class="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="colorGreen"
-                                [checked]="false"
-                              />
-                              <label class="colorName green" for="colorGreen">Зеленый</label>
-                            </li>
-                            <li class="skinType-list-item">
-                                <input
-                                mdbCheckbox
-                                class="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="colorPirple"
-                                [checked]="false"
-                              />
-                              <label class="colorName pirple" for="colorPirple">Фиолетовый</label>
-                            </li>
-                            <li class="skinType-list-item">
-                                <input
-                                mdbCheckbox
-                                class="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="colorGray"
-                                [checked]="false"
-                              />
-                              <label class="colorName gray" for="colorGray">Серый</label>
-                            </li>
-                            <li class="skinType-list-item">
-                                <input
-                                mdbCheckbox
-                                class="form-check-input"
-                                type="checkbox"
-                                value=""
-                                id="colorBrown"
-                                [checked]="false"
-                              />
-                              <label class="colorName brown" for="colorBrown">Коричневый</label>
                             </li>
                         </ul>
                     </div>
@@ -344,24 +247,15 @@
                     @if (showSubmenuList$().includes('float')) {
                     <div class="skinFloat">
                         <form class="skinFloat-form">
-                          <input type="text" class="skinFloat-input" placeholder="0.0000">
+                          <input type="number" class="skinFloat-input" placeholder="0.0000" (change)="onChangeFloatAbove($event)">
                         </form>
                         <div class="skinFloat-delimiter">
                         </div>
                         <form class="skinFloat-form">
-                          <input type="text" class="skinFloat-input" placeholder="1">
+                          <input type="number" class="skinFloat-input" placeholder="1" (change)="onChangeFloatLess($event)">
                         </form>
                       </div>
                   }
-                </div>
-            </div>
-            <div class="buy-page-button">
-                <div class="buy-page-reset-button">
-                    <button type="button" class="btn-reset">
-                    <span class="btn-reset-text">
-                        Сброс
-                    </span>
-                </button>
                 </div>
             </div>
         </div>
@@ -415,22 +309,22 @@
                                             aria-expanded="false"
                                             mdbDropdownToggle
                                           >
-                                          @if (sort$() === 'default') {
+                                          @if (sortBy$() === 'default') {
                                             По умолчанию
                                           }
-                                          @if (sort$() === 'priceMax') {
+                                          @if (sortBy$() === 'priceMax') {
                                             <i class="fas fa-sort-amount-down me-1"></i>
                                             Цена: Макс.
                                           }
-                                          @if (sort$() === 'priceMin') {
+                                          @if (sortBy$() === 'priceMin') {
                                             <i class="fas fa-sort-amount-up me-1"></i>
                                             Цена: Мин.
                                           }
-                                          @if (sort$() === 'floatMax') {
+                                          @if (sortBy$() === 'floatMax') {
                                             <i class="fas fa-sort-amount-down me-1"></i>
                                             Float: Макс.
                                           }
-                                          @if (sort$() === 'floatMin') {
+                                          @if (sortBy$() === 'floatMin') {
                                             <i class="fas fa-sort-amount-up me-1"></i>
                                             Float: Мин.
                                           }
@@ -441,30 +335,30 @@
                                             aria-labelledby="filterDropdownMenuButton"
                                           >
                                             <li>
-                                                <a class="dropdown-item" href="#" (click)="setSort('default')">
+                                                <a class="dropdown-item" href="#" (click)="setSortBy('default')">
                                                     По умолчанию
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#" (click)="setSort('priceMax')">
+                                                <a class="dropdown-item" href="#" (click)="setSortBy('priceMax')">
                                                     <i class="fas fa-sort-amount-down me-1"></i>
                                                     Цена: Макс.
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#" (click)="setSort('priceMin')">
+                                                <a class="dropdown-item" href="#" (click)="setSortBy('priceMin')">
                                                     <i class="fas fa-sort-amount-up me-1"></i>
                                                     Цена: Мин.
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#" (click)="setSort('floatMax')">
+                                                <a class="dropdown-item" href="#" (click)="setSortBy('floatMax')">
                                                     <i class="fas fa-sort-amount-down me-1"></i>
                                                     Float: Макс.
                                                 </a>
                                             </li>
                                             <li>
-                                                <a class="dropdown-item" href="#" (click)="setSort('floatMin')">
+                                                <a class="dropdown-item" href="#" (click)="setSortBy('floatMin')">
                                                     <i class="fas fa-sort-amount-up me-1"></i>
                                                     Float: Мин.
                                                 </a>
