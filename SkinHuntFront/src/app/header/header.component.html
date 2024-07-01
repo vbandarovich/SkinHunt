@@ -99,6 +99,9 @@
       </div>
       <div class="d-flex align-items-center">
         @if (this.authService.user$()) {
+          <div class="text-white fs-6 me-2">
+            Баланс: {{userBalance$()}} $
+          </div>
           <div mdbDropdown #profileDropdown class="dropdown">
             <button
               class="btn dropdown-toggle p-0 d-flex align-items-center"

@@ -15,9 +15,6 @@
                                         Сохр. фильтры
                                     </span>
                                 </div>
-                                <div class="count-filters">
-                                    0
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -38,12 +35,12 @@
                   @if (showSubmenuList$().includes('price')) {
                     <div class="skinPrice">
                       <form class="skinPrice-form">
-                        <input type="number" class="skinPrice-input" placeholder="Br 0.00" (change)="onChangePriceAbove($event)">
+                        <input type="number" class="skinPrice-input" placeholder="USD 0.00" (change)="onChangePriceAbove($event)">
                       </form>
                       <div class="skinPrice-delimiter">
                       </div>
                       <form class="skinPrice-form">
-                        <input type="number" class="skinPrice-input" placeholder="Br ∞" (change)="onChangePriceLess($event)">
+                        <input type="number" class="skinPrice-input" placeholder="USD ∞" (change)="onChangePriceLess($event)">
                       </form>
                     </div>
                   }
@@ -264,13 +261,6 @@
         <div>
             <div class="content-header-container">
                 <div class="spacer-container">
-                    <div class="spacer-item" style="margin-right: 24px;">
-                        <div class="refresh-button">
-                            <button class="refresh-btn">
-                                <i class="fas fa-redo"></i>
-                            </button>
-                        </div>
-                    </div>
                     <div class="spacer-item">
                         <div>
                             <div class="spacer-container">

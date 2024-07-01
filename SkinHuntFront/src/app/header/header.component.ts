@@ -48,6 +48,10 @@ export class HeaderComponent {
     return roles?.includes('admin')
   });
 
+  userBalance$ = computed(() => {
+    return this.authService.user$()?.balance;
+  });
+
   constructor (
     private modalService: MdbModalService,
     public authService: AuthService

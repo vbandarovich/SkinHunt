@@ -1,12 +1,11 @@
 <div class="side-nav-styles">
-    <div class="">
+    <div>
         <img src="assets/logo_market.png" class="MarketLogo" alt="Market">
     </div>
     <a
-      class="side-nav-item"
-      href="#"
+      routerLink=""
       [ngClass]="selectedTab$() === 'buy' ? 'active' : ''"
-      (click)="setTab('buy')"
+      class="side-nav-item"
     >
         <div>
             <i class="fas fa-shopping-cart icon-style"></i>
@@ -16,10 +15,10 @@
         </span>
     </a>
     <a
-      class="side-nav-item"
-      href="#"
+      routerLink="/basket"
       [ngClass]="selectedTab$() === 'basket' ? 'active' : ''"
-      (click)="setTab('basket')">
+      class="side-nav-item"
+    >
         <div>
             <i class="fas fa-shopping-basket icon-style"></i>
         </div>
@@ -28,10 +27,10 @@
         </span>
     </a>
     <a
-      class="side-nav-item"
-      href="#"
+      routerLink="/history"
       [ngClass]="selectedTab$() === 'history' ? 'active' : ''"
-      (click)="setTab('history')">
+      class="side-nav-item"
+    >
         <div>
             <i class="fas fa-history icon-style"></i>
         </div>

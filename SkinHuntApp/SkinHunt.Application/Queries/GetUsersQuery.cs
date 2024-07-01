@@ -1,8 +1,10 @@
 ﻿using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Common.Models;
 
 namespace SkinHunt.Application.Queries
@@ -16,12 +18,14 @@ namespace SkinHunt.Application.Queries
         private readonly DbContext _dbContext;
         private readonly IMapper _mapper;
         private readonly ILogger<GetUsersQueryHandler> _logger;
+        private readonly UserManager<UserEntity> _userManager;
 
-        public GetUsersQueryHandler(DbContext dbContext, IMapper mapper, ILogger<GetUsersQueryHandler> logger)
+        public GetUsersQueryHandler(DbContext dbContext, IMapper mapper, ILogger<GetUsersQueryHandler> logger, UserManager<UserEntity> userManager = null)
         {
             _dbContext = dbContext;
             _mapper = mapper;
             _logger = logger;
+            _userManager = userManager;
         }
 
         public async Task<List<UserDto>> Handle(GetUsersQuery request, CancellationToken cancellationToken)
@@ -31,6 +35,13 @@ namespace SkinHunt.Application.Queries
                 var users = await _dbContext.Users
                     .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
+
+                //foreach (var user in users)
+                //{
+                //    var userEntity = await _userManager.FindByIdAsync(user.Id);
+                //    var roles = await _userManager.GetRolesAsync(userEntity);
+                //    user.Roles = roles.ToArray();
+                //}
 
                 if (users.Any())
                 {

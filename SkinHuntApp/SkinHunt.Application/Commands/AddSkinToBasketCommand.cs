@@ -8,14 +8,14 @@ namespace SkinHunt.Application.Commands
 {
     public class AddSkinToBasketCommand : IRequest
     {
-        public string UserId { get; set; }
+        public string User { get; set; }
         
-        public Guid SkinId { get; set; }
+        public string Skin { get; set; }
 
-        public AddSkinToBasketCommand(string userId, Guid skinId)
+        public AddSkinToBasketCommand(string user, string skin)
         {
-            UserId = userId;
-            SkinId = skinId;
+            User = user;
+            Skin = skin;
         }
     }
 
@@ -34,8 +34,8 @@ namespace SkinHunt.Application.Commands
 
         public async Task Handle(AddSkinToBasketCommand request, CancellationToken cancellationToken)
         {
-            var user = await _dbContext.Users.FirstAsync(o => o.Id == request.UserId);
-            var skin = await _dbContext.Skins.FirstAsync(o => o.Id == request.SkinId);
+            var user = await _dbContext.Users.FirstAsync(o => o.Id == request.User);
+            var skin = await _dbContext.Skins.FirstAsync(o => o.Id.ToString() == request.Skin);
             
             var entity = new BasketEntity()
             {

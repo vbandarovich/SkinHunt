@@ -1,20 +1,32 @@
-import {Component, signal} from '@angular/core';
+import {Component, computed, inject, signal} from '@angular/core';
 import {SidebarTabs} from "../../models/sidebar-tabs";
 import {NgClass} from "@angular/common";
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-side-nav',
   standalone: true,
   imports: [
-    NgClass
+    NgClass,
+    RouterModule,
   ],
   templateUrl: './side-nav.component.html',
   styleUrl: './side-nav.component.scss'
 })
 export class SideNavComponent {
-  selectedTab$ = signal<SidebarTabs>('buy');
+  router: Router = inject(Router);
 
-  setTab(tab: SidebarTabs) {
-    this.selectedTab$.set(tab);
-  }
+  selectedTab$ = computed(() => {
+    const currentUrl = this.router.url;
+
+    if (currentUrl === '/basket') {
+      return 'basket';
+    }
+
+    if (currentUrl === '/history') {
+      return 'history';
+    }
+
+    return 'buy';
+  });
 }
