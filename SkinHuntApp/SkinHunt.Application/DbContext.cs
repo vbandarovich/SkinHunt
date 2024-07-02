@@ -12,6 +12,8 @@ namespace SkinHunt.Application
 
         public DbSet<BasketEntity> Basket { get; set; }
 
+        public DbSet<SoldSkinsEntity> SoldsSkins { get; set; }
+
         public DbContext(DbContextOptions<DbContext> options) : base(options)
         {
         }

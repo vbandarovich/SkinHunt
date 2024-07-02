@@ -10,11 +10,6 @@ namespace SkinHunt.Application.Queries
     public class GetSkinsByUserIdFromBasketQuery : IRequest<List<BasketDto>>
     {
         public string Id { get; set; }
-
-        public GetSkinsByUserIdFromBasketQuery(string id)
-        {
-            Id = id;
-        }
     }
 
     public class GetSkinsByUserIdQueryHandler : IRequestHandler<GetSkinsByUserIdFromBasketQuery, List<BasketDto>>

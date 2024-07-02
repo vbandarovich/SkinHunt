@@ -375,7 +375,7 @@
             <div class="sellOrders-wrapper">
                 <div class="sellOrdersList-wrapper">
                     @for (itemCard of cardsList$(); track itemCard) {
-                        <skin-item-card [card]="itemCard"></skin-item-card>
+                        <skin-item-card [card]="itemCard" (addToBasket)="addSkinToBasket($event)"></skin-item-card>
                     }
                 </div>
             </div>

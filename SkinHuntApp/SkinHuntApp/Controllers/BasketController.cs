@@ -22,13 +22,13 @@ namespace SkinHunt.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetSkinsFromBasket([FromBody] string userId)
+        public async Task<ActionResult> GetSkinsFromBasket([FromQuery] GetSkinsByUserIdFromBasketQuery query)
         {
             try
             {
-                await _mediator.Send(new GetSkinsFromBasketQuery(userId));
+                var result = await _mediator.Send(query);
 
-                return Ok();
+                return Ok(result);
             }
             catch (Exception ex)
             {
@@ -42,7 +42,7 @@ namespace SkinHunt.Service.Controllers
         {
             try
             {
-                await _mediator.Send(new AddSkinToBasketCommand(model.User, model.Skin));
+                await _mediator.Send(new AddSkinToBasketCommand(model.UserId, model.SkinId));
 
                 return Ok();
             }

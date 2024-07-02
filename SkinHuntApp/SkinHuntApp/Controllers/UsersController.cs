@@ -33,7 +33,7 @@ namespace SkinHunt.Service.Controllers
 
                     var id = await JwtTokenHandler.GetIdFromTokenAsync(token);
 
-                    var skins = await _mediator.Send(new GetSkinsByUserIdFromBasketQuery(id));
+                    var skins = await _mediator.Send(new GetSkinsByUserIdFromBasketQuery() { Id = id });
 
                     _logger.LogInformation("Skins received successfully.");
                     return Ok(skins);

@@ -14,10 +14,6 @@
     background-color: #6c697c;
 }
 
-.card-container:hover button {
-    background-color: #8678d7;
-}
-
 .card-container:hover i {
     opacity: 80%;
 }
@@ -61,24 +57,30 @@
     height: 28px;
 }
 
-.btn-basket {
+.btn-basket-buy {
     width: 100%;
     height: 28px;
     cursor: pointer;
     color: #fff;
-    background-color: #403d4d;
+    background-color: #298b2e;
     border: 0;
     border-radius: 4px;
 }
 
-.btn-basket i {
-    opacity: 50%;
+.btn-basket-buy:hover {
+    background-color: #5ec04b !important;
 }
 
-.btn-basket:hover {
-    background-color: #a293e5 !important;
+.btn-basket-remove{
+    width: 100%;
+    height: 28px;
+    cursor: pointer;
+    color: #fff;
+    background-color: #fa1717;
+    border: 0;
+    border-radius: 4px;
 }
 
-.btn-basket:hover i{
-    opacity: 100%;
+.btn-basket-remove:hover {
+    background-color: #fc4d4d !important;
 }

@@ -1,4 +1,4 @@
-import {Component, input} from "@angular/core";
+import {Component, OnInit, input, output} from "@angular/core";
 import {RouterOutlet} from "@angular/router";
 import {MdbCheckboxModule} from "mdb-angular-ui-kit/checkbox";
 import {HeaderComponent} from "../../header/header.component";
@@ -36,7 +36,7 @@ import { SkinModel } from "../../models/skinModel";
             </div>
         </div>
         <div class="baseCard-action-button">
-            <button type="button" class="btn-basket">
+            <button type="button" class="btn-basket" (click)="addToBasket.emit(card().id)">
               <i class="fas fa-shopping-cart"></i>
             </button>
         </div>
@@ -132,6 +132,12 @@ import { SkinModel } from "../../models/skinModel";
     `,
   ]
 })
-export class SkinItemCardComponent {
+export class SkinItemCardComponent implements OnInit {
   card = input.required<SkinModel>();
+
+  addToBasket = output<string>();
+
+  ngOnInit(): void {
+    console.log('card value', this.card());
+  }
 }

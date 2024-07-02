@@ -2,7 +2,7 @@
 
 public class BasketModel
 {
-    public string User { get; set; }
+    public string UserId { get; set; }
     
-    public string Skin { get; set; }
+    public string SkinId { get; set; }
 }

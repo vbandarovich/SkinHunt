@@ -1,13 +1,13 @@
 import { Component, input } from '@angular/core';
-import { SkinModel } from '../../models/skinModel';
+import { BasketValue } from '../../models/basket-value';
 
 @Component({
-  selector: 'app-skin-item-card-basket',
+  selector: 'skin-item-card-basket',
   standalone: true,
   imports: [],
   templateUrl: './skin-item-card-basket.component.html',
   styleUrl: './skin-item-card-basket.component.scss'
 })
 export class SkinItemCardBasketComponent {
-  card = input.required<SkinModel>();
+  basketValue = input.required<BasketValue>();
 }

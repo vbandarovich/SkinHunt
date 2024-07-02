@@ -9,6 +9,7 @@ import { MdbCheckboxModule } from 'mdb-angular-ui-kit/checkbox';
 import { HttpClient } from '@angular/common/http';
 import { SkinModel } from '../../models/skinModel';
 import { SkinService } from '../../services/skin.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-buy-page-main',
@@ -27,6 +28,7 @@ import { SkinService } from '../../services/skin.service';
 
 export class BuyPageMainComponent {
   skinService = inject(SkinService);
+  authService = inject(AuthService);
 
   cards$ = signal<SkinModel[]>([]);
   sortBy$ = signal<SortItems>('default');
@@ -113,5 +115,21 @@ export class BuyPageMainComponent {
       .subscribe((skins) => {
         this.cards$.set(skins);
       });
+  }
+
+  addSkinToBasket(id: string) {
+    const userId = this.authService.user$()?.id;
+
+    if (userId) {
+      const command = {
+        userId: userId,
+        skinId: id,
+      };
+  
+      this.skinService.addSkinToBasket(command)
+      .subscribe(() => {
+        this.cards$.set(this.cards$().filter((o) => o.id !== id))
+      });
+    }
   }
 }

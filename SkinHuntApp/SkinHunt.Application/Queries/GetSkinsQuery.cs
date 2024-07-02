@@ -41,9 +41,14 @@ namespace SkinHunt.Application.Queries
         public async Task<List<SkinDto>> Handle(GetSkinsQuery request, CancellationToken cancellationToken)
         {
             try
-            { 
+            {
+                var skinIdsInBasketList = await _db.Basket
+                    .Select(o => o.Skin.Id)
+                    .ToListAsync();
+
                 var query = _db.Skins
                     .Include(s => s.Type)
+                    .Where(o => !skinIdsInBasketList.Contains(o.Id))
                     .ProjectTo<SkinDto>(_mapper.ConfigurationProvider);
                 
                 if (request.PriceAbove is not null)
