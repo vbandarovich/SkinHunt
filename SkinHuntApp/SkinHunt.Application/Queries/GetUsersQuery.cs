@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Common.Models;
+using SkinHunt.Domain.Constants;
 
 namespace SkinHunt.Application.Queries
 {
@@ -32,16 +33,13 @@ namespace SkinHunt.Application.Queries
         {
             try
             {
+                var adminUsers = await _userManager.GetUsersInRoleAsync(RolesConstants.Admin);
+                var adminUsersIdList = adminUsers.Select(x => x.Id).ToList();
+
                 var users = await _dbContext.Users
+                    .Where(o => !adminUsersIdList.Contains(o.Id))
                     .ProjectTo<UserDto>(_mapper.ConfigurationProvider)
                     .ToListAsync();
-
-                //foreach (var user in users)
-                //{
-                //    var userEntity = await _userManager.FindByIdAsync(user.Id);
-                //    var roles = await _userManager.GetRolesAsync(userEntity);
-                //    user.Roles = roles.ToArray();
-                //}
 
                 if (users.Any())
                 {

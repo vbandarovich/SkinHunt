@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.EntityFrameworkCore.Query.Internal;
 using SkinHunt.Application.Common.Entities;
 using SkinHunt.Application.Common.Models;
 
@@ -21,6 +22,8 @@ namespace SkinHunt.Application.Common.Mapping
             CreateMap<BasketEntity, BasketDto>();
             
             CreateMap<ItemTypeEntity, ItemTypeDto>();
+
+            CreateMap<SoldSkinsEntity, TransactionsDto>();
         }
     }
 }

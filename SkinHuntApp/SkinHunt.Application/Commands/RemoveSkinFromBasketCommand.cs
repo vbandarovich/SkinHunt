@@ -6,11 +6,11 @@ namespace SkinHunt.Application.Commands
 {
     public class RemoveSkinFromBasketCommand : IRequest
     {
-        public Guid BasketEntryId { get; set; }
+        public Guid Id { get; set; }
 
-        public RemoveSkinFromBasketCommand(Guid basketEntryId)
+        public RemoveSkinFromBasketCommand(Guid id)
         {
-            BasketEntryId = basketEntryId;
+            Id = id;
         }
     }
 
@@ -27,16 +27,13 @@ namespace SkinHunt.Application.Commands
 
         public async Task Handle(RemoveSkinFromBasketCommand request, CancellationToken cancellationToken)
         {
-            var entity = await _dbContext.Basket.FirstOrDefaultAsync(o => o.Id == request.BasketEntryId);
+            var entity = await _dbContext.Basket.FirstAsync(o => o.Id == request.Id);
+            
+            _dbContext.Basket.Remove(entity);
 
-            if (entity is not null)
-            {
-                _dbContext.Basket.Remove(entity);
+            _logger.LogInformation("Skin removed from basket successfully.");
 
-                _logger.LogInformation("Skin removed from basket successfully.");
-
-                await _dbContext.SaveChangesAsync(cancellationToken);
-            }
+            await _dbContext.SaveChangesAsync(cancellationToken);    
         }
     }
 }

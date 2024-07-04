@@ -1,9 +1,6 @@
 <div class="history-page">
     <app-side-nav></app-side-nav>
     <div class="history-body">
-        <!-- @for (itemCard of cardsList$(); track itemCard) {
-                <skin-item-card [card]="itemCard"></skin-item-card>
-            } -->
         <div class="historyList-wrapper">
             <div class="row">
                 <div class="col-12">
@@ -20,194 +17,28 @@
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    @for (transactionCard of transactionsList$(); track transactionCard) {
                                         <tr class="align-middle text-white bg-color">
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
+                                                    <img [src]="transactionCard.user.avatar" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
                                                     <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
+                                                        <div class="h6 mb-0 lh-1">{{transactionCard.user.email}}</div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
+                                            <td>{{transactionCard.user.phoneNumber}}</td>
+                                            <td> <span class="d-inline-block align-middle">{{transactionCard.skin.name}}</span></td>
+                                            <td><span>{{transactionCard.createdDate.toLocaleString()}}</span></td>
+                                            <td>{{transactionCard.skin.priceWithDiscount}} $</td>
                                         </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                        <tr class="align-middle text-white bg-color">
-                                            <td>
-                                                <div class="d-flex align-items-center">
-                                                    <img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="avatar sm rounded-pill me-3 flex-shrink-0" alt="Customer">
-                                                    <div>
-                                                        <div class="h6 mb-0 lh-1">User Email</div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                            <td>User PhoneNumber</td>
-                                            <td> <span class="d-inline-block align-middle">Skin</span></td>
-                                            <td><span>Data</span></td>
-                                            <td>Price</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
+                                    }
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
+            </div>
         </div>
     </div>
 </div>

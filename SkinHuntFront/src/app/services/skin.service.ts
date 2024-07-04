@@ -6,6 +6,7 @@ import { SortItems } from "../models/sort";
 import { httpParamsFromRequest } from "./helper";
 import { BasketModel } from "../models/basketModel";
 import { BasketValue } from "../models/basket-value";
+import { SoldModel } from "../models/SoldModel";
 
 export interface SkinFilterModel {
     sortBy: SortItems;
@@ -38,6 +39,22 @@ export class SkinService {
         return this.http.get<BasketValue[]>(`${API_URL}/basket`, {
             params: httpParamsFromRequest({ id: userId }),
         });
+    }
+
+    removeSkinFormBasket(id: string) {
+        return this.http.delete(`${API_URL}/basket/${id}`);
+    }
+
+    buySkinFromBasket(soldModel: SoldModel) {
+        return this.http.post<boolean>(`${API_URL}/users/buy-skin`, soldModel);
+    }
+
+    getUserSkinsFromBasketCount(userId: string) {
+        return this.http.get<number>(`${API_URL}/basket/${userId}`);
+    }
+
+    getSkinsFromSoldsCount(userId: string) {
+        return this.http.get<number>(`${API_URL}/basket/solds/${userId}`);
     }
 }
 

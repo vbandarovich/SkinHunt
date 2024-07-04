@@ -1,6 +1,7 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, computed, inject, OnInit, signal} from '@angular/core';
 import {UserService} from "../../services/user.service";
 import {AuthService} from "../../services/auth.service";
+import { SkinService } from '../../services/skin.service';
 
 @Component({
   selector: 'app-profile',
@@ -12,9 +13,12 @@ import {AuthService} from "../../services/auth.service";
 export class ProfileComponent implements OnInit {
   userService = inject(UserService);
   authService = inject(AuthService);
+  skinService = inject(SkinService);
   selectedImage$ = signal<string>("../../../assets/unAuthAvatar.jpg");
   userEmail$ = signal<string>('-');
   userNumber$ = signal<string>('-');
+  basketCount$ = signal<number>(0);
+  soldsCount$ = signal<number>(0);
 
   ngOnInit() {
     const avatar = this.authService.user$()?.avatar;
@@ -32,6 +36,9 @@ export class ProfileComponent implements OnInit {
     if (phoneNumber) {
       this.userNumber$.set(phoneNumber);
     }
+
+    this.getSkinsFromBasketCount();
+    this.getSkinsFromSoldCount();
   }
 
   onFileSelected(event: Event) {
@@ -50,6 +57,35 @@ export class ProfileComponent implements OnInit {
         }
       };
       reader.readAsDataURL(file);
+    }
+  }
+
+  userBalance$ = computed(() => {
+    return this.authService.user$()?.balance;
+  });
+
+  getSkinsFromBasketCount() {
+    const userId = this.authService.user$()?.id;
+
+    if (userId) {
+      this.skinService.getUserSkinsFromBasketCount(userId).subscribe((res) => {
+        if (res) {
+          this.basketCount$.set(res);
+        }
+      });
+    }
+  }
+
+  getSkinsFromSoldCount() {
+    const userId = this.authService.user$()?.id;
+
+    if (userId) {
+      this.skinService.getSkinsFromSoldsCount(userId).subscribe((res) => {
+        if (res) {
+          console.log("res", res)
+          this.soldsCount$.set(res);
+        }
+      });
     }
   }
 }

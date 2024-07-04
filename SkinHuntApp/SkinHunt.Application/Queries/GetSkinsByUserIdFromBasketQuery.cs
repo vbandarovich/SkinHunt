@@ -29,9 +29,9 @@ namespace SkinHunt.Application.Queries
         {
             try
             {
-                var result = await _db.Basket.Where(x => x.User.Id == request.Id)
-                    .Include(x => x.User)
-                    .Include(x => x.Skin)
+                var result = await _db.Basket.Where(o => o.User.Id == request.Id)
+                    .Include(o => o.User)
+                    .Include(o => o.Skin)
                     .ProjectTo<BasketDto>(_mapper.ConfigurationProvider)
                     .ToListAsync(cancellationToken);
 

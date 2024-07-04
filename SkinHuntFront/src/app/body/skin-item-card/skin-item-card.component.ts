@@ -132,12 +132,8 @@ import { SkinModel } from "../../models/skinModel";
     `,
   ]
 })
-export class SkinItemCardComponent implements OnInit {
+export class SkinItemCardComponent {
   card = input.required<SkinModel>();
 
   addToBasket = output<string>();
-
-  ngOnInit(): void {
-    console.log('card value', this.card());
-  }
 }

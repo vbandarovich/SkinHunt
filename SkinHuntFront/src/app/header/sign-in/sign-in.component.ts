@@ -108,8 +108,8 @@ export class SignInComponent {
 
   onSubmitSignUp() {
     const command = {
-      email: this.SignInEmail.value!,
-      password: this.SignInPassword.value!,
+      email: this.SignUpEmail.value!,
+      password: this.SignUpPassword.value!,
       phoneNumber: this.SignUpPhoneNumber.value!
     };
 

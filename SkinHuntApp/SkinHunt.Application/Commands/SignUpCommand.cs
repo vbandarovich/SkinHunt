@@ -46,6 +46,7 @@ namespace SkinHunt.Application.Commands
             {
                 UserName = request.Model.Email,
                 Email = request.Model.Email,
+                PhoneNumber = request.Model.PhoneNumber,
             };
 
             var result = await _userManager.CreateAsync(user, request.Model.Password);

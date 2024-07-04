@@ -3,6 +3,8 @@ import { User } from "../models/User";
 import { HttpClient } from "@angular/common/http";
 import { API_URL } from "../constants/URL";
 import { tap } from "rxjs";
+import { TransactionModel } from "../models/transactionModel";
+import { httpParamsFromRequest } from "./helper";
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +19,7 @@ export class UserService {
     };
 
     return this.http
-      .post<User>(`${API_URL}/users`, command)
+      .post<User>(`${API_URL}/users/update-avatar`, command)
       .pipe(
         tap((res) => {
           if (res != null) {
@@ -25,5 +27,9 @@ export class UserService {
           }
         })
       );
+  }
+
+  getTransactions(userId: string) {
+    return this.http.get<TransactionModel[]>(`${API_URL}/transactions/${userId}`);
   }
 }

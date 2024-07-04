@@ -46,9 +46,13 @@ namespace SkinHunt.Application.Queries
                     .Select(o => o.Skin.Id)
                     .ToListAsync();
 
+                var skinIdsInSoldList = await _db.SoldsSkins
+                    .Select(o => o.Skin.Id)
+                    .ToListAsync();
+
                 var query = _db.Skins
                     .Include(s => s.Type)
-                    .Where(o => !skinIdsInBasketList.Contains(o.Id))
+                    .Where(o => !skinIdsInBasketList.Contains(o.Id) && !skinIdsInSoldList.Contains(o.Id))
                     .ProjectTo<SkinDto>(_mapper.ConfigurationProvider);
                 
                 if (request.PriceAbove is not null)

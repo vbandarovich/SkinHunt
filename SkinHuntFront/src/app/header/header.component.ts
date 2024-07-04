@@ -6,8 +6,6 @@ import {ChangeDetectionStrategy, Component, computed, inject, signal} from '@ang
 import {CommonModule} from '@angular/common';
 import {SignInComponent} from './sign-in/sign-in.component';
 import {MdbModalModule, MdbModalRef, MdbModalService} from 'mdb-angular-ui-kit/modal';
-import {InterfaceLanguage} from "../models/interface-language";
-import {Currency} from "../models/currency";
 import { Router, RouterModule } from '@angular/router';
 
 @Component({
@@ -28,9 +26,6 @@ import { Router, RouterModule } from '@angular/router';
 
 export class HeaderComponent {
   signInModalRef: MdbModalRef<SignInComponent> | null = null;
-
-  language$ = signal<InterfaceLanguage>('ru');
-  currency$ = signal<Currency>('usd');
 
   router: Router = inject(Router);
 
@@ -61,14 +56,6 @@ export class HeaderComponent {
     this.signInModalRef = this.modalService.open(SignInComponent, {
       modalClass: 'modal-dialog-centered'
     })
-  }
-
-  setLanguage(language: InterfaceLanguage) {
-    this.language$.set(language);
-  }
-
-  setCurrency(currency: Currency) {
-    this.currency$.set(currency);
   }
 
   logOutHandler() {

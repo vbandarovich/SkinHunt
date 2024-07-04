@@ -22,11 +22,27 @@ namespace SkinHunt.Service.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetSkinsFromBasket([FromQuery] GetSkinsByUserIdFromBasketQuery query)
+        public async Task<IActionResult> GetSkinsFromBasket([FromQuery] GetSkinsByUserIdFromBasketQuery query)
         {
             try
             {
                 var result = await _mediator.Send(query);
+
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error with message: {ex}.");
+                return StatusCode(500, $"Internal server error: {ex.Message}.");
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetSkinsFromBasketCount(string id)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSkinsFromBasketCountQuery(id));
 
                 return Ok(result);
             }
@@ -45,6 +61,38 @@ namespace SkinHunt.Service.Controllers
                 await _mediator.Send(new AddSkinToBasketCommand(model.UserId, model.SkinId));
 
                 return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error with message: {ex}.");
+                return StatusCode(500, $"Internal server error: {ex.Message}.");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> RemoveSkinFromBasket(Guid Id)
+        {
+            try
+            {
+                await _mediator.Send(new RemoveSkinFromBasketCommand(Id));
+
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error with message: {ex}.");
+                return StatusCode(500, $"Internal server error: {ex.Message}.");
+            }
+        }
+
+        [HttpGet("solds/{id}")]
+        public async Task<IActionResult> GetSoldsCount(string id)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetSoldsCountQuery(id));
+
+                return Ok(result);
             }
             catch (Exception ex)
             {

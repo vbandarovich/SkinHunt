@@ -34,73 +34,10 @@
           </a>
         </li>
       </ul>
-
-      <div class="language-dropdown-button me-4">
-        <div mdbDropdown #flagDropdown class="dropdown">
-          <button
-            class="btn dropdown-toggle p-0"
-            type="button"
-            id="flagDropdownMenuButton"
-            aria-expanded="false"
-            mdbDropdownToggle
-          >
-            @if (language$() === 'ru') {
-              <i class="flag flag-russia"></i>
-            }
-            @if (language$() === 'eng') {
-              <i class="flag flag-united-states"></i>
-            }
-          </button>
-          <ul
-            mdbDropdownMenu
-            class="dropdown-menu dropdown-menu-end dropdown-menu-start"
-            aria-labelledby="flagDropdownMenuButton"
-          >
-            <li>
-              <a class="dropdown-item" (click)="setLanguage('ru')">
-                <i class="flag flag-russia"></i>
-                Русский
-              </a>
-            </li>
-            <li>
-              <a class="dropdown-item" (click)="setLanguage('eng')">
-                <i class="flag flag-united-states"></i>
-                English
-              </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <div class="currency-dropdown-button me-4">
-        <div mdbDropdown #currencyDropdown class="dropdown">
-          <button
-            class="btn dropdown-toggle p-0"
-            type="button"
-            id="currencyDropdownMenuButton"
-            aria-expanded="false"
-            mdbDropdownToggle
-          >
-            @if (currency$() === 'usd') {
-              $ USD
-            }
-            @if (currency$() === 'byn') {
-              Br BYN
-            }
-          </button>
-          <ul
-            mdbDropdownMenu
-            class="dropdown-menu dropdown-menu-end dropdown-menu-start"
-            aria-labelledby="currencyDropdownMenuButton"
-          >
-            <li><a class="dropdown-item" (click)="setCurrency('usd')">$ USD</a></li>
-            <li><a class="dropdown-item" (click)="setCurrency('byn')">Br BYN</a></li>
-          </ul>
-        </div>
-      </div>
       <div class="d-flex align-items-center">
         @if (this.authService.user$()) {
           <div class="text-white fs-6 me-2">
-            Баланс: {{userBalance$()}} $
+            Баланс: {{userBalance$()?.toFixed(2)}} $
           </div>
           <div mdbDropdown #profileDropdown class="dropdown">
             <button

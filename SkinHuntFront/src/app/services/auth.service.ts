@@ -21,6 +21,7 @@ export class AuthService {
 
       if (user) {
         this.user$.set(JSON.parse(user));
+        this.updateBalance().subscribe();
       }
     }
 
@@ -50,9 +51,24 @@ export class AuthService {
         );
     }
 
-    logOut(){
+    logOut() {
       localStorage.removeItem('user');
       this.user$.set(null);
       this.router.navigate(['']);
+    }
+
+    updateBalance() {
+      return this.http.get<number>(`${API_URL}/users/${this.user$()?.id}`)
+      .pipe(
+        tap((res) => {
+          if (res != null) {
+            const existUser = localStorage.getItem('user');
+            const parsedUserData = JSON.parse(existUser!);
+            parsedUserData.balance = res;
+            localStorage.setItem('user', JSON.stringify(parsedUserData));
+            this.user$.set(parsedUserData);
+          }
+        })
+      );
     }
 }

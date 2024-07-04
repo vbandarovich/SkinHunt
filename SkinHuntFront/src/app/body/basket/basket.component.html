@@ -4,7 +4,7 @@
         <div class="basket-wrapper">
             <div class="basketList-wrapper">
                 @for (basketValue of basketValueList$(); track basketValue.id) {
-                    <skin-item-card-basket [basketValue]="basketValue"></skin-item-card-basket>
+                    <skin-item-card-basket [basketValue]="basketValue" (removeFromBasket)="removeSkinFromBasket($event)" (buySkinFromBasket)="buySkinFromBasket($event)"></skin-item-card-basket>
                 }
             </div>
         </div>

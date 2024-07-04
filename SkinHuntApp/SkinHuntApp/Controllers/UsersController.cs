@@ -1,9 +1,9 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using SkinHunt.Application.Commands;
 using SkinHunt.Application.Common.Models;
-using SkinHunt.Application.Extensions;
 using SkinHunt.Application.Queries;
 
 namespace SkinHunt.Service.Controllers
@@ -21,57 +21,8 @@ namespace SkinHunt.Service.Controllers
             _mediator = mediator;
             _logger = logger;
         }
-
-        [HttpGet]
-        public async Task<ActionResult> GetSkinsFromBasketAsync()
-        {
-            try
-            {
-                if (HttpContext.Request.Headers.TryGetValue("Authorization", out var authHeader))
-                {
-                    var token = authHeader.ToString().Replace("Bearer ", "");
-
-                    var id = await JwtTokenHandler.GetIdFromTokenAsync(token);
-
-                    var skins = await _mediator.Send(new GetSkinsByUserIdFromBasketQuery() { Id = id });
-
-                    _logger.LogInformation("Skins received successfully.");
-                    return Ok(skins);
-                }
-                
-                _logger.LogInformation("An error occurred while receiving the token.");
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError($"An unexpected error occurred while receiving the skin. Error message {ex}");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
-
-        [HttpDelete]
-        public async Task<ActionResult> RemoveSkinFromBasketAsync([FromBody] Guid skinId)
-        {
-            try
-            {
-                if (skinId != Guid.Empty)
-                {
-                    await _mediator.Send(new RemoveSkinFromBasketCommand(skinId));
-
-                    return Ok();
-                }
-                
-                _logger.LogInformation("An error occurred while receiving the token.");
-                return BadRequest();
-            }
-            catch (Exception ex)
-            {
-                _logger.LogError("An unexpected error occurred while deleting the skin.");
-                return StatusCode(500, $"Internal server error: {ex.Message}");
-            }
-        }
         
-        [HttpPost]
+        [HttpPost("update-avatar")]
         public async Task<IActionResult> UpdateUserAvatar([FromBody] UpdateUserAvatarModel model)
         {
             try
@@ -92,6 +43,46 @@ namespace SkinHunt.Service.Controllers
                 _logger.LogError("Unexpected error occured during update avatar");
                 return StatusCode(500, $"Internal server error: {ex.Message}");
             } 
+        }
+
+        [HttpPost("buy-skin")]
+        public async Task<IActionResult> BuySkin([FromBody] SoldModel model)
+        {
+            try
+            {
+                var result = await _mediator.Send(new BuySkinCommand(model));
+
+                if (result)
+                {
+                    _logger.LogError("Skin purchased successfully");
+                    return Ok(result);
+                }
+
+                return BadRequest();
+                
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Unexpected error occured during purchase skin");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserBalance(string Id)
+        {
+            try
+            {
+                var result = await _mediator.Send(new GetUserBalanceQuery(Id));
+
+                _logger.LogInformation("User balance updated.");
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError("Unexpected error occured during update avatar");
+                return StatusCode(500, $"Internal server error: {ex.Message}");
+            }
         }
     }
 }

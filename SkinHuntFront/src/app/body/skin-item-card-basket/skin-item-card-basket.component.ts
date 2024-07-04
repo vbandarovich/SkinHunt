@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { BasketValue } from '../../models/basket-value';
 
 @Component({
@@ -10,4 +10,7 @@ import { BasketValue } from '../../models/basket-value';
 })
 export class SkinItemCardBasketComponent {
   basketValue = input.required<BasketValue>();
+
+  buySkinFromBasket = output<{ id: string; skinId: string }>();
+  removeFromBasket = output<string>();
 }
